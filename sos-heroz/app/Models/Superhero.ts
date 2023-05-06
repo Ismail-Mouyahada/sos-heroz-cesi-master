@@ -21,10 +21,10 @@ export default class Superhero extends BaseModel {
   public telephone: string
 
   @column()
-  public nomHeroique: string
+  public nom_heroique: string
 
   @column()
-  public descriptionPouvoir: string
+  public description_pouvoir: string
 
   @column()
   public disponible: boolean
@@ -36,7 +36,7 @@ export default class Superhero extends BaseModel {
   public longitude: string
 
   @column()
-  public maxMission: number
+  public max_mission: number
 
   @column()
   public userId: number

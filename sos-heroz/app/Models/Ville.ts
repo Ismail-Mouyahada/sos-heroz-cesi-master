@@ -7,10 +7,10 @@ export default class Ville extends BaseModel {
   public id: number
 
   @column()
-  public nomVille: string
+  public nom_ville: string
 
   @column()
-  public codePostal: string
+  public code_postal: string
 
   @column()
   public latitude: string
