@@ -10,8 +10,13 @@
   @entryPointScripts('app')
 </head>
 
-<body>
-  {{ villes }}
+<body class="m-2">
+  @each(item in villes)
+
+  {{ item.nom_ville }}
+  <br />
+
+  @end
 </body>
 
 </html>

@@ -36,8 +36,6 @@ export default class Mission extends BaseModel {
   @column()
   public urgence: number
 
-
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
@@ -45,7 +43,7 @@ export default class Mission extends BaseModel {
   public updatedAt: DateTime
 
   @column()
-  public superheroid: Number
+  public superheroId: Number
   @belongsTo(() => Superhero)
   public Superhero: BelongsTo<typeof Superhero>
 
