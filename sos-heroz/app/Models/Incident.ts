@@ -6,7 +6,7 @@ export default class Incident extends BaseModel {
   public id: number
 
   @column()
-  public typeIncident: string
+  public type_incident: string
 
   @column()
   public description: string

@@ -2,14 +2,15 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Mission from './Mission'
 import User from './User'
+import { AttachmentContract, attachment } from '@ioc:Adonis/Addons/AttachmentLite'
 
 
 export default class Superhero extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
-  public profil: string
+  @attachment()
+  public profil: AttachmentContract
 
   @column()
   public nom: string
@@ -21,10 +22,10 @@ export default class Superhero extends BaseModel {
   public telephone: string
 
   @column()
-  public nomHeroique: string
+  public nom_heroique: string
 
   @column()
-  public descriptionPouvoir: string
+  public description_pouvoir: string
 
   @column()
   public disponible: boolean
@@ -36,7 +37,7 @@ export default class Superhero extends BaseModel {
   public longitude: string
 
   @column()
-  public maxMission: number
+  public max_mission: number
 
   @column()
   public userId: number
