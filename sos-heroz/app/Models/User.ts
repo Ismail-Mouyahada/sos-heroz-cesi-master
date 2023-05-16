@@ -7,13 +7,7 @@ export default class User extends BaseModel {
   public id: number
 
   @column()
-  public nom: string
-
-  @column()
-  public prenom: string
-
-  @column()
-  public role: string
+  public name: string
 
   @column()
   public email: string
@@ -22,7 +16,10 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public rememberMeToken: string | null
+  public rememberMeToken?: string
+
+  @column.dateTime()
+  public emailVerifiedAt?: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

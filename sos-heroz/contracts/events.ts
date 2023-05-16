@@ -5,6 +5,8 @@
  * file.
  */
 
+import User from 'App/Models/User'
+
 declare module '@ioc:Adonis/Core/Event' {
   /*
   |--------------------------------------------------------------------------
@@ -26,6 +28,11 @@ declare module '@ioc:Adonis/Core/Event' {
   |
   */
   interface EventsList {
-    //
+    userRegistered: User
+    passwordResetRequested: {
+      user: User
+      token: string
+    }
+    passwordReset: User
   }
 }
