@@ -50,7 +50,7 @@ export default class MissionsController {
       },
     })
 
-    return response.redirect().toRoute('mission.index')
+    return response.redirect().toRoute('missions.index')
   }
 
   public async show({ view }: HttpContextContract) {
@@ -110,7 +110,7 @@ export default class MissionsController {
       },
     })
 
-    return response.redirect().toRoute('mission.index')
+    return response.redirect().toRoute('missions.index')
   }
 
 

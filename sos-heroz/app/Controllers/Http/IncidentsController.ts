@@ -40,7 +40,7 @@ export default class IncidentsController {
       },
     })
 
-    return response.redirect().toRoute('incident.index')
+    return response.redirect().toRoute('incidents.index')
 
   }
 
@@ -98,6 +98,6 @@ export default class IncidentsController {
       },
     })
 
-    return response.redirect().toRoute('incident.index')
+    return response.redirect().toRoute('incidents.index')
   }
 }

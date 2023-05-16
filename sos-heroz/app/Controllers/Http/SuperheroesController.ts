@@ -1,5 +1,4 @@
 import { Attachment } from '@ioc:Adonis/Addons/AttachmentLite'
-import Application from '@ioc:Adonis/Core/Application'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Superhero from 'App/Models/Superhero'
 
@@ -19,7 +18,7 @@ export default class SuperheroesController {
 
   public async store({ request, response, session }: HttpContextContract) {
     // filtrer les valuers envoyé depuis la requête
-    const {  nom, prenom, telephone, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission, userId } = request.body()
+    const { nom, prenom, telephone, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission, userId } = request.body()
 
     // Nouvelle instanciation d'une superhero
     const superhero = new Superhero()
@@ -50,7 +49,7 @@ export default class SuperheroesController {
       },
     })
 
-    return response.redirect().toRoute('superhero.index')
+    return response.redirect().toRoute('superheros.index')
 
   }
 
@@ -58,7 +57,7 @@ export default class SuperheroesController {
 
     const superhero = await Superhero.findOrFail(params.id)
     return view.render('pages.superheros.show', { superhero })
-   }
+  }
 
   public async edit({ view, params }: HttpContextContract) {
 
@@ -116,6 +115,6 @@ export default class SuperheroesController {
       },
     })
 
-    return response.redirect().toRoute('superhero.index')
+    return response.redirect().toRoute('superheros.index')
   }
 }

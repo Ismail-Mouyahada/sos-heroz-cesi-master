@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Ville from 'App/Models/Ville'
-import { validator } from '../../../config/app';
+
 
 export default class VillesController {
   public async index({ view }: HttpContextContract) {
@@ -88,6 +88,6 @@ export default class VillesController {
       },
     })
 
-    return response.redirect().toRoute('ville.index')
-   }
+    return response.redirect().toRoute('villes.index')
+  }
 }
