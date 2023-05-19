@@ -1,0 +1,98 @@
+@layout('layouts/app')
+@section('content')
+
+<div class="flex flex-col justify-center items-center h-[100vh] py-4">
+  <div
+    class=" relative flex flex-col items-center rounded-[20px] w-1/2 max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+    <div class="mt-2 mb-8 w-full">
+      <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
+        Information Général
+      </h4>
+      <p class="mt-2 px-2 text-base text-gray-600">
+        {{ mission.description}}
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-4 px-2 w-full">
+      <div
+        class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">titre de mission</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ mission.nom_mission}}
+        </p>
+      </div>
+
+      <div
+        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Incident</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ mission.type_incident}}
+        </p>
+      </div>
+      <div
+        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Incident</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ mission.est_confirmee? 'Oui' : 'Non'}}
+        </p>
+      </div>
+
+      <div
+        class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Contact</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ mission.email}}
+        </p>
+      </div>
+
+      <div
+        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Satut</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ mission.statut}}
+        </p>
+      </div>
+
+      <div
+        class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Superhero assigné</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ mission.superheroId.nom_heroique }}
+        </p>
+      </div>
+
+      <div
+        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Date de déclaration</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ createdAt }}
+        </p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 my-2 gap-4 px-2 w-full">
+      <div id="map" class="w-full  h-80"></div>
+    </div>
+
+
+    <a href="{{ route('mission.index') }}"
+      class="w-1/2 text-center bg-emerald-400 p-3 my-4 rounded-md  text-white justify-end"><i
+        class="fa fa-arrow-left text-white  "></i> Précédent</a>
+  </div>
+
+</div>
+
+<script>
+  var map = new mapboxgl.Map({
+  accessToken: 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w',
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [{{mission.longitude}}, {{ mission.latitude}}],
+  zoom: 5
+  });
+
+  var marker = new mapboxgl.Marker()
+  .setLngLat([{{mission.longitude}}, {{ mission.latitude}}])
+  .addTo(map);
+
+</script>
+
+@endsection

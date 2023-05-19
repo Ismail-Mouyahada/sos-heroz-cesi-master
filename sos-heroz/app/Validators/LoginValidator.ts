@@ -11,6 +11,6 @@ export default class LoginValidator {
   })
 
   public messages = {
-    required: 'The  field is required.',
+    required: 'le  champe est obligatoire.',
   }
 }

@@ -1,8 +1,14 @@
+import { faker } from '@faker-js/faker'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Incident from 'App/Models/Incident'
 
 export default class IncidentsController {
   public async index({ view }: HttpContextContract) {
+
+    // await Incident.create({
+    //   type_incident : faker.lorem.slug(),
+    //   description : faker.lorem.lines()
+    // })
 
     // Récupérer tous les types des incidents
     const incidents = await Incident.all()
@@ -40,7 +46,7 @@ export default class IncidentsController {
       },
     })
 
-    return response.redirect().toRoute('incidents.index')
+    return response.redirect().toRoute('incident.index')
 
   }
 
@@ -98,6 +104,6 @@ export default class IncidentsController {
       },
     })
 
-    return response.redirect().toRoute('incidents.index')
+    return response.redirect().toRoute('incident.index')
   }
 }

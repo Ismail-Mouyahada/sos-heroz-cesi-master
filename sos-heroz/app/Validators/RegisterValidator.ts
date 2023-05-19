@@ -2,10 +2,16 @@ import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class RegisterValidator {
-  constructor(protected ctx: HttpContextContract) {}
+  constructor(protected ctx: HttpContextContract) { }
 
   public schema = schema.create({
-    name: schema.string([rules.trim()]),
+    nom: schema.string([rules.trim()]),
+    prenom: schema.string([rules.trim()]),
+    telephone: schema.string([
+      rules.trim(),
+      rules.mobile(),
+      rules.unique({ table: 'users', column: 'telephone' }),
+    ]),
     email: schema.string([
       rules.trim(),
       rules.email(),
@@ -17,9 +23,9 @@ export default class RegisterValidator {
   })
 
   public messages = {
-    'required': 'The  field is required.',
-    'unique': 'The  has already been taken.',
-    'password.minLength': 'Password must be a minimum of 6 chracters.',
-    'password_confirmation.confirmed': 'Password confirmation does not match.',
+    'required': 'le  field est obligatoire.',
+    'unique': 'le  est déjà réservé par une autre utilisateur.',
+    'password.minLength': 'le mot de passe devrait contenir en moins 6 caractèrs.',
+    'password_confirmation.confirmed': 'la confirmation de mot de passe n\'est pas indentique.',
   }
 }

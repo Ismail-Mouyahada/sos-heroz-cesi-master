@@ -25,7 +25,7 @@ export default class Mission extends BaseModel {
   public longitude: string
 
   @column()
-  public date_incident: DateTime
+  public date_incident: Date
 
   @column()
   public statut: string
@@ -35,12 +35,6 @@ export default class Mission extends BaseModel {
 
   @column()
   public urgence: number
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
 
   @column()
   public superheroId: Number
@@ -52,5 +46,9 @@ export default class Mission extends BaseModel {
   @belongsTo(() => Ville)
   public Ville: BelongsTo<typeof Ville>
 
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
 
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  public updatedAt: DateTime
 }

@@ -1,14 +1,22 @@
+
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Incident from 'App/Models/Incident'
 import Mission from 'App/Models/Mission'
+import Superhero from 'App/Models/Superhero'
+import Ville from 'App/Models/Ville'
 
 export default class MissionsController {
   public async index({ view }: HttpContextContract) {
 
+
     // Récupérer tous les types des missions
     const missions = await Mission.all()
+    const incidents = await Incident.all()
+    const superheros = await Superhero.all()
+    const villes = await Ville.all()
 
     // renvoyer les données vers le vue 'index' de l'application
-    return view.render('pages.missions.index', { missions })
+    return view.render('pages.missions.index', { missions, incidents, villes, superheros })
   }
 
   public async create({ view }: HttpContextContract) {
@@ -20,7 +28,7 @@ export default class MissionsController {
   public async store({ request, response, session }: HttpContextContract) {
 
     // filtrer les valuers envoyé depuis la requête
-    const { nom_mission, type_incident, description, latitude, longitude, date_incident, statut, est_confirmee, urgence, superheroId, villeId } = request.body()
+    const { nom_mission, type_incident, description, latitude, longitude, date_incident, statut, est_confirmee, urgence, superhero_id, ville_id } = request.body()
 
     // Nouvelle instanciation d'une mission
     const mission = new Mission()
@@ -33,11 +41,10 @@ export default class MissionsController {
     mission.longitude = longitude
     mission.date_incident = date_incident
     mission.statut = statut
-    mission.est_confirmee = est_confirmee
+    mission.est_confirmee = est_confirmee ? true : false
     mission.urgence = urgence
-    mission.nom_mission = nom_mission
-    mission.superheroId = superheroId
-    mission.villeId = villeId
+    mission.superheroId = superhero_id
+    mission.villeId = ville_id
 
     // Sauvgarder le nouveau element
     await mission.save()
@@ -50,23 +57,32 @@ export default class MissionsController {
       },
     })
 
-    return response.redirect().toRoute('missions.index')
+    return response.redirect().toRoute('mission.index')
   }
 
-  public async show({ view }: HttpContextContract) {
+  public async show({ view, params }: HttpContextContract) {
 
-    return view.render('pages.missions.create')
+    const mission = await Mission.findOrFail(params.id)
+
+
+
+
+    return view.render('pages.missions.show', { mission, createdAt: mission.createdAt, ville : mission.Ville, superhero:mission.Superhero })
   }
 
   public async edit({ view, params }: HttpContextContract) {
 
     const mission = await Mission.findOrFail(params.id)
-    return view.render('pages.missions.edit', { mission })
+    const incidents = await Incident.all()
+    const superheros = await Superhero.all()
+    const villes = await Ville.all()
+
+    return view.render('pages.missions.edit', { mission, incidents, villes, superheros })
   }
 
   public async update({ request, response, session, params }: HttpContextContract) {
     // filtrer les valuers envoyé depuis la requête
-    const { nom_mission, type_incident, description, latitude, longitude, date_incident, statut, est_confirmee, urgence, superheroId, villeId } = request.body()
+    const { nom_mission, type_incident, description, latitude, longitude, date_incident, statut, est_confirmee, urgence, superhero_id, ville_id } = request.body()
     const mission = await Mission.findOrFail(params.id)
 
     // Injeter les valeurs dans les champs
@@ -77,11 +93,10 @@ export default class MissionsController {
     mission.longitude = longitude
     mission.date_incident = date_incident
     mission.statut = statut
-    mission.est_confirmee = est_confirmee
-    mission.urgence = urgence
-    mission.nom_mission = nom_mission
-    mission.superheroId = superheroId
-    mission.villeId = villeId
+    mission.est_confirmee = est_confirmee ? true : false
+    mission.urgence = parseInt(urgence)
+    mission.superheroId = superhero_id
+    mission.villeId = ville_id
 
     mission.save()
 
@@ -110,7 +125,7 @@ export default class MissionsController {
       },
     })
 
-    return response.redirect().toRoute('missions.index')
+    return response.redirect().toRoute('mission.index')
   }
 
 

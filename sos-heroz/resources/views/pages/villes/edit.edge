@@ -1,0 +1,70 @@
+@layout('layouts/app')
+@section('content')
+
+<div class="w-1/2 mx-auto p-4 bg-white rounded-md">
+  <form action="{{ route('ville.update',{id: ville.id})}}" method="POST">
+    {{ csrfField() }}
+
+    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+      <div>
+        <label for="nom_ville" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de
+          ville</label>
+        <input type="text" name="nom_ville" id="nom_ville" value="{{ ville.nom_ville }}"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="ex : Rouen" required="">
+      </div>
+      <div>
+        <label for="code_postal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code
+          postal</label>
+        <input type="text" name="code_postal" id="code_postal" value="{{ ville.code_postal }}"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="ex: 76000" required="">
+      </div>
+      <div>
+        <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">latitude</label>
+        <input type="latitude" name="latitude" id="latitude" value="{{ ville.latitude }}"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="latitude" required="">
+      </div>
+      <div>
+        <label for="longitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">longitude</label>
+        <input type="longitude" name="longitude" id="longitude" value="{{ ville.longitude }}"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="longitude" required="">
+      </div>
+    </div>
+    <div class="grid gap-4 mb-4 sm:w-full">
+      <div class="w-full">
+        <div id="map" class="w-full  h-80"></div>
+      </div>
+
+
+
+    </div>
+    <button type="submit"
+      class="text-white inline-flex items-center my-3 bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      <i class="fa fa-add mx-2"></i>
+      Mettre à jour
+    </button>
+  </form>
+</div>
+<script>
+  const lattitudeInput = {{ ville.latitude}}
+            const longitudeInput = {{ ville.longitude}}
+
+            var map = new mapboxgl.Map({
+                accessToken: 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w',
+                container: 'map2',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [longitudeInput, lattitudeInput],
+                zoom: 12
+            });
+
+            var marker = new mapboxgl.Marker()
+                .setLngLat([longitudeInput, lattitudeInput])
+                .addTo(map);
+
+
+</script>
+
+@endsection

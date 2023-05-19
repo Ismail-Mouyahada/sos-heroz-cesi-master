@@ -34,7 +34,8 @@
       "@japa/preset-adonis/build/adonis-typings",
       "@adonisjs/lucid",
       "@adonisjs/auth",
-      "@adonisjs/attachment-lite"
+      "@adonisjs/attachment-lite",
+      "adonis5-swagger"
     ]
   }
 }

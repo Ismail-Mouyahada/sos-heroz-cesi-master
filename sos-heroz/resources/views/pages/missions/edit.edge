@@ -1,0 +1,171 @@
+@layout('layouts/app')
+@section('content')
+<div class="w-1/2 mx-auto p-4 bg-white rounded-md">
+  <form action="{{ route('mission.update',{id:mission.id})}}" method="POST">
+    {{ csrfField() }}
+
+    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+      <div>
+        <label for="nom_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de
+          mission</label>
+        <input value="{{ mission.nom_mission }}" type="text" name="nom_mission" id="nom_mission"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="Nom de mission" required="">
+      </div>
+      <div>
+        <label for="date_incident" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date
+          d'incident</label>
+        <input value="{{ mission.date_incident }}" type="date" name="date_incident" id="date_incident"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Date d'incdent ">
+      </div>
+
+      <div>
+        <label for="statut" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Statut</label>
+        <input value="{{ mission.statut }}" type="text" name="statut" id="statut"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="en cours" required="">
+      </div>
+      <div>
+        <label for="urgence" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgence</label>
+        <select id="urgence" name="urgence"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+          <option {{ mission.urgence=='' ? 'selected' :'' }}>Niveau d'urgence</option>
+          <option value="1" {{ mission.urgence=='1' ? 'selected' :'' }}>urgent</option>
+          <option value="2" {{ mission.urgence=='2' ? 'selected' :'' }}>très urgent</option>
+          <option value="3" {{ mission.urgence=='3' ? 'selected' :'' }}>pas urgent</option>
+          <option value="4" {{ mission.urgence=='4' ? 'selected' :'' }}>danger imminent</option>
+        </select>
+      </div>
+      <div>
+        <label for="ville_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>
+        <select id="ville_id" name="ville_id"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+          <option>Nom de ville</option>
+          @each(item in villes)
+          <option {{ mission.urgence==item.id ? 'selected' :'' }} value="{{ item.id}}">{{ item.nom_ville}}</option>
+          @endeach
+        </select>
+      </div>
+      <div>
+        <label for="superhero_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Superhero</label>
+        <select id="superhero_id" name="superhero_id"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+          <option>Nom de super-hero</option>
+          @each(item in superheros)
+          <option {{ mission.urgence==item.id ? 'selected' :'' }} value="{{ item.id}}">{{ item.nom_heroique}}</option>
+          @endeach
+        </select>
+      </div>
+      <div>
+        <label for="type_incident"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">type_incident</label>
+        <select id="type_incident" name="type_incident"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+          <option>selectionnez un statut</option>
+          @each(item in incidents)
+
+          <option {{ mission.urgence==item.id ? 'selected' :'' }} value="{{ item.type_incident}}">{{
+            item.type_incident}}</option>
+          @endeach
+
+        </select>
+      </div>
+
+
+      <div>
+
+        <input {{ mission.est_confirmee? "checked" : "" }} type="checkbox" name="est_confirmee" id="est_confirmee"
+          class="bg-emerald-50 border border-gray-300 text-gray-900 text-sm   rounded-lg focus:ring-emerald-600 focus:border-primary-600 block w-full p-2.5 dark:bg-emerald-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="latitude" required="">
+        <label for="est_confirmee" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Mission Confirmee ?</label>
+      </div>
+
+      <div>
+        <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">latitude</label>
+        <input value="{{ mission.latitude }}" type="latitude" name="latitude" id="latitude"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="latitude" required="">
+      </div>
+      <div>
+        <label for="longitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">longitude</label>
+        <input value="{{ mission.longitude }}" type="longitude" name="longitude" id="longitude"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="longitude" required="">
+      </div>
+    </div>
+
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+      <div id="map" class="w-full  h-80"></div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+
+      <div class="sm:col-span-2">
+        <label for="description"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+        <textarea id="description" rows="4" name="description"
+          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="détails de l'mission ... ">{{ mission.description }}</textarea>
+      </div>
+    </div>
+
+    <div class="grid gap-4 my-4 sm:grid-cols-2">
+      <button type="submit"
+        class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        <i class="fa fa-add mx-2"></i>
+        Ajouter une mission
+      </button>
+    </div>
+  </form>
+
+</div>
+<script>
+  let latit = document.getElementById('latitude')
+  let long = document.getElementById('longitude')
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w';
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+
+      latit.value = latitude
+      long.value  = longitude
+
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [longitude, latitude],
+        zoom: 5
+      });
+
+      new mapboxgl.Marker()
+      .setLngLat([longitude, latitude])
+      .addTo(map);
+
+map.on('click', function(e) {
+  let lngLat = e.lngLat;
+  new mapboxgl.Marker()
+  .setLngLat([lngLat.lng, lngLat.lat])
+  .addTo(map);
+
+
+
+  latit.value = lngLat.lat
+  long.value = lngLat.lng
+  // Add a marker at the clicked location
+  var marker = new mapboxgl.Marker()
+  .setLngLat([lngLat.lng, lngLat.lat])
+  .addTo(map);
+  });
+
+    });
+
+
+
+
+</script>
+
+@endsection

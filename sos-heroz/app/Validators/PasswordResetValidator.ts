@@ -15,9 +15,9 @@ export default class PasswordResetValidator {
   })
 
   public messages = {
-    'required': 'The  field is required.',
-    'exists': 'No account exists for this email address.',
-    'password.minLength': 'Password must be a minimum of 6 chracters.',
-    'password_confirmation.confirmed': 'Password confirmation does not match.',
+    'required': 'le  field est obligatoire.',
+    'unique': 'le  est déjà réservé par une autre utilisateur.',
+    'password.minLength': 'le mot de passe devrait contenir en moins 6 caractèrs.',
+    'password_confirmation.confirmed': 'la confirmation de mot de passe n\'est pas indentique.',
   }
 }

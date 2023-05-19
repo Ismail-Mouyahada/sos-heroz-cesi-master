@@ -3,7 +3,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  content: ['./resources/views/**/*.edge'],
+  content: ["./resources/**/*.{edge,js,ts,jsx,tsx,vue}"],
   theme: {
     extend: {
       fontFamily: {
@@ -11,5 +11,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('flowbite/plugin')],
 }

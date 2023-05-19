@@ -9,8 +9,8 @@ export default class Superhero extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @attachment()
-  public profil: AttachmentContract
+  @column()
+  public profil: string
 
   @column()
   public nom: string
@@ -19,7 +19,7 @@ export default class Superhero extends BaseModel {
   public prenom: string
 
   @column()
-  public telephone: string
+  public tel: string
 
   @column()
   public nom_heroique: string

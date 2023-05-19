@@ -13,7 +13,7 @@ export default class EmailValidator {
   })
 
   public messages = {
-    required: 'The  field is required.',
-    exists: 'No account exists for this email address.',
+    required: 'le  champ est obligatoire.',
+    exists: 'Aucun compte avec cet adresse e-mail.',
   }
 }

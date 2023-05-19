@@ -1,4 +1,5 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+import { DateTime } from 'luxon'
 
 export default class CreateMissionsTable extends BaseSchema {
   protected tableName = 'missions'
@@ -11,7 +12,7 @@ export default class CreateMissionsTable extends BaseSchema {
       table.text('description')
       table.string('latitude', 25)
       table.string('longitude', 25)
-      table.dateTime('date_incident')
+      table.date('date_incident')
       table.string('statut', 25)
       table.boolean('est_confirmee')
       table.integer('urgence')

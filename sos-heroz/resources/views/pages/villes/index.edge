@@ -1,22 +1,190 @@
-<!DOCTYPE html>
-<html lang="fr">
+@layout('layouts/app')
+@section('content')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  @entryPointStyles('app')
-  @entryPointScripts('app')
-</head>
+<section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+  <div class=" W-100 px-4 lg:px-12">
+    <!-- Start coding here -->
+    <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+        <div class="w-full md:w-full">
+          <form class="flex items-center">
+            <label for="simple-search" class="sr-only">Chercher</label>
+            <div class="relative w-full">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <i class="fa fa-search"></i>
+              </div>
+              <input type="search" id="search" name="search"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Chercher" required="">
+            </div>
+          </form>
+        </div>
 
-<body class="m-2">
-  @each(item in villes)
+        <!-- Modal toggle -->
+        <div class="flex justify-center m-5">
+          <button id="defaultModalButton" data-modal-toggle="defaultModal"
+            class="block text-white bg-emerald-400 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            type="button">
+            Créer
+          </button>
+        </div>
 
-  {{ item.nom_ville }}
-  <br />
+      </div>
 
-  @end
-</body>
 
-</html>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-4 py-3">ID</th>
+              <th scope="col" class="px-4 py-3">Ville</th>
+              <th scope="col" class="px-4 py-3">Code postal</th>
+              <th scope="col" class="px-4 py-3">latitude</th>
+              <th scope="col" class="px-4 py-3">longitude</th>
+
+              <th scope="col" class="px-4 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @each(item in villes)
+            <tr class="border-b dark:border-gray-700">
+              <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{ item.id
+                }} </th>
+              <td class="px-4 py-3">{{ item.nom_ville }} </td>
+              <td class="px-4 py-3">{{ item.code_postal }} </td>
+              <td class="px-4 py-3">{{ item.latitude }} </td>
+              <td class="px-4 py-3">{{ item.longitude }} </td>
+
+              <td class="px-4 py-3 flex items-center justify-end">
+                <ul class=" flex ">
+                  <li><a class="shadow text-emerald-500 bg-emerald-50 p-2 mx-2 rounded-md"
+                      href="{{ route('ville.show', {id: item.id})}}"><i class="fa fa-eye "></i></a></li>
+                  <li><a class="shadow text-amber-400 bg-orange-50 p-2 mx-2 rounded-md"
+                      href="{{ route('ville.edit', {id: item.id})}}"><i class="fa fa-pen "></i></a></li>
+                  <li>
+
+                    <a class="shadow text-red-400 bg-red-50 p-2 mx-2 rounded-md"
+                      onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i
+                        class="fa fa-trash "></i></a>
+
+                    <form action="{{ route('ville.delete', {id: item.id})}}" method="POST" id="dleteFrom-{{item.id}}">
+                      {{ csrfField() }}
+                      <button type="submit" class=" "> </button>
+                    </form></i></a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            @end
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <!-- Main modal -->
+  <div id="defaultModal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+        <!-- Modal header -->
+        <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-center text-gray-900 dark:text-white">
+            Nouveau ville
+          </h3>
+          <button type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="defaultModal">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form action="{{ route('ville.store')}}" method="POST">
+          {{ csrfField() }}
+
+          <div class="grid gap-4 mb-4 sm:grid-cols-2">
+            <div>
+              <label for="nom_ville" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de
+                ville</label>
+              <input type="text" name="nom_ville" id="nom_ville"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="ex : Rouen" required="">
+            </div>
+            <div>
+              <label for="code_postal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code
+                postal</label>
+              <input type="text" name="code_postal" id="code_postal"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="ex: 76000" required="">
+            </div>
+            <div>
+              <label for="latitude"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">latitude</label>
+              <input type="latitude" name="latitude" id="latitude"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="latitude" required="">
+            </div>
+            <div>
+              <label for="longitude"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">longitude</label>
+              <input type="longitude" name="longitude" id="longitude"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="longitude" required="">
+            </div>
+          </div>
+          <div class="grid gap-4 mb-4 sm:w-full">
+            <div class="w-full">
+              <div id="map" class="w-full  h-80"></div>
+            </div>
+
+
+
+          </div>
+          <button type="submit"
+            class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            <i class="fa fa-add mx-2"></i>
+            Ajouter une ville
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w';
+  var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [2.35, 48.86],
+  zoom: 1
+  });
+
+  map.on('click', function(e) {
+  var lngLat = e.lngLat;
+  document.getElementById('latitude').value = lngLat.lat;
+  document.getElementById('longitude').value = lngLat.lng;
+
+  // Add a marker at the clicked location
+  var marker = new mapboxgl.Marker()
+  .setLngLat([lngLat.lng, lngLat.lat])
+  .addTo(map);
+  });
+
+</script>
+
+
+@endsection

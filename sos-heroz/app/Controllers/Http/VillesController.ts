@@ -5,13 +5,13 @@ import Ville from 'App/Models/Ville'
 
 export default class VillesController {
   public async index({ view }: HttpContextContract) {
-    await Ville.create({
-      nom_ville: faker.address.cityName(),
-      code_postal: faker.address.zipCode(),
-      latitude: faker.address.latitude(),
-      longitude: faker.address.longitude()
+    // await Ville.create({
+    //   nom_ville: faker.address.cityName(),
+    //   code_postal: faker.address.zipCode(),
+    //   latitude: faker.address.latitude(),
+    //   longitude: faker.address.longitude()
 
-    })
+    // })
 
     const villes = await Ville.all();
 
@@ -26,9 +26,10 @@ export default class VillesController {
 
   public async store({ request, view, session }: HttpContextContract) {
 
-    const { latitude, longitude, nom_ville } = request.body()
+    const { latitude, longitude, nom_ville, code_postal } = request.body()
     const ville = new Ville()
     ville.nom_ville = nom_ville
+    ville.code_postal = code_postal
     ville.longitude = longitude
     ville.latitude = latitude
 
@@ -55,10 +56,11 @@ export default class VillesController {
   }
 
   public async update({ view, params, request, session }: HttpContextContract) {
-    const { latitude, longitude, nom_ville } = request.body()
+    const { latitude, longitude, nom_ville, code_postal } = request.body()
     const ville = await Ville.findOrFail(params.id)
 
     ville.nom_ville = nom_ville
+    ville.code_postal = code_postal
     ville.longitude = longitude
     ville.latitude = latitude
 
@@ -88,6 +90,6 @@ export default class VillesController {
       },
     })
 
-    return response.redirect().toRoute('villes.index')
+    return response.redirect().toRoute('ville.index')
   }
 }

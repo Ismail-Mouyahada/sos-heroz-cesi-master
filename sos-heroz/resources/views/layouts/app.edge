@@ -5,16 +5,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>{{ env('APP_NAME') }}</title>
+  <title>SOS - Heroz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+  <link href='/animations.css' rel='stylesheet' />
   @entryPointStyles('app')
   @entryPointScripts('app')
 </head>
 
-<body class="bg-gray-100 text-gray-400 font-sans">
+<body class="bg-gray-100 max-h-full text-gray-400 font-sans">
 
   @include('layouts/partials/header')
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
+  <div class="w-full min-h-full mx-auto px-4 sm:px-6 lg:px-8 my-6">
     @!section('content')
   </div>
 

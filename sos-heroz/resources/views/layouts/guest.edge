@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SOS - Heroz</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/animations.css" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+
+<body class="bg-gray-100 h-screen text-gray-400 font-sans">
+
+  @include('layouts/partials/header')
+  <div class="w-full min-h-full  ">
+    @!section('content')
+  </div>
+
+  @include('layouts/partials/footer')
+</body>
+
+</html>
