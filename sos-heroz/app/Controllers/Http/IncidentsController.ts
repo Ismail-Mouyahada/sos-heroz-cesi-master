@@ -1,14 +1,9 @@
-import { faker } from '@faker-js/faker'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Incident from 'App/Models/Incident'
+import IncidentValidator from 'App/Validators/IncidentValidator'
 
 export default class IncidentsController {
   public async index({ view }: HttpContextContract) {
-
-    // await Incident.create({
-    //   type_incident : faker.lorem.slug(),
-    //   description : faker.lorem.lines()
-    // })
 
     // Récupérer tous les types des incidents
     const incidents = await Incident.all()
@@ -25,24 +20,16 @@ export default class IncidentsController {
 
   public async store({ request, response, session }: HttpContextContract) {
 
+
+    const payload = await request.validate(IncidentValidator)
+
     // filtrer les valuers envoyé depuis la requête
-    const { type_incident, description } = request.body()
-
-    // Nouvelle instanciation d'un inccident
-    const incident = new Incident()
-
-    // Injeter les valeurs dans les champs
-    incident.type_incident = type_incident
-    incident.description = description
-
-    // Sauvgarder le nouveau element
-    await incident.save()
-
+    await Incident.create(payload)
     // Affichier le message de confirmation
     session.flash({
       notification: {
         type: 'success',
-        message: `l'incident "${incident.type_incident}" a été créé avec succès 🥳 `,
+        message: `l'incident "${payload.type_incident}" a été créé avec succès 🥳 `,
       },
     })
 
@@ -72,12 +59,14 @@ export default class IncidentsController {
   }
 
   public async update({ response, request, params, session }: HttpContextContract) {
-    const { type_incident, description } = request.body()
+
+    const payload = await request.validate(IncidentValidator)
+
     const incident = await Incident.findOrFail(params.id)
 
     // retrouvez l'element rechercher
-    incident.type_incident = type_incident
-    incident.description = description
+    incident.type_incident = payload.type_incident
+    incident.description = payload.description
 
     incident.save()
 
@@ -99,7 +88,7 @@ export default class IncidentsController {
 
     session.flash({
       notification: {
-        type: 'danger',
+        type: 'success',
         message: ` l'incident a été supprimé avec succès 🥳 `,
       },
     })

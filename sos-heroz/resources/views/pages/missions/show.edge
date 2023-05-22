@@ -1,7 +1,8 @@
 @layout('layouts/app')
 @section('content')
 
-<div class="flex flex-col justify-center items-center h-[100vh] py-4">
+<div class="flex flex-col justify-center items-center   py-4">
+
   <div
     class=" relative flex flex-col items-center rounded-[20px] w-1/2 max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
     <div class="mt-2 mb-8 w-full">
@@ -12,7 +13,14 @@
         {{ mission.description}}
       </p>
     </div>
-    <div class="grid grid-cols-2 gap-4 px-2 w-full">
+
+    <div class="grid grid-cols-1 my-2 gap-4 px-2 w-full">
+      <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
+    </div>
+
+
+
+    <div class="grid grid-cols-2 gap-4 px-2 w-full bg-gray-50 p-4 rounded-md ">
       <div
         class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
         <p class="text-sm text-gray-600">titre de mission</p>
@@ -53,45 +61,127 @@
       </div>
 
       <div
-        class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Superhero assigné</p>
-        <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ mission.superheroId.nom_heroique }}
-        </p>
-      </div>
-
-      <div
         class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
         <p class="text-sm text-gray-600">Date de déclaration</p>
         <p class="text-base font-medium text-navy-700 dark:text-white">
           {{ createdAt }}
         </p>
       </div>
-    </div>
-    <div class="grid grid-cols-1 my-2 gap-4 px-2 w-full">
-      <div id="map" class="w-full  h-80"></div>
+
     </div>
 
+    <h6 class="px-2 text-xl  w-full text-emerald-400   text-center py-3 my-2 rounded-md dark:text-white">
+      Super Hero associé
+    </h6>
 
-    <a href="{{ route('mission.index') }}"
-      class="w-1/2 text-center bg-emerald-400 p-3 my-4 rounded-md  text-white justify-end"><i
-        class="fa fa-arrow-left text-white  "></i> Précédent</a>
+    <div class="grid grid-cols-2 gap-4 px-2 w-full py-4 my-2   bg-gray-100 rounded-md">
+
+
+      <div
+        class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border w-fit   shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+        <img src="{{ superhero.profil }}"
+          class="text-base h-50 rounded-md shadow font-medium text-navy-700 dark:text-white" />
+
+      </div>
+      <div class="space-y-2">
+        <div
+          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600"> Super-Hero</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            {{ superhero.nom_heroique }}
+          </p>
+        </div>
+
+        <div
+          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600">Identité</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            {{ superhero.nom +' '+superhero.prenom}}
+          </p>
+        </div>
+        <div
+          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600">Description des pouviors</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            {{ superhero.description_pouvoir}}
+          </p>
+        </div>
+        <div
+          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600">Contact</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            <a href="tel:{{superhero.tel}}" class="fa fa-phone bg-gray-600 rounded-full text-white p-2 mx-2"></a> +33
+            {{ superhero.tel}}
+          </p>
+        </div>
+        <div
+          class="shadow flex flex-col items-start justify-center text-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+          <p>
+            <i class="fa fa-check bg-emerald-400 rounded-full text-white text-center  p-2 mx-2"></i> disponible
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
 </div>
 
+
+<a href="{{ route('mission.index') }}"
+  class="w-1/2 text-center bg-emerald-400 p-3 my-4 rounded-md  text-white justify-end"><i
+    class="fa fa-arrow-left text-white  "></i> Précédent</a>
+</div>
+
+</div>
+
 <script>
-  var map = new mapboxgl.Map({
-  accessToken: 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w',
-  container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11',
-  center: [{{mission.longitude}}, {{ mission.latitude}}],
-  zoom: 5
+  navigator.geolocation.getCurrentPosition((position) => {
+    const { latitude, longitude } = position.coords;
+
+    const map = L.map('map').setView([{{ mission.latitude }}, {{ mission.longitude }}], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    maxZoom: 50,
+
+  }).addTo(map);
+
+
+
+  const markerIcon = L.icon({
+    iconUrl: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngmart.com%2Ffiles%2F7%2FDanger-Sign-PNG-Pic.png&f=1&nofb=1&ipt=adec70fb4f0e729477715bea68bd7d8dc6d0879d289305f0cffc8cb6c3f2c5d5&ipo=images', // Remplacez par le chemin de votre icône de marqueur
+    iconSize: [100, 100],
+    iconAnchor: [12, 41],
+    popupAnchor: [0, -41],
+
   });
 
-  var marker = new mapboxgl.Marker()
-  .setLngLat([{{mission.longitude}}, {{ mission.latitude}}])
-  .addTo(map);
+  const profil = L.icon({
+    iconUrl: '{{superhero.profil}}', // Remplacez par le chemin de votre icône de marqueur
+    iconSize: [100, 100],
+    iconAnchor: [12, 41],
+    popupAnchor: [0, -41],
+
+  });
+
+  const popupContent = `
+            <div>
+              <h3 class="bg-gray-50 text-emerald-500 rouded-md p-2 text-emerald-400"> la mission "{{ mission.nom_mission}}}"</h3>
+              <p class="bg-gray-50 p-2 text-emerald-500 rounded-md">✅ Inscrit 🦸</p>
+            </div>
+          `;
+
+  marker = L.marker([{{ mission.latitude }}, {{ mission.longitude }}], { icon: markerIcon }).addTo(map);
+  marker = L.marker([{{ superhero.latitude }}, {{ superhero.longitude }}], { icon: profil }).addTo(map);
+
+
+
+});
 
 </script>
 

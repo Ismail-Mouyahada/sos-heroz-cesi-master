@@ -1,24 +1,26 @@
 [type='checkbox']:checked {
-  height: 3em !important;
+  height: 2em !important;
+  min-width: 2em;
 
   background-color: rgb(14, 231, 159) !important;
 }
 
 [type='checkbox']:checked::before {
-  content: 'Oui → ';
+
   color: white;
   font-size: 16px;
   text-align: center;
 }
 
 [type='checkbox']::before {
-  content: 'Non';
+
   color: rgb(91, 93, 117);
   font-size: 16px;
   text-align: center;
 }
 
 [type='checkbox'] {
-  height: 3em !important;
+  height: 2em !important;
+  min-width: 2em;
 
 }

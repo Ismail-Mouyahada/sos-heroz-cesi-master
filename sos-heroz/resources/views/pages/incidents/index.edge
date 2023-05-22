@@ -53,22 +53,24 @@
               <td class="px-4 py-3">{{ item.description }} </td>
 
               <td class="px-4 py-3 flex items-center justify-end">
-               <ul class=" flex ">
-                <li><a class="shadow text-emerald-500 bg-emerald-50 p-2 mx-2 rounded-md"
-                    href="{{ route('incident.show', {id: item.id})}}"><i class="fa fa-eye "></i></a></li>
-                <li><a class="shadow text-amber-400 bg-orange-50 p-2 mx-2 rounded-md"
-                    href="{{ route('incident.edit', {id: item.id})}}"><i class="fa fa-pen "></i></a></li>
-                <li>
+                <ul class=" flex ">
+                  <li><a class="shadow text-emerald-500 bg-emerald-50 p-2 mx-2 rounded-md"
+                      href="{{ route('incident.show', {id: item.id})}}"><i class="fa fa-eye "></i></a></li>
+                  <li><a class="shadow text-amber-400 bg-orange-50 p-2 mx-2 rounded-md"
+                      href="{{ route('incident.edit', {id: item.id})}}"><i class="fa fa-pen "></i></a></li>
+                  <li>
 
-                  <a class="shadow text-red-400 bg-red-50 p-2 mx-2 rounded-md"
-                    onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i class="fa fa-trash "></i></a>
+                    <a class="shadow text-red-400 bg-red-50 p-2 mx-2 rounded-md"
+                      onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i
+                        class="fa fa-trash "></i></a>
 
-                  <form action="{{ route('incident.delete', {id: item.id})}}" method="POST" id="dleteFrom-{{item.id}}">
-                    {{ csrfField() }}
-                    <button type="submit" class=" "> </button>
-                  </form></i></a>
-                </li>
-              </ul>
+                    <form action="{{ route('incident.delete', {id: item.id})}}" method="POST"
+                      id="dleteFrom-{{item.id}}">
+                      {{ csrfField() }}
+                      <button type="submit" class=" "> </button>
+                    </form></i></a>
+                  </li>
+                </ul>
               </td>
             </tr>
             @end
@@ -117,6 +119,11 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="exemple :incendie dans un super-marché . . ." required="">
             </div>
+            @if (flashMessages.has('errors.nom'))
+            <p class="text-xs text-red-500 mt-1">
+              {{ flashMessages.get('errors.nom') }}
+            </p>
+            @endif
 
             <div class="sm:col-span-2">
               <label for="description"
@@ -125,7 +132,11 @@
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="détails de l'utilisateur ... "></textarea>
             </div>
-
+            @if (flashMessages.has('errors.description'))
+            <p class="text-xs text-red-500 mt-1">
+              {{ flashMessages.get('errors.description') }}
+            </p>
+            @endif
 
 
           </div>

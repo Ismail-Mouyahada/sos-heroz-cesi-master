@@ -61,6 +61,16 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
           placeholder="-0.000" required="">
       </div>
+
+    </div>
+
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+      <div id="map" class="w-full  h-80"></div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+
       <div>
         <label for="max_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max
           Mission</label>
@@ -70,11 +80,14 @@
       </div>
 
       <div>
-        <label for="disponible" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disponible</label>
-        <input type="checkbox" name="disponible" id="disponible" max="3" min="1"
-          {{ superhero.disponible? 'checked':'' }}
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="0.00" required="">
+        <label for="disponible"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disponibilité</label>
+        <select id="disponible" name="disponible"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+          <option>selectionnez un role</option>
+          <option {{superhero.disponible? 'selected' :''}} value="0">Non</option>
+          <option {{superhero.disponible? 'selected' :''}} value="1">oui</option>
+        </select>
       </div>
 
       <div class="sm:col-span-2">
@@ -92,10 +105,48 @@
 
     </div>
     <button type="submit"
-      class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-      <i class="fa fa-add"></i>
-      Ajouter un super-hero
+      class="text-white inline-flex items-center my-2 bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      <i class="fa fa-add mx-2"></i>
+      Mettre à jour
     </button>
   </form>
 </div>
+
+<script>
+  let latit = document.getElementById('latitude');
+  let long = document.getElementById('longitude');
+  let marker = null;
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const { latitude, longitude } = position.coords;
+
+    latit.value = latitude;
+    long.value = longitude;
+
+    const map = L.map('map').setView([{{ superhero.latitude }}, {{ superhero.longitude }}], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    maxZoom: 19,
+  }).addTo(map);
+
+  marker = L.marker([{{ superhero.latitude }}, {{ superhero.longitude }}]).addTo(map);
+
+  map.on('click', function (e) {
+    let latLng = e.latlng;
+
+    latit.value = latLng.lat;
+    long.value = latLng.lng;
+
+    if (marker) {
+      map.removeLayer(marker);
+    }
+
+    marker = L.marker(latLng).addTo(map);
+  });
+    });
+
+
+
+</script>
 @endsection

@@ -35,7 +35,7 @@
     </div>
     <div class="grid gap-4 mb-4 sm:w-full">
       <div class="w-full">
-        <div id="map" class="w-full  h-80"></div>
+        <div id="map" style="height:400px; width:100%;"></div>
       </div>
 
 
@@ -48,22 +48,62 @@
     </button>
   </form>
 </div>
+
+
 <script>
-  const lattitudeInput = {{ ville.latitude}}
-            const longitudeInput = {{ ville.longitude}}
 
-            var map = new mapboxgl.Map({
-                accessToken: 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w',
-                container: 'map2',
-                style: 'mapbox://styles/mapbox/streets-v11',
-                center: [longitudeInput, lattitudeInput],
-                zoom: 12
-            });
+  let latit = document.getElementById('latitude');
+  let long = document.getElementById('longitude');
+  let ville = document.getElementById('nom_ville');
+  let code_postal = document.getElementById('code_postal');
+  let marker = null;
 
-            var marker = new mapboxgl.Marker()
-                .setLngLat([longitudeInput, lattitudeInput])
-                .addTo(map);
+  navigator.geolocation.getCurrentPosition((position) => {
+    const { latitude, longitude } = position.coords;
 
+    latit.value = latitude;
+    long.value = longitude;
+
+    const map = L.map('map').setView([{{ ville.latitude }}, {{ ville.longitude }}], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    maxZoom: 200,
+  }).addTo(map);
+
+  marker = L.marker([{{ ville.latitude }}, {{ ville.longitude }}]).addTo(map);
+
+  map.on('click', function (e) {
+    let latLng = e.latlng;
+
+    latit.value = latLng.lat;
+    long.value = latLng.lng;
+
+    if (marker) {
+      map.removeLayer(marker);
+    }
+
+    marker = L.marker(latLng).addTo(map);
+
+    // Reverse geocoding to retrieve city name and postal code
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.address) {
+          ville.value = data.address.city || '';
+          code_postal.value = data.address.postcode || '';
+        } else {
+          ville.value = '';
+          code_postal.value = '';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        ville.value = '';
+        code_postal.value = '';
+      });
+  });
+      });
 
 </script>
 

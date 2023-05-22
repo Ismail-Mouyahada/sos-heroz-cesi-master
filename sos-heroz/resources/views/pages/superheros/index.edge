@@ -22,12 +22,21 @@
 
         <!-- Modal toggle -->
         <div class="flex justify-center m-5">
-          <button id="defaultModalButton" data-modal-toggle="defaultModal"
-            class="block text-white bg-emerald-400 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            type="button">
+          <a href="{{route('superhero.create')}}"
+            class="block text-white bg-emerald-400 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
             Créer
-          </button>
+          </a>
         </div>
+
+      </div>
+
+
+      <div class=" w-full shadow p-2 m-2">
+        <label for="default-range" class="block mb-2 text-sm font-medium text-emerald-900 dark:text-white">Selectionner
+          le
+          rayon de recherche</label>
+        <input type="range" min="100" max="100000" step="1" value="1000" id="radiusInput" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer
+          dark:bg-gray-700">
 
       </div>
 
@@ -63,7 +72,7 @@
               <td class="px-4 py-3">{{ item.tel }} </td>
               <td class="px-4 py-3 "><span
                   class="w-full {{ item.disponible?'bg-emerald-400 p-2 rounded-md  text-white ':'bg-red-400 p-2 rounded-md text-white ' }}">{{
-                  item.disponible?'Oui':'Non' }}</span> </td>
+                  item.disponible == true ?'Oui':'Non' }}</span> </td>
               <td class="px-4 py-3">{{ item.max_mission }} </td>
 
               <td class="px-4 py-3 flex items-center justify-end">
@@ -76,9 +85,10 @@
                   <li>
 
                     <a class="shadow text-red-400 bg-red-50 p-2 mx-2 rounded-md"
-                      onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i class="fa fa-trash "></i></a>
+                      onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i
+                        class="fa fa-trash "></i></a>
 
-                      <form action="{{ route('superhero.delete', {id: item.id})}}" method="POST"
+                    <form action="{{ route('superhero.delete', {id: item.id})}}" method="POST"
                       id="dleteFrom-{{item.id}}">
                       {{ csrfField() }}
                       <button type="submit" class=" "> </button>
@@ -183,6 +193,16 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="-0.000" required="">
             </div>
+
+          </div>
+
+
+          <div class=" w-full">
+            <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 px-2 w-full">
+
             <div>
               <label for="max_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max
                 Mission</label>
@@ -196,8 +216,8 @@
               <select id="disponible" name="disponible"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                 <option selected="">selectionnez un role</option>
-                <option value=1>Oui</option>
-                <option value=0>Non</option>
+                <option value="1">Oui</option>
+                <option value="0">Non</option>
               </select>
             </div>
             <div class="sm:col-span-2">
@@ -207,7 +227,6 @@
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="détails des super pouvoirs ... "></textarea>
             </div>
-
 
 
 
@@ -223,5 +242,71 @@
     </div>
   </div>
 </section>
+<div id="notification" class="notification">
+  <span id="notificationTitle" class="notification__title"></span>
+  <span id="notificationMessage" class="notification__message"></span>
+</div>
+
+<style>
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: #e2e8f0;
+    color: #4a5568;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  .notification__title {
+    font-weight: bold;
+  }
+
+  .notification__message {
+    display: block;
+    margin-top: 5px;
+  }
+</style>
+<script>
+  let latit = document.getElementById('latitude');
+  let long = document.getElementById('longitude');
+  let marker = null;
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const { latitude, longitude } = position.coords;
+
+    latit.value = latitude;
+    long.value = longitude;
+
+    const map = L.map('map').setView([latitude, longitude], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(map);
+
+    marker = L.marker([latitude, longitude]).addTo(map);
+
+    map.on('click', function (e) {
+      let latLng = e.latlng;
+
+      latit.value = latLng.lat;
+      long.value = latLng.lng;
+
+      if (marker) {
+        map.removeLayer(marker);
+      }
+
+      marker = L.marker(latLng).addTo(map);
+    });
+  });
+
+
+
+</script>
+
+
 
 @endsection

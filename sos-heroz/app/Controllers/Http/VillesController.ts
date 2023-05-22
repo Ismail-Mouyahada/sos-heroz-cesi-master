@@ -1,17 +1,12 @@
-import { faker } from '@faker-js/faker'
+
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Ville from 'App/Models/Ville'
+import VilleValidator from 'App/Validators/VilleValidator';
 
 
 export default class VillesController {
   public async index({ view }: HttpContextContract) {
-    // await Ville.create({
-    //   nom_ville: faker.address.cityName(),
-    //   code_postal: faker.address.zipCode(),
-    //   latitude: faker.address.latitude(),
-    //   longitude: faker.address.longitude()
 
-    // })
 
     const villes = await Ville.all();
 
@@ -25,6 +20,9 @@ export default class VillesController {
   }
 
   public async store({ request, view, session }: HttpContextContract) {
+
+    // Validation de la formulaire
+  await request.validate(VilleValidator)
 
     const { latitude, longitude, nom_ville, code_postal } = request.body()
     const ville = new Ville()
@@ -56,6 +54,10 @@ export default class VillesController {
   }
 
   public async update({ view, params, request, session }: HttpContextContract) {
+
+    // Validation de la formulaire
+    await request.validate(VilleValidator)
+
     const { latitude, longitude, nom_ville, code_postal } = request.body()
     const ville = await Ville.findOrFail(params.id)
 

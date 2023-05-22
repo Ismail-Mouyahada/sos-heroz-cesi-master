@@ -7,34 +7,32 @@ export default class AuthController {
   }
 
   public async store({ request, session, response, auth }: HttpContextContract) {
-    if (auth.user?.id == null) {
-      const { email, password, remember } = await request.validate(LoginValidator)
 
-      try {
-        await auth.attempt(email, password, remember)
+    const { email, password, remember } = await request.validate(LoginValidator)
 
-        session.flash({
-          notification: {
-            type: 'success',
-            message: "Bienvenue, vous êtes de retour 🦸.",
-          },
-        })
+    try {
+      await auth.attempt(email, password, remember)
 
-        return response.intended()
-      } catch (error) {
-        session.flash({
-          notification: {
-            type: 'error',
-            message: "Nous n'avons pas pu verifié ces identifiants. 🤔",
-          },
-        })
+      session.flash({
+        notification: {
+          type: 'success',
+          message: "Bienvenue, vous êtes de retour 🦸.",
+        },
+      })
 
-      }
-
-      return response.redirect().back()
-    } else {
       return response.redirect().toRoute('dashboard')
+    } catch (error) {
+      session.flash({
+        notification: {
+          type: 'error',
+          message: "Nous n'avons pas pu verifié ces identifiants. 🤔",
+        },
+      })
+
     }
+
+    return response.redirect().back()
+
   }
 
   public async destroy({ auth, session, response }: HttpContextContract) {

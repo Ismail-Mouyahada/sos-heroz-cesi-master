@@ -42,6 +42,7 @@
               <th scope="col" class="px-4 py-3">Nom</th>
               <th scope="col" class="px-4 py-3">Téléphone</th>
               <th scope="col" class="px-4 py-3">E-mail</th>
+              <th scope="col" class="px-4 py-3">Confirmée</th>
               <th scope="col" class="px-4 py-3">
                 <span class="sr-only">Actions</span>
               </th>
@@ -56,25 +57,46 @@
               <td class="px-4 py-3">{{ item.nom }} </td>
               <td class="px-4 py-3">{{ item.telephone }} </td>
               <td class="px-4 py-3">{{ item.email }} </td>
+              <td class="px-4 py-3">
+                @if(item.role === 'superadmin')
+                <span class=" bg-orange-50 p-2 text-orange-400 font-semibold rounded-md"><i class="fa fa-star  mx-2"
+                    aria-hidden="true"></i> Super Admin </span>
+                @elseif(item.role === 'visiteur')
+                <span class=" bg-slate-50 p-2 text-slate-400 font-semibold rounded-md">🥸 {{ item.role }} </span>
+                @elseif(item.role==='citoyen' )
+                <span class=" bg-blue-50 p-2 text-blue-400 font-semibold rounded-md">🕺🏼{{ item.role }} </span>
+                @elseif(item.role==='commune' )
+                <span class=" bg-indigo-50 p-2 text-indigo-400 font-semibold rounded-md">🏯Mairie</span>
+                @elseif(item.role === 'hero')
+                <span class=" bg-emerald-50 p-2 text-emerald-400 font-semibold rounded-md">🦸 Super Hero </span>
+                @else
+                <span class=" bg-indigo-100 p-2 text-indigo-400 font-semibold rounded-md">🤔 Noueau </span>
+                @endif
+
+
+
+              </td>
 
               <td class="px-4 py-3 flex items-center justify-end">
 
-               <ul class=" flex ">
-                <li><a class="shadow text-emerald-500 bg-emerald-50 p-2 mx-2 rounded-md"
-                    href="{{ route('utilisateur.show', {id: item.id})}}"><i class="fa fa-eye "></i></a></li>
-                <li><a class="shadow text-amber-400 bg-orange-50 p-2 mx-2 rounded-md"
-                    href="{{ route('utilisateur.edit', {id: item.id})}}"><i class="fa fa-pen "></i></a></li>
-                <li>
+                <ul class=" flex ">
+                  <li><a class="shadow text-emerald-500 bg-emerald-50 p-2 mx-2 rounded-md"
+                      href="{{ route('utilisateur.show', {id: item.id})}}"><i class="fa fa-eye "></i></a></li>
+                  <li><a class="shadow text-amber-400 bg-orange-50 p-2 mx-2 rounded-md"
+                      href="{{ route('utilisateur.edit', {id: item.id})}}"><i class="fa fa-pen "></i></a></li>
+                  <li>
 
-                  <a class="shadow text-red-400 bg-red-50 p-2 mx-2 rounded-md"
-                    onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i class="fa fa-trash "></i></a>
+                    <a class="shadow text-red-400 bg-red-50 p-2 mx-2 rounded-md"
+                      onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i
+                        class="fa fa-trash "></i></a>
 
-                  <form action="{{ route('utilisateur.delete', {id: item.id})}}" method="POST" id="dleteFrom-{{item.id}}">
-                    {{ csrfField() }}
-                    <button type="submit" class=" "> </button>
-                  </form></i></a>
-                </li>
-              </ul>
+                    <form action="{{ route('utilisateur.delete', {id: item.id})}}" method="POST"
+                      id="dleteFrom-{{item.id}}">
+                      {{ csrfField() }}
+                      <button type="submit" class=" "> </button>
+                    </form></i></a>
+                  </li>
+                </ul>
               </td>
             </tr>
             @end
@@ -133,25 +155,45 @@
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Téléphone</label>
               <input type="tel" name="telephone" id="telephone"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Prenom" required="">
+                placeholder="07 00 00 00" required="">
             </div>
+
+            @if (flashMessages.has('errors.telephone'))
+            <p class="text-xs text-red-500 mt-1">
+              {{ flashMessages.get('errors.telephone') }}
+            </p>
+            @endif
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail</label>
               <input type="email" name="email" id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="exemple@sosheros.fr" required="">
             </div>
+
+            @if (flashMessages.has('errors.email'))
+            <p class="text-xs text-red-500 mt-1">
+              {{ flashMessages.get('errors.email') }}
+            </p>
+            @endif
             <div>
               <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rôle</label>
               <select id="role" name="role"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                 <option selected="">selectionnez un role</option>
                 <option value="citoyen">citoyen</option>
+                <option value="visiteur">visiteur</option>
                 <option value="commune">Commune</option>
                 <option value="hero">Super Hero</option>
                 <option value="superadmin">super-admin</option>
               </select>
             </div>
+
+            @if (flashMessages.has('errors.role'))
+            <p class="text-xs text-red-500 mt-1">
+              {{ flashMessages.get('errors.role') }}
+            </p>
+            @endif
+
             <div>
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de
                 passe</label>
@@ -175,11 +217,10 @@
             </p>
             @endif
 
-
           </div>
           <button type="submit"
             class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-            <i class="fa fa-add"></i>
+            <i class="fa fa-add mx-2"></i>
             Ajouter cet utilisateur
           </button>
         </form>

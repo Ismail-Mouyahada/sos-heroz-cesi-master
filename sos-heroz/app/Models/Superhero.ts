@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Mission from './Mission'
 import User from './User'
-import { AttachmentContract, attachment } from '@ioc:Adonis/Addons/AttachmentLite'
+ 
 
 
 export default class Superhero extends BaseModel {

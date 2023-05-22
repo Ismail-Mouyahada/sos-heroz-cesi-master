@@ -1,5 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import RegisterValidator from 'App/Validators/RegisterValidator'
+import UtilisateurValidator from 'App/Validators/UtilisateurValidator'
 
 export default class UtilisateursController {
 
@@ -16,8 +18,14 @@ export default class UtilisateursController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const data = request.only(['nom', 'prenom', 'role', 'telephone', 'email', 'password'])
-    const utilisateur = await User.create(data)
+
+    // Validation de la formulaire
+    await request.validate(UtilisateurValidator)
+
+
+    const payload = await request.validate(RegisterValidator)
+
+    const utilisateur = await User.create(payload)
 
     return response.redirect().toRoute('utilisateur.show', { id: utilisateur.id })
   }
@@ -35,10 +43,28 @@ export default class UtilisateursController {
   }
 
   public async update({ params, request, response }: HttpContextContract) {
+    // Validation de la formulaire
+    const { nom, prenom, role, email, telephone } = request.body()
+    console.log(nom)
     const utilisateur = await User.findOrFail(params.id)
-    const data = request.only(['nom', 'prenom', 'role', 'telephone', 'email', 'password'])
-    utilisateur.merge(data)
-    await utilisateur.save()
+    try {
+
+      console.log('here')
+
+      utilisateur.nom = nom
+      utilisateur.prenom = prenom
+      utilisateur.role = role
+      utilisateur.email = email
+      utilisateur.telephone = telephone
+
+
+
+      await utilisateur.save()
+
+    } catch (error) {
+      console.log(error)
+    }
+
 
     return response.redirect().toRoute('utilisateur.show', { id: utilisateur.id })
   }

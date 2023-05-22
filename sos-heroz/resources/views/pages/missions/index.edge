@@ -7,7 +7,9 @@
     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
       <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
         <div class="w-full md:w-full">
-          <form class="flex items-center">
+          <form class="flex items-center" action="{{ route('mission.index')}}">
+
+            {{ csrfField() }}
             <label for="simple-search" class="sr-only">Chercher</label>
             <div class="relative w-full">
               <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -51,7 +53,7 @@
           </thead>
           <tbody>
             @each(item in missions)
-            <tr class="border-b dark:border-gray-700">
+            <tr class="border-b dark:border-gray-700" id="searchResults">
               <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{ item.id
                 }} </th>
               <td class="px-4 py-3">{{ item.nom_mission }} </td>
@@ -98,8 +100,8 @@
 
   <!-- Main modal -->
   <div id="defaultModal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto my-5 overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+    class=" fixed top-9 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-6xl h-full md:h-auto mt-11">
       <!-- Modal content -->
       <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
         <!-- Modal header -->
@@ -120,10 +122,10 @@
           </button>
         </div>
         <!-- Modal body -->
-        <form action="{{ route('mission.store')}}" method="POST">
+        <form action="{{ route('mission.store')}}" method="POST" >
           {{ csrfField() }}
 
-          <div class="grid gap-4 mb-4 sm:grid-cols-2">
+          <div class="grid gap-2 mb-4 sm:grid-cols-3">
             <div>
               <label for="nom_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de
                 mission</label>
@@ -218,11 +220,11 @@
           </div>
 
 
-          <div class="grid grid-cols-1 gap-4 px-2 w-full">
-            <div id="map" class="w-full  h-80"></div>
+          <div class="grid grid-flow-col   px-2 w-full">
+            <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
           </div>
 
-          <div class="grid grid-cols-1 gap-4 px-2 w-full">
+          <div class="w-full gap-1 px-2  ">
 
             <div class="sm:col-span-2">
               <label for="description"
@@ -247,46 +249,46 @@
 </section>
 
 
+
+
+
 <script>
-  let latit = document.getElementById('latitude')
-  let long = document.getElementById('longitude')
-
-    mapboxgl.accessToken = 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w';
-
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-
-      latit.value = latitude
-      long.value  = longitude
-
-      const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [longitude, latitude],
-        zoom: 5
-      });
-
-      new mapboxgl.Marker()
-      .setLngLat([longitude, latitude])
-      .addTo(map);
-
-map.on('click', function(e) {
-  let lngLat = e.lngLat;
-  new mapboxgl.Marker()
-  .setLngLat([lngLat.lng, lngLat.lat])
-  .addTo(map);
+  let latit = document.getElementById('latitude');
+  let long = document.getElementById('longitude');
 
 
 
-  latit.value = lngLat.lat
-  long.value = lngLat.lng
-  // Add a marker at the clicked location
-  var marker = new mapboxgl.Marker()
-  .setLngLat([lngLat.lng, lngLat.lat])
-  .addTo(map);
-  });
+  navigator.geolocation.getCurrentPosition((position) => {
+    const { latitude, longitude } = position.coords;
+
+    latit.value = latitude;
+    long.value = longitude;
+
+    const map = L.map('map').setView([latitude, longitude], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 10,
+    }).addTo(map);
+
+    marker = L.marker([latitude, longitude]).addTo(map);
+
+    map.on('click', function (e) {
+      let latLng = e.latlng;
+
+      latit.value = latLng.lat;
+      long.value = latLng.lng;
+
+      if (marker) {
+        map.removeLayer(marker);
+      }
+
+      marker = L.marker(latLng).addTo(map);
+
 
     });
+  });
+
 
 
 

@@ -11,15 +11,24 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
+
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script>
-  <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+
   <link href='/animations.css' rel='stylesheet' />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   @entryPointStyles('app')
   @entryPointScripts('app')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/perliedman-leaflet-control-geocoder/1.13.0/Control.Geocoder.min.css" />
+
+
+
 </head>
 
-<body class="bg-gray-100 max-h-full text-gray-400 font-sans">
+<body class="bg-gray-100 max-h-full text-gray-400 font-sans bg-gradient-to-r from-emerald-400 to-slate-600">
 
   @include('layouts/partials/header')
   <div class="w-full min-h-full mx-auto px-4 sm:px-6 lg:px-8 my-6">
@@ -27,6 +36,8 @@
   </div>
 
   @include('layouts/partials/footer')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 </body>
 
 </html>

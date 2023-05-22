@@ -145,18 +145,17 @@
                 placeholder="longitude" required="">
             </div>
           </div>
-          <div class="grid gap-4 mb-4 sm:w-full">
-            <div class="w-full">
-              <div id="map" class="w-full  h-80"></div>
-            </div>
 
-
-
+          <div class="w-full">
+            <div id="map" style="height:400px; width:100%;"></div>
           </div>
+
+
+
           <button type="submit"
-            class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            class="text-white inline-flex items-center my-3 bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
             <i class="fa fa-add mx-2"></i>
-            Ajouter une ville
+            Soumettre
           </button>
         </form>
       </div>
@@ -165,23 +164,58 @@
 </section>
 
 <script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w';
-  var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11',
-  center: [2.35, 48.86],
-  zoom: 1
-  });
 
-  map.on('click', function(e) {
-  var lngLat = e.lngLat;
-  document.getElementById('latitude').value = lngLat.lat;
-  document.getElementById('longitude').value = lngLat.lng;
+  let latit = document.getElementById('latitude');
+  let long = document.getElementById('longitude');
+  let ville = document.getElementById('nom_ville');
+  let code_postal = document.getElementById('code_postal');
 
-  // Add a marker at the clicked location
-  var marker = new mapboxgl.Marker()
-  .setLngLat([lngLat.lng, lngLat.lat])
-  .addTo(map);
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    const { latitude, longitude } = position.coords;
+
+    latit.value = latitude;
+    long.value = longitude;
+
+    const map = L.map('map').setView([latitude, longitude], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 10,
+    }).addTo(map);
+
+    marker = L.marker([latitude, longitude]).addTo(map);
+
+    map.on('click', function (e) {
+      let latLng = e.latlng;
+
+      latit.value = latLng.lat;
+      long.value = latLng.lng;
+
+      if (marker) {
+        map.removeLayer(marker);
+      }
+
+      marker = L.marker(latLng).addTo(map);
+
+      // Reverse geocoding to retrieve city name and postal code
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.address) {
+            ville.value = data.address.city || '';
+            code_postal.value = data.address.postcode || '';
+          } else {
+            ville.value = '';
+            code_postal.value = '';
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          ville.value = '';
+          code_postal.value = '';
+        });
+    });
   });
 
 </script>

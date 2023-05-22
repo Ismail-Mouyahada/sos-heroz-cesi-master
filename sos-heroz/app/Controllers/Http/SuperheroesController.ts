@@ -2,7 +2,8 @@
 import Application from '@ioc:Adonis/Core/Application'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Superhero from 'App/Models/Superhero'
-import fs from 'fs'
+import SuperheroValidator from 'App/Validators/SuperheroValidator'
+
 
 export default class SuperheroesController {
 
@@ -15,6 +16,14 @@ export default class SuperheroesController {
     // renvoyer les données vers le vue 'index' de l'application
     return view.render('pages.superheros.index', { superheros })
   }
+  public async list({ view }: HttpContextContract) {
+    // Récupérer tous les types des superheroes
+    const superheros = await Superhero.all()
+
+
+    // renvoyer les données vers le vue 'list' de l'application
+    return view.render('pages.superheros.list', { superheros })
+  }
 
   public async create({ view }: HttpContextContract) {
     // renvoyer la page de création d'un nouveau superhero
@@ -22,16 +31,22 @@ export default class SuperheroesController {
   }
 
   public async store({ request, response, session }: HttpContextContract) {
+
+    // Validation de la formulaire
+    await request.validate(SuperheroValidator)
+
+    // Validation de la formulaire
+    await request.validate(SuperheroValidator)
     // filtrer les valuers envoyé depuis la requête
     const { nom, prenom, tel, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission, userId } = request.body()
 
-
+    console.log(tel)
     // Nouvelle instanciation d'une superhero
     const superhero = new Superhero()
 
     const profileImage = request.file('profil')
 
-    console.log(profileImage)
+
     if (profileImage) {
       // Save the file to a desired location
       await profileImage.move(Application.publicPath('uploads/profile-images'), {
@@ -47,21 +62,22 @@ export default class SuperheroesController {
 
       // Save the file path in the database
       superhero.profil = filePath
-      superhero.nom = nom
-      superhero.prenom = prenom
-      superhero.tel = tel
-      superhero.nom_heroique = nom_heroique
-      superhero.description_pouvoir = description_pouvoir
-      superhero.disponible = disponible
-      superhero.latitude = latitude
-      superhero.longitude = longitude
-      superhero.max_mission = max_mission
-      superhero.userId = userId
 
-      // Sauvgarder le nouveau element
-      await superhero.save()
     }
 
+    superhero.nom = nom
+    superhero.prenom = prenom
+    superhero.tel = tel
+    superhero.nom_heroique = nom_heroique
+    superhero.description_pouvoir = description_pouvoir
+    superhero.disponible = parseInt(disponible) === 1 ? true : false
+    superhero.latitude = latitude
+    superhero.longitude = longitude
+    superhero.max_mission = max_mission
+    superhero.userId = userId
+
+    // Sauvgarder le nouveau element
+    await superhero.save()
     // Affichier le message de confirmation
     session.flash({
       notification: {
@@ -78,13 +94,17 @@ export default class SuperheroesController {
   public async show({ view, params }: HttpContextContract) {
 
     const superhero = await Superhero.findOrFail(params.id)
-    return view.render('pages.superheros.show', { superhero })
+    const missions = await superhero.related('missions').query();
+    console.log(missions.length)
+    return view.render('pages.superheros.show', { superhero, missions })
   }
 
   public async edit({ view, params }: HttpContextContract) {
 
     const superhero = await Superhero.findOrFail(params.id)
-    return view.render('pages.superheros.edit', { superhero })
+    const missions = await superhero.related('missions').query();
+    console.log(missions.length)
+    return view.render('pages.superheros.edit', { superhero, missions })
   }
 
   public async update({ params, request, response, session }: HttpContextContract) {
@@ -93,31 +113,12 @@ export default class SuperheroesController {
     // Filtrer les valeurs envoyées depuis la requête
     const { nom, prenom, tel, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission, userId } = request.body()
 
-    // Mettre à jour les champs du super-héros
-    superhero.nom = nom
-    superhero.prenom = prenom
-    superhero.tel = tel
-    superhero.nom_heroique = nom_heroique
-    superhero.description_pouvoir = description_pouvoir
-    superhero.disponible = disponible
-    superhero.latitude = latitude
-    superhero.longitude = longitude
-    superhero.max_mission = max_mission
-    superhero.userId = userId
-
     const profileImage = request.file('profil')
 
     if (profileImage) {
-      // Vérifier si le répertoire "uploads" existe, sinon le créer
-      const uploadsDir = Application.publicPath('uploads')
-      if (!fs.existsSync(uploadsDir)) {
-        fs.mkdirSync(uploadsDir)
-      }
-
       // Save the file to a desired location
       await profileImage.move(Application.publicPath('uploads/profile-images'), {
         name: `${new Date().getTime()}.${profileImage.extname}`,
-        overwrite: true,
       })
 
       if (!profileImage.isValid) {
@@ -126,19 +127,26 @@ export default class SuperheroesController {
 
       // Get the file path
       const filePath = `/uploads/profile-images/${profileImage.fileName}`
-
+      console.log(parseInt(disponible) === 1 ? true : false)
       // Save the file path in the database
       superhero.profil = filePath
 
-      // Delete the old profile image if it exists
-      if (superhero.profil && fs.existsSync(Application.publicPath(superhero.profil))) {
-        fs.unlinkSync(Application.publicPath(superhero.profil))
-      }
+      // Sauvgarder le nouveau element
+
     }
+    superhero.nom = nom
+    superhero.prenom = prenom
+    superhero.tel = tel
+    superhero.nom_heroique = nom_heroique
+    superhero.description_pouvoir = description_pouvoir
+    superhero.disponible = parseInt(disponible) === 1 ? true : false
+    superhero.latitude = latitude
+    superhero.longitude = longitude
+    superhero.max_mission = max_mission
+    superhero.userId = userId
 
-    // Sauvegarder les modifications du super-héros
+
     await superhero.save()
-
     // Afficher le message de confirmation
     session.flash({
       notification: {
