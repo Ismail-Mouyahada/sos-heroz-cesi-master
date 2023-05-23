@@ -30,17 +30,16 @@ export default class SuperheroesController {
     return view.render('pages.superheros.create')
   }
 
-  public async store({ request, response, session }: HttpContextContract) {
+  public async store({ request, response, session, auth }: HttpContextContract) {
 
-    // Validation de la formulaire
-    await request.validate(SuperheroValidator)
+    // // Validation de la formulaire
+    // const payload = await request.validate(SuperheroValidator)
 
-    // Validation de la formulaire
-    await request.validate(SuperheroValidator)
     // filtrer les valuers envoyé depuis la requête
-    const { nom, prenom, tel, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission, userId } = request.body()
+    const { nom, prenom, tel, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission } = request.body()
 
-    console.log(tel)
+    const userId = auth.user?.id ? auth.user?.id : 1
+    console.log(userId)
     // Nouvelle instanciation d'une superhero
     const superhero = new Superhero()
 

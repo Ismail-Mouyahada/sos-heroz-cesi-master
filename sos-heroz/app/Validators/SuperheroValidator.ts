@@ -26,7 +26,9 @@ export default class SuperheroValidator {
     description_pouvoir: schema.string({}, [
       rules.required(),
     ]),
-    disponible: schema.boolean(),
+    disponible: schema.string({}, [
+      rules.required(),
+    ]),
     latitude: schema.string({}, [
       rules.required(),
     ]),
@@ -34,9 +36,7 @@ export default class SuperheroValidator {
       rules.required(),
     ]),
     max_mission: schema.number(),
-    userId: schema.number([
-      rules.exists({ table: 'users', column: 'id' }),
-    ]),
+
   });
 
   public static messages = {

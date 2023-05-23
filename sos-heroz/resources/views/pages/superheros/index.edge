@@ -29,7 +29,9 @@
         </div>
 
       </div>
-
+      <div class=" w-full">
+        <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
+      </div>
 
       <div class=" w-full shadow p-2 m-2">
         <label for="default-range" class="block mb-2 text-sm font-medium text-emerald-900 dark:text-white">Selectionner
@@ -108,139 +110,8 @@
 
 
 
-  <!-- Main modal -->
-  <div id="defaultModal" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
-    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-      <!-- Modal content -->
-      <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-        <!-- Modal header -->
-        <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-          <h3 class="text-lg font-semibold text-center text-gray-900 dark:text-white">
-            Nouveau de super-hero
-          </h3>
-          <button type="button"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-            data-modal-toggle="defaultModal">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"></path>
-            </svg>
-            <span class="sr-only">Close modal</span>
-          </button>
-        </div>
-        <!-- Modal body -->
-        <form action="{{ route('superhero.store')}}" method="POST" enctype="multipart/form-data">
-          {{ csrfField() }}
-
-          <div class="flex items-center justify-center w-full">
-            <label for="dropzone-file"
-              class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-              <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                </svg>
-                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to
-                    upload</span> or
-                  drag and drop</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-              </div>
-              <input id="dropzone-file" type="file" name="profil" class="hidden" />
-            </label>
-          </div>
-
-          <div class="grid gap-4 mb-4 sm:grid-cols-2">
-            <div>
-              <label for="nom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
-              <input type="text" name="nom" id="nom"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Nom de famille" required="">
-            </div>
-            <div>
-              <label for="prenom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
-              <input type="text" name="prenom" id="prenom"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Prenom" required="">
-            </div>
-            <div>
-              <label for="nom_heroique" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom
-                Heroîque</label>
-              <input type="text" name="nom_heroique" id="nom_heroique"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Prenom" required="">
-            </div>
-            <div>
-              <label for="tel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Téléphone</label>
-              <input type="tel" name="tel" id="tel"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="07 00 00 00" required="">
-            </div>
-            <div>
-              <label for="latitude"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">latitude</label>
-              <input type="latitude" name="latitude" id="latitude"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="-0.000" required="">
-            </div>
-            <div>
-              <label for="longitude"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">longitude</label>
-              <input type="longitude" name="longitude" id="longitude"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="-0.000" required="">
-            </div>
-
-          </div>
 
 
-          <div class=" w-full">
-            <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
-          </div>
-
-          <div class="grid grid-cols-1 gap-4 px-2 w-full">
-
-            <div>
-              <label for="max_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max
-                Mission</label>
-              <input type="number" name="max_mission" id="max_mission" max="3" min="1"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="0.00" required="">
-            </div>
-            <div>
-              <label for="disponible"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Disponibilité</label>
-              <select id="disponible" name="disponible"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                <option selected="">selectionnez un role</option>
-                <option value="1">Oui</option>
-                <option value="0">Non</option>
-              </select>
-            </div>
-            <div class="sm:col-span-2">
-              <label for="description_pouvoir"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description Pouvoir</label>
-              <textarea id="description_pouvoir" name="description_pouvoir" rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="détails des super pouvoirs ... "></textarea>
-            </div>
-
-
-
-
-          </div>
-          <button type="submit"
-            class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-            <i class="fa fa-add"></i>
-            Ajouter un super-hero
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
 </section>
 <div id="notification" class="notification">
   <span id="notificationTitle" class="notification__title"></span>
@@ -270,38 +141,153 @@
   }
 </style>
 <script>
-  let latit = document.getElementById('latitude');
-  let long = document.getElementById('longitude');
-  let marker = null;
 
-  navigator.geolocation.getCurrentPosition((position) => {
-    const { latitude, longitude } = position.coords;
 
-    latit.value = latitude;
-    long.value = longitude;
-
-    const map = L.map('map').setView([latitude, longitude], 13);
+  document.addEventListener('DOMContentLoaded', () => {
+    const map = L.map('map').setView([0, 0], 2); // Centre par défaut à [0, 0] avec un niveau de zoom de 2
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-      maxZoom: 19,
+      attribution: 'Données de la carte &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributeurs',
     }).addTo(map);
 
-    marker = L.marker([latitude, longitude]).addTo(map);
+    let circle; // Variable pour stocker le cercle
 
-    map.on('click', function (e) {
-      let latLng = e.latlng;
+    // Obtenir la position actuelle de l'utilisateur en utilisant l'API de géolocalisation HTML5
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          map.setView([latitude, longitude], 13); // Mettre à jour la vue de la carte avec la position actuelle de l'utilisateur
 
-      latit.value = latLng.lat;
-      long.value = latLng.lng;
+          L.marker([latitude, longitude]).addTo(map); // Ajouter un marqueur à la position actuelle de l'utilisateur
 
-      if (marker) {
-        map.removeLayer(marker);
+          // Ajouter des marqueurs pour les positions des super-héros
+          const superheroes = [
+            // Ajoutez les données des super-héros avec les coordonnées de latitude et de longitude
+            // Utilisez la boucle @each pour parcourir les superheros et générer les objets
+            @each(item in superheros)
+          {
+              name: 'Superhéros {{item.nom_heroique}}',
+              image: "{{item.profil}}",
+              latitude: {{ item.latitude }},
+        longitude: {{ item.longitude }},
+  },
+    @end
+        ];
+
+  const superheroMarkers = []; // Stocker les marqueurs de super-héros dans le rayon
+
+  superheroes.forEach((superhero) => {
+    const { latitude, longitude, name, image } = superhero;
+
+    // Créer une icône personnalisée pour le marqueur
+    const icon = L.icon({
+      iconUrl: image,
+      iconSize: [32, 32], // Ajustez la taille selon les besoins
+      popupAnchor: [0, -16], // Ajustez la position de l'ancre de la fenêtre contextuelle
+    });
+
+    const marker = L.marker([latitude, longitude], { icon }).addTo(map);
+
+    // Créer un contenu de fenêtre contextuelle avec le nom et l'image du super-héros
+    const popupContent = `
+            <div>
+              <h4>${name}</h4>
+              <img src="${image}" alt="${name}" style="width: 100px; border-radius: 50%;">
+            </div>
+          `;
+
+    marker.bindPopup(popupContent); // Ajouter le contenu de la fenêtre contextuelle au marqueur
+
+    superheroMarkers.push(marker);
+  });
+
+  // Ajouter un marqueur de cercle pour la position de l'utilisateur
+  const circleMarker = L.circleMarker([latitude, longitude], {
+    radius: 6,
+    color: '#3388ff',
+    fillColor: '#3388ff',
+    fillOpacity: 0.8,
+  }).addTo(map);
+
+  // Ajouter un cercle modifiable autour de la position de l'utilisateur
+  circle = L.circle([latitude, longitude], {
+    radius: 1000, // Rayon initial en mètres
+    color: '#3388ff',
+    fillColor: '#3388ff',
+    fillOpacity: 0.2,
+    editable: true, // Activer la modification du cercle
+  }).addTo(map);
+
+  // Mettre à jour le rayon du cercle lorsqu'il est modifié
+  circle.on('editable:dragend', (event) => {
+    const newRadius = event.target.getRadius();
+    console.log('Nouveau rayon :', newRadius); // Vous pouvez utiliser la nouvelle valeur du rayon selon vos besoins
+
+    // Filtrer les marqueurs de super-héros dans le rayon
+    const superheroesWithinRadius = superheroMarkers.filter((marker) => {
+      const markerLatLng = marker.getLatLng();
+      const distance = map.distance(markerLatLng, circle.getLatLng());
+      return distance <= newRadius;
+    });
+
+    console.log('Superhéros dans le rayon :', superheroesWithinRadius);
+  });
+
+  // Gérer l'événement de modification de l'entrée de plage
+  const radiusInput = document.getElementById('radiusInput');
+  radiusInput.addEventListener('input', (event) => {
+    const newRadius = parseInt(event.target.value);
+    circle.setRadius(newRadius);
+    console.log('Rayon mis à jour :', newRadius);
+
+    // Filtrer les marqueurs de super-héros dans le rayon
+    const superheroesWithinRadius = superheroMarkers.filter((marker) => {
+      const markerLatLng = marker.getLatLng();
+      const distance = map.distance(markerLatLng, circle.getLatLng());
+
+      // Obtenir la référence des éléments superheroesList et superheroesListItems
+      const superheroesListElement = document.getElementById('superheroesList');
+      const superheroesListItemsElement = document.getElementById('superheroesListItems');
+
+      // Effacer le contenu existant de l'élément superheroesListItems
+      superheroesListItemsElement.innerHTML = '';
+
+      if (superheroesWithinRadius.length > 0) {
+        // Générer le HTML pour la liste des super-héros dans le rayon
+        const superheroesHTML = superheroesWithinRadius
+          .map((superhero) => {
+            return `<li>${superhero.name}</li>`;
+          })
+          .join('');
+
+        // Définir le HTML généré comme contenu de l'élément superheroesListItems
+        superheroesListItemsElement.innerHTML = superheroesHTML;
+
+        // Afficher l'élément superheroesList
+        superheroesListElement.classList.remove('hidden');
+
+        // Gérer l'événement du bouton de fermeture
+        const closeButton = document.getElementById('closeButton');
+        closeButton.addEventListener('click', () => {
+          // Masquer l'élément superheroesList
+          superheroesListElement.classList.add('hidden');
+        });
       }
 
-      marker = L.marker(latLng).addTo(map);
+      return distance <= newRadius;
     });
   });
+      },
+  (error) => {
+    console.error('Erreur lors de l\'obtention de la position actuelle :', error);
+  }
+    );
+  } else {
+    console.error('La géolocalisation n\'est pas prise en charge par votre navigateur');
+  }
+});
+
 
 
 
