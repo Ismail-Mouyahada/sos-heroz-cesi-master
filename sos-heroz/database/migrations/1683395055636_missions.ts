@@ -1,5 +1,4 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
-import { DateTime } from 'luxon'
 
 export default class CreateMissionsTable extends BaseSchema {
   protected tableName = 'missions'
@@ -8,20 +7,16 @@ export default class CreateMissionsTable extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('nom_mission', 120)
-      table.string('type_incident', 100)
+      table.string('type_incident')
+      table.string('ville')
+      table.string('code_postal')
       table.text('description')
+
       table.string('latitude', 25)
       table.string('longitude', 25)
-      table.date('date_incident')
-      table.string('statut', 25)
-      table.boolean('est_confirmee')
-      table.integer('urgence')
-      table
-        .integer('ville_id')
-        .unsigned()
-        .references('villes.id')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE')
+      table.string('statut', 25).defaultTo('en_attente')
+      table.boolean('est_confirmee').defaultTo(false)
+      table.integer('urgence').defaultTo(1)
 
       table
         .integer('superhero_id')

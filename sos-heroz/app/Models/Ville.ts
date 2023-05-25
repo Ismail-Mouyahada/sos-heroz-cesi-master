@@ -17,6 +17,7 @@ export default class Ville extends BaseModel {
 
   @column()
   public longitude: string
+ 
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

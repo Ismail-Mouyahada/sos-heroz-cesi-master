@@ -1,8 +1,8 @@
 
 import Application from '@ioc:Adonis/Core/Application'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Incident from 'App/Models/Incident'
 import Superhero from 'App/Models/Superhero'
-import SuperheroValidator from 'App/Validators/SuperheroValidator'
 
 
 export default class SuperheroesController {
@@ -26,8 +26,10 @@ export default class SuperheroesController {
   }
 
   public async create({ view }: HttpContextContract) {
+
+    const incidents = await Incident.all()
     // renvoyer la page de création d'un nouveau superhero
-    return view.render('pages.superheros.create')
+    return view.render('pages.superheros.create', { incidents })
   }
 
   public async store({ request, response, session, auth }: HttpContextContract) {
@@ -35,8 +37,12 @@ export default class SuperheroesController {
     // // Validation de la formulaire
     // const payload = await request.validate(SuperheroValidator)
 
+
+
     // filtrer les valuers envoyé depuis la requête
-    const { nom, prenom, tel, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission } = request.body()
+    const { nom, prenom, tel, nom_heroique, incidents_list, description_pouvoir, disponible, latitude, longitude, max_mission, super_force, vol, super_vitesse, invulnerabilite, guerison_rapide, controle_des_elements, teleportation, invisibilite, controle_montal, precognition, super_intelligence } = request.body()
+
+
 
     const userId = auth.user?.id ? auth.user?.id : 1
     console.log(userId)
@@ -63,7 +69,7 @@ export default class SuperheroesController {
       superhero.profil = filePath
 
     }
-
+console.log(incidents_list)
     superhero.nom = nom
     superhero.prenom = prenom
     superhero.tel = tel
@@ -73,7 +79,19 @@ export default class SuperheroesController {
     superhero.latitude = latitude
     superhero.longitude = longitude
     superhero.max_mission = max_mission
+    superhero.incidents_list = incidents_list.join()
     superhero.userId = userId
+    superhero.super_force = super_force
+    superhero.vol = vol
+    superhero.super_vitesse = super_vitesse
+    superhero.invulnerabilite = invulnerabilite
+    superhero.guerison_rapide = guerison_rapide
+    superhero.controle_des_elements = controle_des_elements
+    superhero.teleportation = teleportation
+    superhero.invisibilite = invisibilite
+    superhero.controle_montal = controle_montal
+    superhero.precognition = precognition
+    superhero.super_intelligence = super_intelligence
 
     // Sauvgarder le nouveau element
     await superhero.save()
@@ -99,18 +117,19 @@ export default class SuperheroesController {
   }
 
   public async edit({ view, params }: HttpContextContract) {
+    const incidents = await Incident.all()
 
     const superhero = await Superhero.findOrFail(params.id)
     const missions = await superhero.related('missions').query();
-    console.log(missions.length)
-    return view.render('pages.superheros.edit', { superhero, missions })
+
+    return view.render('pages.superheros.edit', { superhero, missions, incidents })
   }
 
   public async update({ params, request, response, session }: HttpContextContract) {
     const superhero = await Superhero.findOrFail(params.id)
 
     // Filtrer les valeurs envoyées depuis la requête
-    const { nom, prenom, tel, nom_heroique, description_pouvoir, disponible, latitude, longitude, max_mission, userId } = request.body()
+    const { nom, prenom, tel, nom_heroique, description_pouvoir, disponible, latitude, incidents_list, longitude, max_mission, userId, super_force, vol, super_vitesse, invulnerabilite, guerison_rapide, controle_des_elements, teleportation, invisibilite, controle_montal, precognition, super_intelligence } = request.body()
 
     const profileImage = request.file('profil')
 
@@ -142,7 +161,19 @@ export default class SuperheroesController {
     superhero.latitude = latitude
     superhero.longitude = longitude
     superhero.max_mission = max_mission
+    superhero.incidents_list = incidents_list.join()
     superhero.userId = userId
+    superhero.super_force = super_force
+    superhero.vol = vol
+    superhero.super_vitesse = super_vitesse
+    superhero.invulnerabilite = invulnerabilite
+    superhero.guerison_rapide = guerison_rapide
+    superhero.controle_des_elements = controle_des_elements
+    superhero.teleportation = teleportation
+    superhero.invisibilite = invisibilite
+    superhero.controle_montal = controle_montal
+    superhero.precognition = precognition
+    superhero.super_intelligence = super_intelligence
 
 
     await superhero.save()

@@ -1,77 +1,52 @@
 @layout('layouts/app')
 @section('content')
-<div class="w-1/2 mx-auto p-4 bg-white rounded-md">
-  <form action="{{ route('mission.update',{id:mission.id})}}" method="POST">
+<div class="w-3/4 mx-auto opacity-95 p-4 bg-white rounded-md">
+  <h1 class="py-2 px-2 my-2 text-xl rounded-md bg-emerald-400 text-white text-center">Création d'une mission</h1>
+  <form action="{{ route('mission.update',{id:mission.id})}}" method="POST" class="p-4">
     {{ csrfField() }}
-
-    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+    <div class="grid gap-4 mb-4 sm:grid-cols-3">
       <div>
         <label for="nom_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de
           mission</label>
-        <input value="{{ mission.nom_mission }}" type="text" name="nom_mission" id="nom_mission"
+        <input type="text" name="nom_mission" id="nom_mission"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="Nom de mission" required="">
-      </div>
-      <div>
-        <label for="date_incident" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date
-          d'incident</label>
-        <input value="{{ mission.date_incident }}" type="date" name="date_incident" id="date_incident"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Date d'incdent ">
+          placeholder="Nom de mission" value="{{ mission.nom_mission}}" required="">
       </div>
 
 
-      <div>
-        <label for="statut" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">statut</label>
-        <select id="statut" name="statut"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-          <option>Niveau d'urgence</option>
-          <option {{ mission.statut=='en_cours' ? 'selected' :'' }} value="en_cours">en cours</option>
-          <option {{ mission.statut=='en_attente' ? 'selected' :'' }} value="en_attente">en attente</option>
-          <option {{ mission.statut=='terminée' ? 'selected' :'' }} value="terminée">terminée</option>
-          <option {{ mission.statut=='rapportée' ? 'selected' :'' }} value="rapportée">rapportée</option>
-        </select>
-      </div>
       <div>
         <label for="urgence" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgence</label>
-        <select id="urgence" name="urgence"
+        <select id="urgence" name="urgence" value="{{ mission.urgence}}"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-          <option {{ mission.urgence=='' ? 'selected' :'' }}>Niveau d'urgence</option>
-          <option value="1" {{ mission.urgence=='1' ? 'selected' :'' }}>urgent</option>
-          <option value="2" {{ mission.urgence=='2' ? 'selected' :'' }}>très urgent</option>
-          <option value="3" {{ mission.urgence=='3' ? 'selected' :'' }}>pas urgent</option>
-          <option value="4" {{ mission.urgence=='4' ? 'selected' :'' }}>danger imminent</option>
+          <option>Niveau d'urgence</option>
+          <option {{ mission.urgence==1 ?'selected':''}} value="1">urgent</option>
+          <option {{ mission.urgence==2 ?'selected':''}} value="2">très urgent</option>
+          <option {{ mission.urgence==3 ?'selected':''}} value="3">pas urgent</option>
+          <option {{ mission.urgence==4 ?'selected':''}} value="4">danger public</option>
+          <option {{ mission.urgence==5 ?'selected':''}} value="5">danger imminent</option>
         </select>
       </div>
+
       <div>
-        <label for="ville_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>
-        <select id="ville_id" name="ville_id"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-          <option>Nom de ville</option>
-          @each(item in villes)
-          <option {{ mission.urgence==item.id ? 'selected' :'' }} value="{{ item.id}}">{{ item.nom_ville}}</option>
-          @endeach
-        </select>
-      </div>
-      <div>
-        <label for="superhero_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Superhero</label>
+        <label for="superhero_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> (il faut voir le
+          peremetre autour de vous pour pouvoir selectionner un hero)</label>
         <select id="superhero_id" name="superhero_id"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
           <option>Nom de super-hero</option>
-          @each(item in superheros)
-          <option {{ mission.urgence==item.id ? 'selected' :'' }} value="{{ item.id}}">{{ item.nom_heroique}}</option>
+          @each(superhero in superheros)
+          <option {{ mission.superheroId==superhero.id ?'selected':''}} value="{{superhero.id}}">
+            {{superhero.nom_heroique}}</option>
           @endeach
         </select>
       </div>
       <div>
-        <label for="type_incident"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">type_incident</label>
+        <label for="type_incident" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">type
+          incident</label>
         <select id="type_incident" name="type_incident"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-          <option>selectionnez un statut</option>
+          <option>selectionnez le type d'incident</option>
           @each(item in incidents)
-
-          <option {{ mission.urgence==item.id ? 'selected' :'' }} value="{{ item.type_incident}}">{{
+          <option value="{{ item.type_incident}}">{{
             item.type_incident}}</option>
           @endeach
 
@@ -79,26 +54,36 @@
       </div>
 
 
-      <div>
 
-        <input {{ mission.est_confirmee? "checked" : "" }} type="checkbox" name="est_confirmee" id="est_confirmee"
-          class="bg-emerald-50 border border-gray-300 text-gray-900 text-sm   rounded-lg focus:ring-emerald-600 focus:border-primary-600 block w-full p-2.5 dark:bg-emerald-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="latitude" required="">
-        <label for="est_confirmee" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-          Mission Confirmee ?</label>
+      <div>
+        <label for="ville" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ville</label>
+        <input type="text" name="ville" id="ville" value="{{ mission.ville}}"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="ville ..." required="">
       </div>
+      <div>
+        <label for="code_postal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">code
+          postal</label>
+        <input type="text" name="code_postal" id="code_postal" value="{{ mission.code_postal}}"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="76000" required="">
+      </div>
+
 
       <div>
         <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">latitude</label>
-        <input value="{{ mission.latitude }}" type="latitude" name="latitude" id="latitude"
+        <input type="text" name="latitude" id="latitude" value="{{ mission.latitude}}"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="latitude" required="">
+          placeholder="latitude" required="" readonly>
       </div>
+
+
+
       <div>
         <label for="longitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">longitude</label>
-        <input value="{{ mission.longitude }}" type="longitude" name="longitude" id="longitude"
+        <input type="text" name="longitude" id="longitude" value="{{ mission.longitude}}"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="longitude" required="">
+          placeholder="longitude" required="" readonly>
       </div>
     </div>
 
@@ -107,33 +92,44 @@
       <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
     </div>
 
-    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full bg-gray-100 rounded-md p-3">
+      <input id="search-range" type="range" max="10000000" step="1" value="100"
+        class="w-full h-2 bg-gray-200 rounded-lg mt-3 appearance-none cursor-pointer dark:bg-gray-700">
+      <label for="default-range" class="block   text-sm font-medium text-emerlad-900 dark:text-white"> Slectionner le
+        rayon</label>
+
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 px-2 ty-3 w-full">
 
       <div class="sm:col-span-2">
         <label for="description"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
         <textarea id="description" rows="4" name="description"
           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="détails de l'mission ... ">{{ mission.description }}</textarea>
+          placeholder="détails de l'mission ... "> {{ mission.description}}</textarea>
       </div>
     </div>
 
-    <div class="grid gap-4 my-4 sm:grid-cols-2">
+    <div class="grid gap-4 my-4 sm:grid-cols-2 mx-auto ">
       <button type="submit"
-        class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        class="text-white  inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
         <i class="fa fa-add mx-2"></i>
-        Mettre à jour
+        Soumettre
       </button>
     </div>
   </form>
-
+</div>
 </div>
 <script>
   let latit = document.getElementById('latitude');
   let long = document.getElementById('longitude');
-  // let ville = document.getElementById('nom_ville');
-  // let code_postal = document.getElementById('code_postal');
-  // let marker = null;
+  let ville = document.getElementById('ville');
+  let codepostal = document.getElementById('code_postal');
+  let marker = null;
+  let circle = null;
+  let heroMarkers = [];
 
   navigator.geolocation.getCurrentPosition((position) => {
     const { latitude, longitude } = position.coords;
@@ -141,14 +137,138 @@
     latit.value = latitude;
     long.value = longitude;
 
-    const map = L.map('map').setView([{{ mission.latitude }}, {{ mission.longitude }}], 13);
+    const map = L.map('map').setView([{{ mission.latitude }}, {{ mission.longitude }}], 1);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-    maxZoom: 200,
+    minZoom: 2,
   }).addTo(map);
 
   marker = L.marker([{{ mission.latitude }}, {{ mission.longitude }}]).addTo(map);
+
+  const updateRadius = () => {
+    const radius = parseInt(document.getElementById('search-range').value) ?? 12000;
+
+    if (circle) {
+      map.removeLayer(circle);
+    }
+
+    circle = L.circle([{{ mission.latitude }}, {{ mission.longitude }}], {
+    radius: radius,
+      color: '#34d399',
+        fillColor: '#34d399',
+          fillOpacity: 0.3
+  }).addTo(map);
+
+  const markerIcon = L.icon({
+    iconUrl: 'marker-icon.png', // Replace with the path to your marker icon
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [0, -41],
+  });
+
+  // Remove previous hero markers
+  heroMarkers.forEach(heroMarker => map.removeLayer(heroMarker));
+  heroMarkers = [];
+
+  const superheroes = [
+    @each(hero in superheros)
+    {
+      id: {{ hero.id }},
+  description_pouvoir: `{{hero.description_pouvoir }}`,
+    nom: "{{hero.nom}}",
+      prenom: "{{ hero.prenom }}",
+        tel: "{{ hero.tel }}",
+          name: "{{ hero.nom_heroique }}",
+            lat: {{ hero.latitude }},
+  lng: {{ hero.longitude }},
+  profil: "/logo.svg",
+    disponible: {{ hero.disponible }}},
+  @endeach
+    ];
+
+  superheroes.forEach(hero => {
+    const profil = L.icon({
+      iconUrl: '/logo.svg', // Replace with the path to your marker icon
+      iconSize: [50, 50],
+      iconAnchor: [12, 41],
+      popupAnchor: [0, -82],
+    });
+
+    const popupContent = `
+           <div class="space-y-1">
+                <div
+                    class="shadow flex flex-col items-center justify-center rounded-2xl bg-white bg-clip-border p-2 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p class="">
+                        ${hero.name}
+                    </p>
+
+                    <p class="">
+                        ${hero.nom + ' ' + hero.prenom}
+                    </p>
+                </div>
+
+
+                <div
+                    class="shadow flex flex-col items-center justify-center rounded-2xl bg-white bg-clip-border p-2 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p class="">
+
+                    </p>
+                </div>
+                <div
+                    class="shadow flex flex-col items-center justify-center rounded-2xl bg-white bg-clip-border p-2 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p class="">
+                        <a href="tel:${hero.tel}"
+                            class="fa fa-phone bg-gray-600 rounded-full text-white p-2 mx-2"></a> +33 ${hero.tel}
+                    </p>
+                </div>
+                <div
+                    class="shadow flex flex-col items-center justify-center text-center rounded-2xl bg-white bg-c-lip-border p2 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p>
+                        <i class="fa fa-check        ${hero.disponible ? "bg-emerald-400" : "bg-red-400"} rounded-full text-white text-center  p-2 mx-2"></i>
+                        ${hero.disponible ? "disponible" : "Pas disponible"}
+                    </p>
+                </div>
+
+            </div>
+      `;
+
+    const heroMarker = L.marker([hero.lat, hero.lng], { icon: profil })
+      .addTo(map)
+      .bindPopup(popupContent);
+
+    heroMarkers.push(heroMarker);
+  });
+
+  const availableHeroes = superheroes.filter((hero, index, self) => {
+    const heroLatLng = L.latLng(hero.lat, hero.lng);
+    const distance = heroLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
+  return distance <= radius && index === self.findIndex(h => h.id === hero.id);
+  });
+
+  let superheroIds = document.getElementById('superhero_id');
+
+  // // Remove existing options
+  // while (superheroIds.firstChild) {
+  //   superheroIds.removeChild(superheroIds.firstChild);
+  // }
+
+  availableHeroes.forEach(hero => {
+    const option = document.createElement('option');
+    option.value = hero.id;
+    option.textContent = hero.name;
+    superheroIds.appendChild(option);
+  });
+
+  };
+
+  const searchRangeInput = document.getElementById('search-range');
+  searchRangeInput.addEventListener('change', updateRadius);
+  searchRangeInput.addEventListener('input', updateRadius);
 
   map.on('click', function (e) {
     let latLng = e.latlng;
@@ -162,31 +282,29 @@
 
     marker = L.marker(latLng).addTo(map);
 
-    // Reverse geocoding to retrieve city name and postal code
-    // fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`)
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     if (data.address) {
-    //       mission.value = data.address.city || '';
-    //       code_postal.value = data.address.postcode || '';
-    //     } else {
-    //       mission.value = '';
-    //       code_postal.value = '';
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.error('Error:', error);
-    //     mission.value = '';
-    //     code_postal.value = '';
-    //   });
-
-
-  });
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.address) {
+          ville.value = data.address.city || '';
+          code_postal.value = data.address.postcode || '';
+        } else {
+          ville.value = '';
+          code_postal.value = '';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        ville.value = '';
+        code_postal.value = '';
       });
+    updateRadius(); // Update the radius when the marker's position is changed
+  });
 
+  updateRadius();
+});
 
-
-
+  const formattedDate = "{{mission.incident_date}}".toISOString().split('T')[0];
+  document.getElementById('incident_date').value = formattedDate;
 </script>
-
 @endsection

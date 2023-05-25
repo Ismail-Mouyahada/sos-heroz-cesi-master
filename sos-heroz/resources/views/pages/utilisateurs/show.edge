@@ -15,15 +15,30 @@
     <div class="grid grid-cols-2 gap-4 px-2 w-full">
       <div
         class="flex flex-col shadow items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Role</p>
+        <p class="text-sm my-4 text-gray-600">Role</p>
         <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ utilisateur.role}}
+          @if(utilisateur.role === 'superadmin')
+          <span class=" w-full h-  bg-orange-50 p-2 text-orange-400 font-semibold rounded-md"><i class="fa fa-star  mx-2"
+              aria-hidden="true"></i> Super Admin </span>
+          @elseif(utilisateur.role === 'visiteur')
+          <span class=" w-full h-  bg-slate-50 p-2 text-slate-400 font-semibold rounded-md">🥸 {{ utilisateur.role }}
+          </span>
+          @elseif(utilisateur.role==='citoyen' )
+          <span class=" w-full h-  bg-blue-50 p-2 text-blue-400 font-semibold rounded-md">🕺🏼{{ utilisateur.role }}
+          </span>
+          @elseif(utilisateur.role==='commune' )
+          <span class=" w-full h-  bg-indigo-50 p-2 text-indigo-400 font-semibold rounded-md">🏯Mairie</span>
+          @elseif(utilisateur.role === 'hero')
+          <span class=" w-full h-  bg-emerald-50 p-2 text-emerald-400 font-semibold rounded-md">🦸 Super Hero </span>
+          @else
+          <span class=" w-full h-  bg-indigo-100 p-2 text-indigo-400 font-semibold rounded-md">🤔 Noueau </span>
+          @endif
         </p>
       </div>
 
       <div
         class="flex flex-col shadow justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Identité</p>
+        <p class="text-xl text-emerald-500 ">Identité</p>
         <p class="text-base font-medium text-navy-700 dark:text-white">
           {{ utilisateur.nom +' '+ utilisateur.prenom}}
         </p>
@@ -31,7 +46,7 @@
 
       <div
         class="flex flex-col shadow items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Contact</p>
+        <p class="text-xl text-emerald-500 ">Contact</p>
         <p class="text-base font-medium text-navy-700 dark:text-white">
           {{ utilisateur.email}}
         </p>
@@ -39,7 +54,7 @@
 
       <div
         class="flex flex-col shadow justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Appel</p>
+        <p class="text-xl text-emerald-500 ">Appel</p>
         <p class="text-base font-medium text-navy-700 dark:text-white">
           {{ utilisateur.telephone}}
         </p>
@@ -47,7 +62,7 @@
 
       <div
         class="flex flex-col shadow items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Organization</p>
+        <p class="text-xl text-emerald-500 ">Organization</p>
         <p class="text-base font-medium text-navy-700 dark:text-white">
           Simmmple Web LLC
         </p>
@@ -55,9 +70,9 @@
 
       <div
         class="flex flex-col shadow justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Date inscritpion</p>
+        <p class="text-xl text-emerald-500 ">Date inscritpion</p>
         <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ utilisateur.created_at}}
+          {{ date }}
         </p>
       </div>
 

@@ -22,16 +22,20 @@ export default class MissionValidator {
     longitude: schema.string({}, [
       rules.required(),
     ]),
-    date_incident: schema.date.optional(),
-    statut: schema.enum(['nouvelle', 'En_cours', 'Terminé', 'Annuléé', 'rapporté']),
+    ville: schema.string({}, [
+      rules.required(),
+    ]),
+    code_postal: schema.string({}, [
+      rules.required(),
+    ]),
+
+    statut: schema.enum(['nouvelle', 'en_cours', 'terminée', 'annulée', 'rapportée']),
     est_confirmee: schema.boolean(),
     urgence: schema.number(),
     superheroId: schema.number([
       rules.exists({ table: 'superheroes', column: 'id' }),
     ]),
-    villeId: schema.number([
-      rules.exists({ table: 'villes', column: 'id' }),
-    ]),
+
   });
 
   public static messages = {

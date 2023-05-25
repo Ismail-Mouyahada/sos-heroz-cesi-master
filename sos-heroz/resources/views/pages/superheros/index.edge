@@ -37,7 +37,7 @@
         <label for="default-range" class="block mb-2 text-sm font-medium text-emerald-900 dark:text-white">Selectionner
           le
           rayon de recherche</label>
-        <input type="range" min="100" max="100000" step="1" value="1000" id="radiusInput" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer
+        <input type="range" min="100" max="10000000" step="1" value="1000" id="radiusInput" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer
           dark:bg-gray-700">
 
       </div>
@@ -144,7 +144,7 @@
 
 
   document.addEventListener('DOMContentLoaded', () => {
-    const map = L.map('map').setView([0, 0], 2); // Centre par défaut à [0, 0] avec un niveau de zoom de 2
+    const map = L.map('map').setView([0, 0], 1); // Centre par défaut à [0, 0] avec un niveau de zoom de 2
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Données de la carte &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributeurs',
@@ -153,25 +153,25 @@
     let circle; // Variable pour stocker le cercle
 
     // Obtenir la position actuelle de l'utilisateur en utilisant l'API de géolocalisation HTML5
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          map.setView([latitude, longitude], 13); // Mettre à jour la vue de la carte avec la position actuelle de l'utilisateur
 
-          L.marker([latitude, longitude]).addTo(map); // Ajouter un marqueur à la position actuelle de l'utilisateur
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        map.setView([latitude, longitude], 1); // Mettre à jour la vue de la carte avec la position actuelle de l'utilisateur
 
-          // Ajouter des marqueurs pour les positions des super-héros
-          const superheroes = [
-            // Ajoutez les données des super-héros avec les coordonnées de latitude et de longitude
-            // Utilisez la boucle @each pour parcourir les superheros et générer les objets
-            @each(item in superheros)
+        L.marker([latitude, longitude]).addTo(map); // Ajouter un marqueur à la position actuelle de l'utilisateur
+
+        // Ajouter des marqueurs pour les positions des super-héros
+        const superheroes = [
+          // Ajoutez les données des super-héros avec les coordonnées de latitude et de longitude
+          // Utilisez la boucle @each pour parcourir les superheros et générer les objets
+          @each(item in superheros)
           {
-              name: 'Superhéros {{item.nom_heroique}}',
-              image: "{{item.profil}}",
-              latitude: {{ item.latitude }},
-        longitude: {{ item.longitude }},
-  },
+            name: 'Superhéros {{item.nom_heroique}}',
+            image: "{{item.profil}}",
+            latitude: {{ item.latitude }},
+      longitude: {{ item.longitude }},
+          },
     @end
         ];
 
@@ -185,6 +185,7 @@
       iconUrl: image,
       iconSize: [32, 32], // Ajustez la taille selon les besoins
       popupAnchor: [0, -16], // Ajustez la position de l'ancre de la fenêtre contextuelle
+      className: 'rounded-full border-emerald-500 border-solid border-4'
     });
 
     const marker = L.marker([latitude, longitude], { icon }).addTo(map);
@@ -216,76 +217,19 @@
     color: '#3388ff',
     fillColor: '#3388ff',
     fillOpacity: 0.2,
-    editable: true, // Activer la modification du cercle
+    editable: true, // Act
   }).addTo(map);
-
-  // Mettre à jour le rayon du cercle lorsqu'il est modifié
-  circle.on('editable:dragend', (event) => {
-    const newRadius = event.target.getRadius();
-    console.log('Nouveau rayon :', newRadius); // Vous pouvez utiliser la nouvelle valeur du rayon selon vos besoins
-
-    // Filtrer les marqueurs de super-héros dans le rayon
-    const superheroesWithinRadius = superheroMarkers.filter((marker) => {
-      const markerLatLng = marker.getLatLng();
-      const distance = map.distance(markerLatLng, circle.getLatLng());
-      return distance <= newRadius;
-    });
-
-    console.log('Superhéros dans le rayon :', superheroesWithinRadius);
-  });
-
   // Gérer l'événement de modification de l'entrée de plage
   const radiusInput = document.getElementById('radiusInput');
   radiusInput.addEventListener('input', (event) => {
     const newRadius = parseInt(event.target.value);
     circle.setRadius(newRadius);
     console.log('Rayon mis à jour :', newRadius);
-
-    // Filtrer les marqueurs de super-héros dans le rayon
-    const superheroesWithinRadius = superheroMarkers.filter((marker) => {
-      const markerLatLng = marker.getLatLng();
-      const distance = map.distance(markerLatLng, circle.getLatLng());
-
-      // Obtenir la référence des éléments superheroesList et superheroesListItems
-      const superheroesListElement = document.getElementById('superheroesList');
-      const superheroesListItemsElement = document.getElementById('superheroesListItems');
-
-      // Effacer le contenu existant de l'élément superheroesListItems
-      superheroesListItemsElement.innerHTML = '';
-
-      if (superheroesWithinRadius.length > 0) {
-        // Générer le HTML pour la liste des super-héros dans le rayon
-        const superheroesHTML = superheroesWithinRadius
-          .map((superhero) => {
-            return `<li>${superhero.name}</li>`;
-          })
-          .join('');
-
-        // Définir le HTML généré comme contenu de l'élément superheroesListItems
-        superheroesListItemsElement.innerHTML = superheroesHTML;
-
-        // Afficher l'élément superheroesList
-        superheroesListElement.classList.remove('hidden');
-
-        // Gérer l'événement du bouton de fermeture
-        const closeButton = document.getElementById('closeButton');
-        closeButton.addEventListener('click', () => {
-          // Masquer l'élément superheroesList
-          superheroesListElement.classList.add('hidden');
-        });
-      }
-
-      return distance <= newRadius;
-    });
   });
-      },
-  (error) => {
-    console.error('Erreur lors de l\'obtention de la position actuelle :', error);
-  }
+
+      }
     );
-  } else {
-    console.error('La géolocalisation n\'est pas prise en charge par votre navigateur');
-  }
+
 });
 
 

@@ -1,19 +1,24 @@
-@layout('layouts/guest')
+@layout('layouts/app')
 
 @section('content')
-<section class="bg-white dark:bg-gray-900">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-    <div class="mx-auto max-w-screen-sm text-center">
-      <h1 class="mb-4 text-7xl tracking-tight font-extrabold lg:text-3xl text-emerlad-600 dark:text-emerlad-500">Merci
+<section class="bg-white dark:bg-gray-900 m-8 p-4 rounded-md opacity-900">
+  <div class="my-8">
+    <div class="mx-auto max-w-screen-sm text-center space-x-4">
+      <i class="fa fa-check bg-emerald-400 p-4 rounded-full text-white font-bold transform  fa-x3"></i>
+      <h1
+        class="mb-4 text-2xl tracking-tight font-extrabold lg:text-3xl animate-ping text-emerlad-600 dark:text-emerlad-500">
+        Merci
       </h1>
-      <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">votre demande
+      <p class="mb-4 text-lg tracking-tight font-bold text-gray-500 md:text-4xl dark:text-white">votre demande
         d'intervention a été envoyé avec succès.
       </p>
-      <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">merci pour votre engagement civil.
+      <p class="mb-4 text-md font-light text-gray-500 dark:text-gray-400">merci pour votre engagement civil.
       </p>
+      <a class="bg-emerald-400  my-4 rounded-md text-white p-3" href="{{ route('home')}}"> Revenir à la page
+        d'accuil</a>
     </div>
 
-    <a class="bg-emerald-400 p-2 rounded-md my-2" href="{{ route('home')}}"> Revenir à la page d'accuil</a>
+
   </div>
 </section>
 @endsection

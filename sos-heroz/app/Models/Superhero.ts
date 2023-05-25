@@ -2,7 +2,8 @@ import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Mission from './Mission'
 import User from './User'
- 
+
+
 
 
 export default class Superhero extends BaseModel {
@@ -38,6 +39,42 @@ export default class Superhero extends BaseModel {
 
   @column()
   public max_mission: number
+
+  @column()
+  public incidents_list: string
+
+  @column()
+  public super_force: boolean
+
+  @column()
+  public vol: boolean
+
+  @column()
+  public super_vitesse: boolean
+
+  @column()
+  public invulnerabilite: boolean
+
+  @column()
+  public guerison_rapide: boolean
+
+  @column()
+  public controle_des_elements: boolean
+
+  @column()
+  public teleportation: boolean
+
+  @column()
+  public invisibilite: boolean
+
+  @column()
+  public controle_montal: boolean
+
+  @column()
+  public precognition: boolean
+
+  @column()
+  public super_intelligence: boolean
 
   @column()
   public userId: number

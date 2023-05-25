@@ -32,9 +32,40 @@ export default class MissionsController {
   }
 
   public async create({ view }: HttpContextContract) {
-
+    const incidents = await Incident.all()
+    const heros = await Superhero.all()
     // renvoyer la page de création d'un nouveau mission
-    return view.render('pages.missions.create')
+    return view.render('pages.missions.create', { superher: heros, incidents })
+  }
+  public async list({ request, view }: HttpContextContract) {
+
+    const search = request.all().search
+    const incidents = await Incident.all()
+    const superheros = await Superhero.all()
+    const villes = await Ville.all()
+
+    // Récupérer tous les types des missions
+
+    if (search != null) {
+      const missions = await Mission.query()
+        .whereILike('nom_mission', `%${search}%`)
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.missions.list', { missions, incidents, villes, superheros })
+
+    } else {
+      const missions = await Mission.all()
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.missions.list', { missions, incidents, villes, superheros })
+    }
+
+
+  }
+
+  public async declare({ view }: HttpContextContract) {
+    const incidents = await Incident.all()
+    const heros = await Superhero.all()
+    // renvoyer la page de création d'un nouveau mission
+    return view.render('pages.missions.create', { superher: heros, incidents })
   }
 
   public async store({ request, response, session }: HttpContextContract) {
@@ -42,7 +73,7 @@ export default class MissionsController {
     await request.validate(MissionValidator)
 
     // filtrer les valuers envoyé depuis la requête
-    const { nom_mission, type_incident, description, latitude, longitude, date_incident, est_confirmee, urgence, superhero_id, ville_id } = request.body()
+    const { nom_mission, type_incident, description, latitude, longitude, est_confirmee, urgence, superhero_id, ville, code_postal } = request.body()
 
     // Nouvelle instanciation d'une mission
     const mission = new Mission()
@@ -53,12 +84,12 @@ export default class MissionsController {
     mission.description = description
     mission.latitude = latitude
     mission.longitude = longitude
-    mission.date_incident = date_incident
     mission.statut = 'en_attente'
     mission.est_confirmee = est_confirmee ? true : false
     mission.urgence = urgence
     mission.superheroId = superhero_id
-    mission.villeId = ville_id
+    mission.ville = ville
+    mission.code_postal = code_postal
 
     // Sauvgarder le nouveau element
     await mission.save()
@@ -73,12 +104,12 @@ export default class MissionsController {
 
     return response.redirect().toRoute('mission.index')
   }
-  public async Client({ request, response, session }: HttpContextContract) {
+  public async client({ request, response, session }: HttpContextContract) {
 
-    await request.validate(MissionValidator)
+    // await request.validate(MissionValidator)
 
     // filtrer les valuers envoyé depuis la requête
-    const { nom_mission, type_incident, description, latitude, longitude, date_incident, statut, est_confirmee, urgence, superhero_id, ville_id } = request.body()
+    const { nom_mission, type_incident, description, latitude, longitude, statut, est_confirmee, urgence, superhero_id, ville, code_postal } = request.body()
 
     // Nouvelle instanciation d'une mission
     const mission = new Mission()
@@ -89,12 +120,12 @@ export default class MissionsController {
     mission.description = description
     mission.latitude = latitude
     mission.longitude = longitude
-    mission.date_incident = date_incident
     mission.statut = statut
     mission.est_confirmee = est_confirmee ? true : false
     mission.urgence = urgence
     mission.superheroId = superhero_id
-    mission.villeId = ville_id
+    mission.ville = ville
+    mission.code_postal = code_postal
 
     // Sauvgarder le nouveau element
     await mission.save()
@@ -111,12 +142,13 @@ export default class MissionsController {
   }
 
   public async show({ view, params }: HttpContextContract) {
+
     const mission = await Mission.findOrFail(params.id)
     const superhero = await mission.related('Superhero').query().first();
+    const superHeros = await Superhero.all()
 
 
-
-    return view.render('pages.missions.show', { mission, createdAt: mission.createdAt, superhero })
+    return view.render('pages.missions.show', { mission, createdAt: mission.createdAt, superhero, superHeros })
   }
 
   public async edit({ view, params }: HttpContextContract) {
@@ -136,7 +168,7 @@ export default class MissionsController {
     // await request.validate(MissionValidator)
 
     // filtrer les valuers envoyé depuis la requête
-    const { nom_mission, type_incident, description, latitude, longitude, date_incident, statut, est_confirmee, urgence, superhero_id, ville_id } = request.body()
+    const { nom_mission, type_incident, description, latitude, longitude, statut, est_confirmee, urgence, superhero_id, ville, code_postal } = request.body()
     const mission = await Mission.findOrFail(params.id)
 
     // Injeter les valeurs dans les champs
@@ -145,12 +177,13 @@ export default class MissionsController {
     mission.description = description
     mission.latitude = latitude
     mission.longitude = longitude
-    mission.date_incident = date_incident
+
     mission.statut = statut
     mission.est_confirmee = est_confirmee ? true : false
     mission.urgence = parseInt(urgence)
     mission.superheroId = superhero_id
-    mission.villeId = ville_id
+    mission.ville = ville
+    mission.code_postal = code_postal
 
     mission.save()
 

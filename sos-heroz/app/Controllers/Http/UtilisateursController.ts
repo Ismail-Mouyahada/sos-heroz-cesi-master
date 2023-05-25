@@ -33,7 +33,8 @@ export default class UtilisateursController {
   public async show({ params, view }: HttpContextContract) {
     const utilisateur = await User.findOrFail(params.id)
 
-    return view.render('pages.utilisateurs.show', { utilisateur })
+
+    return view.render('pages.utilisateurs.show', { utilisateur, date:utilisateur.createdAt })
   }
 
   public async edit({ params, view }: HttpContextContract) {

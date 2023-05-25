@@ -1,33 +1,31 @@
 @layout('layouts/app')
 @section('content')
 
-<div class="flex flex-col justify-center items-center   py-4">
+<div class="flex flex-col justify-center items-center    py-4">
 
     <div
-        class=" relative flex flex-col items-center rounded-[20px] w-1/2 max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
-        <div class="mt-2 mb-8 w-full">
+        class=" relative flex flex-col items-center rounded-[20px] w-3/4 max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+        <div class="mt-2 m-3 w-full">
             <h4 class="py-4 text-xl shadow  text-emerald-400 text-center w-full bg-gray-50 rounded-md dark:text-white">
                 Information Général
             </h4>
-            <p class="mt-2 py-4 px-2 bg-gray-50 rounded-md text-base text-gray-600">
-                {{ superhero.description_pouvoir}}
-            </p>
+
         </div>
 
 
 
 
-        <div class="grid grid-cols-2 gap-4 px-2 w-full py-4 my-2   bg-gray-100 rounded-md">
+        <div class="grid grid-cols-3 gap-4 px-2 w-full py-4 my-2   bg-gray-100 rounded-md">
 
 
             <div
-                class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border w-fit   shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                class="shadow flex flex-col items-center justify-center rounded-2xl bg-white bg-clip-border     shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
 
                 <img src="{{ superhero.profil }}"
-                    class="text-base h-50 rounded-md shadow font-medium text-navy-700 dark:text-white" />
+                    class="text-base  rounded-md shadow  h-fit font-medium text-navy-700 dark:text-white border-5 border-solid border-red-50" />
 
             </div>
-            <div class="space-y-2">
+            <div class="grid grid-cols-1 space-y-2">
                 <div
                     class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                     <p class="text-sm text-gray-600"> Super-Hero</p>
@@ -43,19 +41,13 @@
                         {{ superhero.nom +' '+superhero.prenom}}
                     </p>
                 </div>
+
                 <div
                     class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                    <p class="text-sm text-gray-600">Description des pouviors</p>
-                    <p class="text-base font-medium text-navy-700 dark:text-white">
-                        {{ superhero.description_pouvoir}}
-                    </p>
-                </div>
-                <div
-                    class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                    <p class="text-sm text-gray-600">Contact</p>
+
                     <p class="text-base font-medium text-navy-700 dark:text-white">
                         <a href="tel:{{superhero.tel}}"
-                            class="fa fa-phone bg-gray-600 rounded-full text-white p-2 mx-2"></a> +33
+                            class="fa fa-phone bg-emerald-400   rounded-full text-white p-2 mx-2"></a> +33
                         {{ superhero.tel}}
                     </p>
                 </div>
@@ -69,11 +61,125 @@
                 </div>
 
             </div>
+            <div class="grid grid-cols-1 space-y-2">
+
+                <div
+                    class="shadow w-full flex flex-col items-start justify-start rounded-2xl bg-white bg-clip-border px-4 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <p class="text-sm text-gray-600">Description des pouviors</p>
+                    <p class="text-base font-medium text-navy-700 dark:text-white">
+                        {{ superhero.description_pouvoir}}
+                    </p>
+                </div>
+            </div>
+
 
         </div>
 
-        <div class="grid grid-cols-1 my-2 gap-4 px-2 w-full">
+
+
+        <div class="grid grid-cols-2 my-2 gap-4 px-2 w-full">
             <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
+            <div>
+                <ul class="grid w-full my-4 gap-6 md:grid-cols-3">
+
+                    <li>
+                        <input readonly disabled type="checkbox" id="super_intellegence"
+                            {{superhero.super_intellegence?'checked':''}} class="hidden peer" required="">
+                        <label for="super_intellegence"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-user-graduate fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Super Intelligence</div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li>
+                        <input readonly disabled type="checkbox" id="precognition"
+                            {{superhero.precognition?'checked':''}} class="hidden peer" required="">
+                        <label for="precognition"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-eye fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Précognition</div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li>
+                        <input readonly disabled type="checkbox" id="controle_montal"
+                            {{superhero.controle_montal?'checked':''}} class="hidden peer" required="">
+                        <label for="controle_montal"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-brain fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Contrôle Mental</div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li>
+                        <input readonly disabled type="checkbox" id="invisibilite"
+                            {{superhero.invisibilite?'checked':''}} class="hidden peer" required="">
+                        <label for="invisibilite"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-eye-slash fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Invisibilité</div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li>
+                        <input readonly disabled type="checkbox" id="invulnerabilite"
+                            {{superhero.invulnerabilite?'checked':''}} class="hidden peer" required="">
+                        <label for="invulnerabilite"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-shield-alt fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Invulnérabilité</div>
+                            </div>
+                        </label>
+                    </li>
+
+                    <li>
+                        <input readonly disabled type="checkbox" id="super_force" {{superhero.super_force?'checked':''}}
+                            class="hidden peer" required="">
+                        <label for="super_force"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-fist-raised fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Super Force</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
+                        <input readonly disabled type="checkbox" id="vol" {{superhero.vol?'checked':''}}
+                            class="hidden peer" required="">
+                        <label for="vol"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-feather-alt fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Vol</div>
+                            </div>
+                        </label>
+                    </li>
+                    <li>
+                        <input readonly disabled type="checkbox" id="super_vitesse"
+                            {{superhero.super_vitesse?'checked':''}} class="hidden peer" required="">
+                        <label for="super_vitesse"
+                            class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                                <i class="fas fa-tachometer-alt fa-2x"></i>
+                                <div class="w-full text-lg font-semibold text-center">Super Vitesse</div>
+                            </div>
+                        </label>
+                    </li>
+
+
+
+                </ul>
+            </div>
         </div>
 
 
@@ -93,11 +199,11 @@
     navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
 
-        const map = L.map('map').setView([{{ superhero.latitude }}, {{ superhero.longitude }}], 13);
+        const map = L.map('map').setView([{{ superhero.latitude }}, {{ superhero.longitude }}], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-        maxZoom: 50,
+        minZoom: 2,
 
     }).addTo(map);
 
@@ -105,24 +211,25 @@
 
 
     const profil = L.icon({
-        iconUrl: 'https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpluspng.com%2Fimg-png%2Fhero-png-hero-cartoon-1200.png&f=1&nofb=1&ipt=4d28d7401e120502bf72b75eea79046a2f8a42d5cfcd75c6069c449ecfacbfa5&ipo=images', // Remplacez par le chemin de votre icône de marqueur
-        iconSize: [100, 100],
+        iconUrl: '{{superhero.profil}}', // Remplacez par le chemin de votre icône de marqueur
+        iconSize: [40, 40],
         iconAnchor: [12, 41],
         popupAnchor: [0, -41],
+        className: 'rounded-full border-emerald-500 border-solid border-4'
 
     });
 
     const popupContent = `
             <div>
-              <h3 class="bg-gray-50 text-emerald-500 rouded-md p-2 text-emerald-400"> la superhero "{{ superhero.nom_superhero}}}"</h3>
-              <p class="bg-gray-50 p-2 text-emerald-500 rounded-md">✅ Inscrit 🦸</p>
+              <h3 class="text-xl  bg-gray-50 text-emerald-500 rouded-md p-2 text-emerald-400"> 🦸 {{ superhero.nom_heroique}}</h3>
+              <p class="bg-gray-50 p-2 text-emerald-500 rounded-md">✅ {{superhero.disponible?'disponible':'Pas disponible'}}  </p>
             </div>
           `;
 
 
     marker = L.marker([{{ superhero.latitude }}, {{ superhero.longitude }}], { icon: profil }).addTo(map);
 
-
+    marker.bindPopup(popupContent);
 
 });
 

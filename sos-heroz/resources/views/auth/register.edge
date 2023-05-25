@@ -7,7 +7,7 @@
 
     <form class="space-y-6 w-full" action="{{ route('RegisterController.store') }}" method="POST">
       {{ csrfField() }}
-      <div class="w-full flex-col">
+      <div class="grid md:grid-cols-2 sm:grid-cols-2 gap-2">
         <div>
           <label for="nom" class="block text-sm font-medium text-gray-500">
             Nom

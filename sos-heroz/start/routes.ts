@@ -21,6 +21,7 @@ Route.post('/geocode', 'GeolocationsController.index');
 Route.get('superheros/public', 'SuperheroesController.list').as('superhero.list')
 Route.get('mission/create/public', 'MissionsController.create').as('mission.create')
 Route.post('mission/save/public', 'MissionsController.client').as('mission.client')
+Route.get('missions/public', 'MissionsController.list').as('mission.list')
 
 Route.group(() => {
   Route.group(() => {
@@ -80,7 +81,6 @@ Route.group(() => {
 
   Route.get('missions', 'MissionsController.index').as('mission.index')
   Route.post('mission/save', 'MissionsController.store').as('mission.store')
-
   Route.get('mission/:id/show', 'MissionsController.show').as('mission.show')
   Route.get('mission/:id/edit', 'MissionsController.edit').as('mission.edit')
   Route.post('mission/:id/update', 'MissionsController.update').as('mission.update')

@@ -1,9 +1,23 @@
 @layout('layouts/app')
 @section('content')
-<div class="w-1/2 mx-auto opacity-95 p-4 bg-white rounded-md">
+<div class="w-3/4 mx-auto opacity-95 p-4 bg-white rounded-md">
+  <h1 class="py-2 px-2 my-2 text-xl rounded-md bg-emerald-400 text-white text-center">Déclaration d'un incident</h1>
   <form action="{{ route('mission.client')}}" method="POST" class="p-4">
     {{ csrfField() }}
-    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+      <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
+    </div>
+
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full bg-gray-100 rounded-md p-3">
+      <input id="search-range" type="range" max="10000000" step="1" value="100"
+        class="w-full h-2 bg-gray-200 rounded-lg mt-3 appearance-none cursor-pointer dark:bg-gray-700">
+      <label for="default-range" class="block   text-sm font-medium text-emerlad-900 dark:text-white"> Slectionner le
+        rayon</label>
+
+    </div>
+    <div class="grid gap-4 mb-4 sm:grid-cols-3">
       <div>
         <label for="nom_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de
           mission</label>
@@ -11,13 +25,7 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
           placeholder="Nom de mission" required="">
       </div>
-      <div>
-        <label for="date_incident" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date
-          d'incident</label>
-        <input type="date" name="date_incident" id="date_incident"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Date d'incdent ">
-      </div>
+
 
       <div>
         <label for="urgence" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgence</label>
@@ -30,29 +38,19 @@
           <option value="4">danger imminent</option>
         </select>
       </div>
+
       <div>
-        <label for="ville_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>
-        <select id="ville_id" name="ville_id"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-          <option>Nom de ville</option>
-          @each(item in villes)
-          <option value="{{ item.id}}">{{ item.nom_ville}}</option>
-          @endeach
-        </select>
-      </div>
-      <div>
-        <label for="superhero_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Superhero</label>
-        <select id="superhero_id" name="superhero_id"
+        <label for="superhero_id" class="block mb-2 text-xs font-medium text-gray-900 dark:text-white"> (il faut voir le
+          peremetre autour de vous pour pouvoir selectionner un hero)</label>
+        <select id="superhero_id" name="superhero_id" placeholder="dedede"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
           <option>Nom de super-hero</option>
-          @each(item in superheros)
-          <option value="{{ item.id}}">{{ item.nom_heroique}}</option>
-          @endeach
+
         </select>
       </div>
       <div>
-        <label for="type_incident"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">type_incident</label>
+        <label for="type_incident" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">type
+          incident</label>
         <select id="type_incident" name="type_incident"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
           <option>selectionnez un statut</option>
@@ -67,27 +65,42 @@
 
 
 
+      <div>
+        <label for="ville" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ville</label>
+        <input type="text" name="ville" id="ville"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="ville ..." required="">
+      </div>
+      <div>
+        <label for="code_postal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">code
+          postal</label>
+        <input type="text" name="code_postal" id="code_postal"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="76000" required="">
+      </div>
+
 
       <div>
         <label for="latitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">latitude</label>
-        <input type="latitude" name="latitude" id="latitude"
+        <input type="text" name="latitude" id="latitude"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="latitude" required="">
+          placeholder="latitude" required="" readonly>
       </div>
+
+
+
       <div>
         <label for="longitude" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">longitude</label>
-        <input type="longitude" name="longitude" id="longitude"
+        <input type="text" name="longitude" id="longitude"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          placeholder="longitude" required="">
+          placeholder="longitude" required="" readonly>
       </div>
     </div>
 
 
-    <div class="grid grid-cols-1 gap-4 px-2 w-full">
-      <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
-    </div>
 
-    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+
+    <div class="grid grid-cols-1 gap-4 px-2 ty-3 w-full">
 
       <div class="sm:col-span-2">
         <label for="description"
@@ -98,9 +111,9 @@
       </div>
     </div>
 
-    <div class="grid gap-4 my-4 sm:grid-cols-2">
+    <div class="grid gap-4 my-4 sm:grid-cols-2 mx-auto ">
       <button type="submit"
-        class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+        class="text-white  inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
         <i class="fa fa-add mx-2"></i>
         Soumettre la demande d'intervention
       </button>
@@ -111,8 +124,11 @@
 <script>
   let latit = document.getElementById('latitude');
   let long = document.getElementById('longitude');
-
-
+  let ville = document.getElementById('ville');
+  let codepostal = document.getElementById('code_postal');
+  let marker = null;
+  let circle = null;
+  let heroMarkers = [];
 
   navigator.geolocation.getCurrentPosition((position) => {
     const { latitude, longitude } = position.coords;
@@ -120,30 +136,163 @@
     latit.value = latitude;
     long.value = longitude;
 
-    const map = L.map('map').setView([latitude, longitude], 13);
+    const map = L.map('map').setView([latitude, longitude], 1);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-      maxZoom: 10,
+      minZoom: 2,
     }).addTo(map);
 
     marker = L.marker([latitude, longitude]).addTo(map);
 
-    map.on('click', function (e) {
-      let latLng = e.latlng;
+    const updateRadius = () => {
+      const radius = parseInt(document.getElementById('search-range').value) ?? 1200;
 
-      latit.value = latLng.lat;
-      long.value = latLng.lng;
-
-      if (marker) {
-        map.removeLayer(marker);
+      if (circle) {
+        map.removeLayer(circle);
       }
 
-      marker = L.marker(latLng).addTo(map);
+      circle = L.circle([latitude, longitude], {
+        radius: radius,
+        color: '#34d399',
+        fillColor: '#34d399',
+        fillOpacity: 0.3
+      }).addTo(map);
 
+      const markerIcon = L.icon({
+        iconUrl: 'marker-icon.png', // Replace with the path to your marker icon
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [0, -41],
+      });
 
+      // Remove previous hero markers
+      heroMarkers.forEach(heroMarker => map.removeLayer(heroMarker));
+      heroMarkers = [];
+
+      const superheroes = [
+        @each(hero in superher)
+    {
+          id: {{ hero.id }},
+      description_pouvoir: `{{hero.description_pouvoir }}`,
+      nom: "{{hero.nom}}",
+      prenom: "{{ hero.prenom }}",
+      tel: "{{ hero.tel }}",
+      name: "{{ hero.nom_heroique }}",
+      lat: {{ hero.latitude }},
+    lng: {{ hero.longitude }},
+    profil: "{{hero.profil}}",
+    disponible: {{ hero.disponible }}
+    },
+    @endeach
+    ];
+
+  superheroes.forEach(hero => {
+    const profil = L.icon({
+      iconUrl: '/logo.svg', // Replace with the path to your marker icon
+      iconSize: [50, 50],
+      iconAnchor: [12, 41],
+      popupAnchor: [0, -82],
     });
+
+    const popupContent = `
+           <div class="space-y-1">
+                <div
+                    class="shadow flex flex-col items-center justify-center rounded-md bg-white bg-clip-border  shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <img src="${hero.profil}" class="rounded-full h-40"/>
+
+                    <p class="">
+                        ${hero.nom + ' ' + hero.prenom}
+                    </p>
+                </div>
+
+
+
+                <div
+                    class="shadow flex flex-col items-center justify-center rounded-md bg-white bg-clip-border  shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p class="">
+                        <a href="tel:${'+33' + hero.tel}" class="fa fa-phone bg-emerald-600 rounded-full text-white p-2 animate-ping "></a>  ${'+33'+hero.tel}
+                    </p>
+                </div>
+                <div
+                    class="shadow flex flex-col items-center justify-center text-center rounded-2xl bg-white bg-c-lip-border p2 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p>
+                        <i class="fa fa-check        ${hero.disponible ? "bg-emerald-400" : "bg-red-400"} rounded-full text-white text-center  p-2 mx-2"></i>
+                        ${hero.disponible ? "disponible" : "Pas disponible"}
+                    </p>
+                </div>
+
+            </div>
+      `;
+
+    const heroMarker = L.marker([hero.lat, hero.lng], { icon: profil })
+      .addTo(map)
+      .bindPopup(popupContent);
+
+    heroMarkers.push(heroMarker);
   });
+
+  const availableHeroes = superheroes.filter((hero, index, self) => {
+    const heroLatLng = L.latLng(hero.lat, hero.lng);
+    const distance = heroLatLng.distanceTo([latitude, longitude]);
+    return distance <= radius && index === self.findIndex(h => h.id === hero.id);
+  });
+
+  let superheroIds = document.getElementById('superhero_id');
+
+  // Remove existing options
+  while (superheroIds.firstChild) {
+    superheroIds.removeChild(superheroIds.firstChild);
+  }
+
+  availableHeroes.forEach(hero => {
+    const option = document.createElement('option');
+    option.value = hero.id;
+    option.textContent = hero.name;
+    superheroIds.appendChild(option);
+  });
+
+  };
+
+  const searchRangeInput = document.getElementById('search-range');
+  searchRangeInput.addEventListener('change', updateRadius);
+  searchRangeInput.addEventListener('input', updateRadius);
+
+  map.on('click', function (e) {
+    let latLng = e.latlng;
+
+    latit.value = latLng.lat;
+    long.value = latLng.lng;
+
+    if (marker) {
+      map.removeLayer(marker);
+    }
+
+    marker = L.marker(latLng).addTo(map);
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.address) {
+          ville.value = data.address.city || '';
+          code_postal.value = data.address.postcode || '';
+        } else {
+          ville.value = '';
+          code_postal.value = '';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        ville.value = '';
+        code_postal.value = '';
+      });
+    updateRadius(); // Update the radius when the marker's position is changed
+  });
+
+  updateRadius();
+});
 
 
 </script>

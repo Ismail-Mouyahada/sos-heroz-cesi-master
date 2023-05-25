@@ -2,7 +2,6 @@ import { DateTime } from 'luxon'
 
 import Superhero from 'App/Models/Superhero';
 import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm';
-import Ville from './Ville';
 
 
 export default class Mission extends BaseModel {
@@ -25,9 +24,6 @@ export default class Mission extends BaseModel {
   public longitude: string
 
   @column()
-  public date_incident: Date
-
-  @column()
   public statut: string
 
   @column()
@@ -37,14 +33,15 @@ export default class Mission extends BaseModel {
   public urgence: number
 
   @column()
+  public ville: string
+
+  @column()
+  public code_postal: string
+
+  @column()
   public superheroId: Number
   @belongsTo(() => Superhero)
   public Superhero: BelongsTo<typeof Superhero>
-
-  @column()
-  public villeId: Number
-  @belongsTo(() => Ville)
-  public Ville: BelongsTo<typeof Ville>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

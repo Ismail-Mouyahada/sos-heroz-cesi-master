@@ -4,8 +4,19 @@
 <div class="flex flex-col justify-center items-center   py-4">
 
   <div
-    class=" relative flex flex-col items-center rounded-[20px] w-1/2 max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+    class=" relative flex flex-col mb-2  items-center rounded-[20px] w-3/4  mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
     <div class="mt-2 mb-8 w-full">
+      @if(mission.est_confirme)
+      <div class="w-full p-4 text-center bg-emerald-400 text-white rounded-md"><i
+          class="fa fa-check  mx-2 bg-white text-emerald-500 rounded-full p-3"></i>Cette mission confirmé par la mairié
+      </div>
+      @else()
+      <div class="w-full p-4 mb-2 text-center bg-red-400 text-white rounded-md"><i
+          class="fa fa-add  mx-2 bg-white text-red-500 rounded-full p-3"></i> Cette mission n'est pas confirmé par la
+        mairié
+      </div>
+      @endif
+
       <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
         Information Général
       </h4>
@@ -15,62 +26,72 @@
     </div>
 
     <div class="grid grid-cols-1 my-2 gap-4 px-2 w-full">
-      <div class="rounded-md my-2" id="map" style="height:400px; width:100%;"></div>
+
+      <div class="grid grid-cols-1 my-2 gap-4 px-2 w-full">
+        <div class="rounded-md my-2" id="map" style="min-height:600px; width:100%;"></div>
+      </div>
+
+
+
+      <div class="grid grid-cols-2 gap-4 w-full bg-gray-50 p-6 rounded-md ">
+        <div
+          class=" shadow flex flex-col grid-rows-2   items-start justify-start rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <div>
+            <p class="text-sm text-gray-600">titre de mission</p>
+            <p class="text-base font-medium text-navy-700 dark:text-white">
+              {{ mission.nom_mission}}
+            </p>
+          </div>
+        </div>
+        <div
+          class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-base  text-indigo-600 p-3 bg-indigo-50 rounded-md  ">Superheros à proximité </p>
+          <div class="grid grid-cols-1  text-navy-700 dark:text-white w-full gap-4 " id="availableHeroes">
+
+          </div>
+        </div>
+
+        <div
+          class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600">Incident</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            {{ mission.type_incident}}
+          </p>
+        </div>
+        <div
+          class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600">Statut de confirmation</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            {{ mission.est_confirmee? 'Oui' : 'Non'}}
+          </p>
+        </div>
+
+        <div
+          class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600">Commune</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            {{ mission.ville}} - {{ mission.code_postal}}
+          </p>
+        </div>
+
+        <div
+          class="shadow flex flex-col justify-center rounded-2xl  {{ mission.statut == 'en_attente' ? 'bg-red-50 text-red-600':''}} bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-base font-medium text-navy-700 dark:text-white   ">
+            {{ mission.statut == 'en_attente'?' cette mission est en file d\'attente de la liste d\'interention ':''}}
+          </p>
+        </div>
+
+        <div
+          class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <p class="text-sm text-gray-600">Date de déclaration</p>
+          <p class="text-base font-medium text-navy-700 dark:text-white">
+            {{ createdAt }}
+          </p>
+        </div>
+
+      </div>
     </div>
-
-
-
-    <div class="grid grid-cols-2 gap-4 px-2 w-full bg-gray-50 p-4 rounded-md ">
-      <div
-        class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">titre de mission</p>
-        <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ mission.nom_mission}}
-        </p>
-      </div>
-
-      <div
-        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Incident</p>
-        <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ mission.type_incident}}
-        </p>
-      </div>
-      <div
-        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Incident</p>
-        <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ mission.est_confirmee? 'Oui' : 'Non'}}
-        </p>
-      </div>
-
-      <div
-        class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Contact</p>
-        <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ mission.email}}
-        </p>
-      </div>
-
-      <div
-        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Satut</p>
-        <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ mission.statut}}
-        </p>
-      </div>
-
-      <div
-        class="shadow flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-        <p class="text-sm text-gray-600">Date de déclaration</p>
-        <p class="text-base font-medium text-navy-700 dark:text-white">
-          {{ createdAt }}
-        </p>
-      </div>
-
-    </div>
-
-    <h6 class="px-2 text-xl  w-full text-emerald-400   text-center py-3 my-2 rounded-md dark:text-white">
+    <h6 class="px-2 text-xl  w-full text-emerald-400  bg-slate-700  text-center py-3 my-2 rounded-md dark:text-white">
       Super Hero associé
     </h6>
 
@@ -84,7 +105,7 @@
           class="text-base h-50 rounded-md shadow font-medium text-navy-700 dark:text-white" />
 
       </div>
-      <div class="space-y-2">
+      <div class="grid grid-cols-2 gap-4 px-2 w-full py-4 my-2   rounded-md space-y-2">
         <div
           class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
           <p class="text-sm text-gray-600"> Super-Hero</p>
@@ -101,7 +122,7 @@
           </p>
         </div>
         <div
-          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white  bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
           <p class="text-sm text-gray-600">Description des pouviors</p>
           <p class="text-base font-medium text-navy-700 dark:text-white">
             {{ superhero.description_pouvoir}}
@@ -119,69 +140,188 @@
           class="shadow flex flex-col items-start justify-center text-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
 
           <p>
-            <i class="fa fa-check bg-emerald-400 rounded-full text-white text-center  p-2 mx-2"></i> disponible
+            <i class="fa fa-check   {{superhero.disponible ? " bg-emerald-400" : "bg-red-400" }} rounded-full text-white
+              text-center p-2 mx-2"></i>
+            {{superhero.disponible? "disponible" : "Pas disponible" }}
           </p>
         </div>
 
       </div>
 
     </div>
-
+    <a href="{{ route('mission.index') }}"
+      class=" text-center bg-emerald-400 p-3 my-4 rounded-md  w-full text-white justify-end"><i
+        class="fa fa-arrow-left text-white  "></i> Précédent</a>
   </div>
 
 </div>
 
 
-<a href="{{ route('mission.index') }}"
-  class="w-1/2 text-center bg-emerald-400 p-3 my-4 rounded-md  text-white justify-end"><i
-    class="fa fa-arrow-left text-white  "></i> Précédent</a>
+
 </div>
 
 </div>
 
 <script>
+  let marker = null;
+  let circle = null;
+  let heroMarkers = [];
+
   navigator.geolocation.getCurrentPosition((position) => {
     const { latitude, longitude } = position.coords;
 
-    const map = L.map('map').setView([{{ mission.latitude }}, {{ mission.longitude }}], 13);
+
+
+    const map = L.map('map').setView([{{ mission.latitude }}, {{ mission.longitude }}], 2);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-    maxZoom: 50,
-
+    minZoom: 1,
   }).addTo(map);
 
+  marker = L.marker([{{ mission.latitude }}, {{ mission.longitude }}]).addTo(map);
 
+  const updateRadius = () => {
+    const radius = 2500000;
+
+    if (circle) {
+      map.removeLayer(circle);
+    }
+
+    circle = L.circle([{{ mission.latitude }}, {{ mission.longitude }}], {
+    radius: radius,
+      color: '#34d399',
+        fillColor: '#34d399',
+          fillOpacity: 0.3
+  }).addTo(map);
 
   const markerIcon = L.icon({
-    iconUrl: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngmart.com%2Ffiles%2F7%2FDanger-Sign-PNG-Pic.png&f=1&nofb=1&ipt=adec70fb4f0e729477715bea68bd7d8dc6d0879d289305f0cffc8cb6c3f2c5d5&ipo=images', // Remplacez par le chemin de votre icône de marqueur
-    iconSize: [100, 100],
+    iconUrl: '/logo.svg', // Replace with the path to your marker icon
+    iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [0, -41],
-
   });
 
-  const profil = L.icon({
-    iconUrl: '{{superhero.profil}}', // Remplacez par le chemin de votre icône de marqueur
-    iconSize: [100, 100],
-    iconAnchor: [12, 41],
-    popupAnchor: [0, -41],
+  // Remove previous hero markers
+  heroMarkers.forEach(heroMarker => map.removeLayer(heroMarker));
+  heroMarkers = [];
 
-  });
+  const superheroes = [
+    @each(hero in superHeros)
+    {
+      id: {{ hero.id }},
+  description_pouvoir: `{{hero.description_pouvoir }}`,
+    nom: "{{hero.nom}}",
+      prenom: "{{ hero.prenom }}",
+        tel: "{{ hero.tel }}",
+          name: "{{ hero.nom_heroique }}",
+            lat: {{ hero.latitude }},
+  lng: {{ hero.longitude }},
+  profil: "{{ hero.profil }}",
+    disponible: {{ hero.disponible }}
+    },
+  @endeach
+    ];
 
-  const popupContent = `
-            <div>
-              <h3 class="bg-gray-50 text-emerald-500 rouded-md p-2 text-emerald-400"> la mission "{{ mission.nom_mission}}}"</h3>
-              <p class="bg-gray-50 p-2 text-emerald-500 rounded-md">✅ Inscrit 🦸</p>
+  superheroes.forEach(hero => {
+    const profil = L.icon({
+      iconUrl: `${hero.profil}`, // Replace with the path to your marker icon
+      iconSize: [60, 60],
+      iconAnchor: [12, 41],
+      popupAnchor: [0, -82],
+      className: 'rounded-full border-emerald-500 border-solid border-4'
+    });
+
+    const popupContent = `
+           <div class="space-y-1 w-full">
+                <div
+                    class="w-[300px] shadow flex flex-col items-center justify-center rounded-md bg-white bg-clip-border  shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    <img src="${hero.profil}" class="rounded-full h-40"/>
+
+                    <p class="">
+                        ${hero.nom + ' ' + hero.prenom}
+                    </p>
+                </div>
+
+
+
+                <div
+                    class="w-[300px] shadow flex flex-col items-center justify-center rounded-md bg-white bg-clip-border  shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p class="">
+                        <a href="tel:${'+33' + hero.tel}" class="fa fa-phone bg-emerald-600 rounded-full text-white p-2 animate-ping "></a>  ${'+33' + hero.tel}
+                    </p>
+                </div>
+                <div
+                    class="shadow flex flex-col items-center justify-center text-center rounded-2xl bg-white bg-c-lip-border p2 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+                    <p>
+                        <i class="fa fa-check        ${hero.disponible ? "bg-emerald-400" : "bg-red-400"} rounded-full text-white text-center  p-2 mx-2"></i>
+                        ${hero.disponible ? "disponible" : "Pas disponible"}
+                    </p>
+                </div>
+
             </div>
-          `;
-
-  marker = L.marker([{{ mission.latitude }}, {{ mission.longitude }}], { icon: markerIcon }).addTo(map);
-  marker = L.marker([{{ superhero.latitude }}, {{ superhero.longitude }}], { icon: profil }).addTo(map);
+      `;
 
 
+    const heroMarker = L.marker([hero.lat, hero.lng], { icon: profil })
+      .addTo(map)
+      .bindPopup(popupContent);
 
+    heroMarkers.push(heroMarker);
+  });
+
+  const availableHeroes = superheroes.filter((hero, index, self) => {
+    const heroLatLng = L.latLng(hero.lat, hero.lng);
+    const distance = heroLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
+    return distance <= radius && index === self.findIndex(h => h.id === hero.id);
+  });
+
+  console.log(availableHeroes)
+  let superheroIds = document.getElementById('availableHeroes');
+
+  //  Remove existing options
+  while (superheroIds.firstChild) {
+    superheroIds.removeChild(superheroIds.firstChild);
+  }
+
+  // Inside the `updateRadius` function, after the `availableHeroes` declaration
+  // Sort availableHeroes by distance in ascending order
+  availableHeroes.sort((a, b) => {
+    const heroALatLng = L.latLng(a.lat, a.lng);
+    const heroBLatLng = L.latLng(b.lat, b.lng);
+    const distanceA = heroALatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
+    const distanceB = heroBLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
+    return distanceA - distanceB;
+  });
+
+  console.log(availableHeroes)
+  // Get the closest three heroes
+  const closestHeroes = availableHeroes.slice(0, 3);
+
+  // Display the closest three heroes and their distances
+  closestHeroes.forEach(hero => {
+    const heroLatLng = L.latLng(hero.lat, hero.lng);
+    const distanceMeters = heroLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
+    const distanceKilometers = (distanceMeters / 1000).toFixed(2); // Convert meters to kilometers
+
+    const option = document.createElement('div');
+    option.innerHTML = `<li class="text-declaration-none flex shadow p-4 justify-between text-start w-full"><img src="${hero.profil}" class="rounded-full w-10 h-10 mx-3" />  <p> ${hero.name} - Distance: ${distanceKilometers} km  <a href="tel:${hero.tel}"><i class="fa fa-phone text-white mx-2 p-2 rounded-full bg-emerald-400"></i><a> </p> `; // Display distance in kilometers
+    superheroIds.appendChild(option);
+  });
+
+  };
+
+  const searchRangeInput = document.getElementById('search-range');
+  // searchRangeInput.addEventListener('change', updateRadius);
+  // searchRangeInput.addEventListener('input', updateRadius);
+
+
+
+  updateRadius();
 });
+
 
 </script>
 
