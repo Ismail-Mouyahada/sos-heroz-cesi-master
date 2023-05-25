@@ -196,14 +196,17 @@
     });
 
     const popupContent = `
-           <div class="space-y-1">
+           <div class="space-y-1 w-[300px]">
                 <div
-                    class="shadow flex flex-col items-center justify-center rounded-md bg-white bg-clip-border  shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+                    class="shadowpy-2 flex flex-col items-center justify-center rounded-md  bg-gradient-to-r  from-emerald-400 to-slate-600 bg-clip-border  shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
                     <img src="${hero.profil}" class="rounded-full h-40"/>
+                    <div class="p-2">
+                  <span class="text-white">${hero.name}</span>
+                    <a class="bg-white rounded-full text-white text-lg p-3" href="/superhero/${hero.id}/show">
+                    <span class="fa fa-eye text-emerald-400"></span>
 
-                    <p class="">
-                        ${hero.nom + ' ' + hero.prenom}
-                    </p>
+                    </a>
+                     </div>
                 </div>
 
 
@@ -261,6 +264,8 @@
   searchRangeInput.addEventListener('input', updateRadius);
 
   map.on('click', function (e) {
+
+
     let latLng = e.latlng;
 
     latit.value = latLng.lat;
@@ -268,7 +273,12 @@
 
     if (marker) {
       map.removeLayer(marker);
+
+
     }
+
+
+
 
     marker = L.marker(latLng).addTo(map);
 

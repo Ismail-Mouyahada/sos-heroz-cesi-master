@@ -22,6 +22,10 @@ Route.get('superheros/public', 'SuperheroesController.list').as('superhero.list'
 Route.get('mission/create/public', 'MissionsController.create').as('mission.create')
 Route.post('mission/save/public', 'MissionsController.client').as('mission.client')
 Route.get('missions/public', 'MissionsController.list').as('mission.list')
+Route.get('superhero/create/public', 'SuperheroesController.create').as('superhero.declare')
+
+Route.get('mission/:id/show', 'MissionsController.show').as('mission.show')
+Route.get('superhero/:id/show', 'SuperheroesController.show').as('superhero.show')
 
 Route.group(() => {
   Route.group(() => {
@@ -73,7 +77,6 @@ Route.group(() => {
   Route.get('superheros', 'SuperheroesController.index').as('superhero.index')
   Route.get('superhero/create', 'SuperheroesController.create').as('superhero.create')
   Route.post('superhero/save', 'SuperheroesController.store').as('superhero.store')
-  Route.get('superhero/:id/show', 'SuperheroesController.show').as('superhero.show')
   Route.get('superhero/:id/edit', 'SuperheroesController.edit').as('superhero.edit')
   Route.post('superhero/:id/update', 'SuperheroesController.update').as('superhero.update')
   Route.post('superhero/:id/delete', 'SuperheroesController.destroy').as('superhero.delete')
@@ -81,7 +84,6 @@ Route.group(() => {
 
   Route.get('missions', 'MissionsController.index').as('mission.index')
   Route.post('mission/save', 'MissionsController.store').as('mission.store')
-  Route.get('mission/:id/show', 'MissionsController.show').as('mission.show')
   Route.get('mission/:id/edit', 'MissionsController.edit').as('mission.edit')
   Route.post('mission/:id/update', 'MissionsController.update').as('mission.update')
   Route.post('mission/:id/delete', 'MissionsController.destroy').as('mission.delete')

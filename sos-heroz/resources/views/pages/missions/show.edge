@@ -6,7 +6,7 @@
   <div
     class=" relative flex flex-col mb-2  items-center rounded-[20px] w-3/4  mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
     <div class="mt-2 mb-8 w-full">
-      @if(mission.est_confirme)
+      @if(mission.est_confirmee)
       <div class="w-full p-4 text-center bg-emerald-400 text-white rounded-md"><i
           class="fa fa-check  mx-2 bg-white text-emerald-500 rounded-full p-3"></i>Cette mission confirmé par la mairié
       </div>
@@ -17,10 +17,11 @@
       </div>
       @endif
 
-      <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
+      <h4
+        class="px-2 p-3  text-center bg-gradient-to-r  from-emerald-400 to-slate-600  text-xl font-semibold rounded-md text-white dark:text-white">
         Information Général
       </h4>
-      <p class="mt-2 px-2 text-base text-gray-600">
+      <p class="mt-2 px-2 text-base bg-slate-50 p-3 py-3 rounded-md text-gray-400">
         {{ mission.description}}
       </p>
     </div>
@@ -31,7 +32,13 @@
         <div class="rounded-md my-2" id="map" style="min-height:600px; width:100%;"></div>
       </div>
 
+      <div
+        class=" shadow bg-gradient-to-r  from-emerald-400 to-slate-600 flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-base  text-emerald-600 p-3 bg-emerald-50 rounded-md my-2 ">Superheros à proximité </p>
+        <div class="grid grid-cols-2   text-navy-700 dark:text-white w-full gap-4 " id="availableHeroes">
 
+        </div>
+      </div>
 
       <div class="grid grid-cols-2 gap-4 w-full bg-gray-50 p-6 rounded-md ">
         <div
@@ -41,13 +48,6 @@
             <p class="text-base font-medium text-navy-700 dark:text-white">
               {{ mission.nom_mission}}
             </p>
-          </div>
-        </div>
-        <div
-          class=" shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-          <p class="text-base  text-indigo-600 p-3 bg-indigo-50 rounded-md  ">Superheros à proximité </p>
-          <div class="grid grid-cols-1  text-navy-700 dark:text-white w-full gap-4 " id="availableHeroes">
-
           </div>
         </div>
 
@@ -91,61 +91,65 @@
 
       </div>
     </div>
-    <h6 class="px-2 text-xl  w-full text-emerald-400  bg-slate-700  text-center py-3 my-2 rounded-md dark:text-white">
+    <h6
+      class="px-2 text-xl  w-full text-white bg-gradient-to-r  from-emerald-400 to-slate-600    text-center py-3 my-2 rounded-md dark:text-white">
       Super Hero associé
     </h6>
 
-    <div class="grid grid-cols-2 gap-4 px-2 w-full py-4 my-2   bg-gray-100 rounded-md">
+    <div class="grid grid-cols-1 gap-4 px-2 w-full py-4 my-2   bg-gray-100 rounded-md">
 
 
-      <div
-        class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border w-fit   shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-
-        <img src="{{ superhero.profil }}"
-          class="text-base h-50 rounded-md shadow font-medium text-navy-700 dark:text-white" />
-
-      </div>
-      <div class="grid grid-cols-2 gap-4 px-2 w-full py-4 my-2   rounded-md space-y-2">
-        <div
-          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-          <p class="text-sm text-gray-600"> Super-Hero</p>
-          <p class="text-base font-medium text-navy-700 dark:text-white">
-            {{ superhero.nom_heroique }}
-          </p>
-        </div>
+      <div class="grid grid-cols-1 gap-4 px-2 w-full  my-2   rounded-md space-y-1">
 
         <div
-          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-          <p class="text-sm text-gray-600">Identité</p>
-          <p class="text-base font-medium text-navy-700 dark:text-white">
-            {{ superhero.nom +' '+superhero.prenom}}
-          </p>
-        </div>
-        <div
-          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white  bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-          <p class="text-sm text-gray-600">Description des pouviors</p>
-          <p class="text-base font-medium text-navy-700 dark:text-white">
-            {{ superhero.description_pouvoir}}
-          </p>
-        </div>
-        <div
-          class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-          <p class="text-sm text-gray-600">Contact</p>
-          <p class="text-base font-medium text-navy-700 dark:text-white">
-            <a href="tel:{{superhero.tel}}" class="fa fa-phone bg-gray-600 rounded-full text-white p-2 mx-2"></a> +33
-            {{ superhero.tel}}
-          </p>
-        </div>
-        <div
-          class="shadow flex flex-col items-start justify-center text-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-
-          <p>
-            <i class="fa fa-check   {{superhero.disponible ? " bg-emerald-400" : "bg-red-400" }} rounded-full text-white
-              text-center p-2 mx-2"></i>
-            {{superhero.disponible? "disponible" : "Pas disponible" }}
-          </p>
+          class=" flex flex-col items-center justify-center rounded-2xl   bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+          <img src="{{ superhero.profil }}"
+            class="text-base h-50 rounded-full shadow-lg border-2 hover:animate-bounce border-emerald-400 border-solid font-medium text-navy-700 dark:text-white" />
         </div>
 
+          <div
+            class="shadow flex flex-col items-start justify-center rounded-2xl bg-white  bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+            <p class="text-sm text-gray-600">Description des pouviors</p>
+            <p class="text-xs  p-2 text-navy-700 dark:text-white">
+              {{ superhero.description_pouvoir}}
+            </p>
+          </div>
+
+
+        <div class="grid grid-cols-2 gap-2">
+          <div
+            class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+            <p class="text-sm text-gray-600"> Super-Hero</p>
+            <p class="text-base font-medium text-navy-700 dark:text-white">
+              {{ superhero.nom_heroique }}
+            </p>
+          </div>
+          <div
+            class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+            <p class="text-sm text-gray-600">Identité</p>
+            <p class="text-base font-medium text-navy-700 dark:text-white">
+              {{ superhero.nom +' '+superhero.prenom}}
+            </p>
+          </div>
+
+          <div
+            class="shadow flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+            <p class="text-sm text-gray-600">Contact</p>
+            <p class="text-base font-medium text-navy-700 dark:text-white">
+              <a href="tel:{{superhero.tel}}" class="fa fa-phone bg-gray-600 rounded-full text-white p-2 mx-2"></a> +33
+              {{ superhero.tel}}
+            </p>
+          </div>
+          <div
+            class="shadow flex flex-col items-start justify-center text-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+
+            <p>
+              <i class="fa fa-check   {{superhero.disponible ? " bg-emerald-400" : "bg-red-400" }} rounded-full
+                text-white text-center p-2 mx-2"></i>
+              {{superhero.disponible? "disponible" : "Pas disponible" }}
+            </p>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -248,8 +252,8 @@
                 <div
                     class="w-[300px] shadow flex flex-col items-center justify-center rounded-md bg-white bg-clip-border  shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
 
-                    <p class="">
-                        <a href="tel:${'+33' + hero.tel}" class="fa fa-phone bg-emerald-600 rounded-full text-white p-2 animate-ping "></a>  ${'+33' + hero.tel}
+                    <p class=" ">
+                        <a href="tel:${'+33' + hero.tel}" class=" bg-emerald-600 rounded-full text-white p-2  "><i class="fa fa-phone text-white"></i></a>  ${'+33' + hero.tel}
                     </p>
                 </div>
                 <div
@@ -275,7 +279,7 @@
   const availableHeroes = superheroes.filter((hero, index, self) => {
     const heroLatLng = L.latLng(hero.lat, hero.lng);
     const distance = heroLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
-    return distance <= radius && index === self.findIndex(h => h.id === hero.id);
+  return distance <= radius && index === self.findIndex(h => h.id === hero.id);
   });
 
   console.log(availableHeroes)
@@ -292,8 +296,8 @@
     const heroALatLng = L.latLng(a.lat, a.lng);
     const heroBLatLng = L.latLng(b.lat, b.lng);
     const distanceA = heroALatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
-    const distanceB = heroBLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
-    return distanceA - distanceB;
+  const distanceB = heroBLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
+  return distanceA - distanceB;
   });
 
   console.log(availableHeroes)
@@ -304,11 +308,11 @@
   closestHeroes.forEach(hero => {
     const heroLatLng = L.latLng(hero.lat, hero.lng);
     const distanceMeters = heroLatLng.distanceTo([{{ mission.latitude }}, {{ mission.longitude }}]);
-    const distanceKilometers = (distanceMeters / 1000).toFixed(2); // Convert meters to kilometers
+  const distanceKilometers = (distanceMeters / 1000).toFixed(2); // Convert meters to kilometers
 
-    const option = document.createElement('div');
-    option.innerHTML = `<li class="text-declaration-none flex shadow p-4 justify-between text-start w-full"><img src="${hero.profil}" class="rounded-full w-10 h-10 mx-3" />  <p> ${hero.name} - Distance: ${distanceKilometers} km  <a href="tel:${hero.tel}"><i class="fa fa-phone text-white mx-2 p-2 rounded-full bg-emerald-400"></i><a> </p> `; // Display distance in kilometers
-    superheroIds.appendChild(option);
+  const option = document.createElement('div');
+  option.innerHTML = `<li class="text-declaration-none flex bg-white rounded-md shadow p-4 justify-between text-start w-full"><img src="${hero.profil}" class="rounded-full w-10 h-10 mx-3" />  <p> ${hero.name} - Distance: ${distanceKilometers} km  <a href="tel:${hero.tel}"><i class="fa fa-phone text-white mx-2 p-2 rounded-full bg-emerald-400"></i><a> </p> `; // Display distance in kilometers
+  superheroIds.appendChild(option);
   });
 
   };

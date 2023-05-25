@@ -15,7 +15,7 @@ export default class CreateMissionsTable extends BaseSchema {
       table.string('latitude', 25)
       table.string('longitude', 25)
       table.string('statut', 25).defaultTo('en_attente')
-      table.boolean('est_confirmee').defaultTo(false)
+      table.boolean('est_confirmee').defaultTo(0)
       table.integer('urgence').defaultTo(1)
 
       table

@@ -44,15 +44,22 @@
           incident</label>
         <select id="type_incident" name="type_incident"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-          <option>selectionnez le type d'incident</option>
+
           @each(item in incidents)
-          <option value="{{ item.type_incident}}">{{
+          <option {{mission.type_incident===item.type_incident ? 'selected' : '' }} value="{{ item.type_incident}}">{{
             item.type_incident}}</option>
           @endeach
 
         </select>
       </div>
 
+      <div>
+        <label for="est_confirmee" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mission
+          confirmée</label>
+        <input type="checkbox" name="est_confirmee" id="est_confirmee"
+          class="bg-gray-50 border py-3 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="est confirme ..." {{ mission.est_confirmee ? 'checked' :''}}>
+      </div>
 
 
       <div>

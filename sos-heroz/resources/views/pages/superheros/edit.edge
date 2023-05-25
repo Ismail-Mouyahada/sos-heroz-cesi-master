@@ -14,9 +14,9 @@
                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
               </path>
             </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to
-                upload</span> or
-              drag and drop</p>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold"> cliquez pour
+                téléverser</span> ou
+              Glissez une photo d'hero ici </p>
             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
           </div>
           <input id="dropzone-file" type="file" name="profil" class="hidden" value="{{ superhero.profil }}" />
@@ -108,9 +108,10 @@
             @each(item in incidents)
             <li class="w-[400px]">
               <div class="flex items-center w-[400px] p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                <input {{ superhero.incidents_list.split(',')[0]==item.type_incident?'checked':'' }} {{
-                  superhero.incidents_list.split(',')[2]==item.type_incident?'checked':'' }} {{
-                  superhero.incidents_list.split(',')[3]==item.type_incident?'checked':'' }} id="checkbox-item-11"
+                <input
+                {{ superhero.incidents_list.split(',')[0]==item.type_incident ? 'checked':'' }}
+                {{ superhero.incidents_list.split(',')[1]==item.type_incident ? 'checked':'' }}
+                {{ superhero.incidents_list.split(',')[2]==item.type_incident ? 'checked':'' }} id="checkbox-item-11"
                   type="checkbox" value="{{item.type_incident}}" name="incidents_list[]"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                 <label for="checkbox-item-11"
@@ -143,7 +144,7 @@
       <ul class="grid w-full my-4 gap-6 md:grid-cols-3">
 
         <li>
-          <input type="checkbox" id="super_intellegence" value="" {{superhero.super_intellegence ? 'checked' : '' }}
+          <input type="checkbox" id="super_intellegence" value="" name="super_intellegence" {{superhero.super_intellegence ? 'checked' : '' }}
             class="hidden peer" required="">
           <label for="super_intellegence"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -155,7 +156,7 @@
         </li>
 
         <li>
-          <input type="checkbox" id="precognition" value="" {{superhero.precognition ? 'checked' : '' }}
+          <input type="checkbox" id="precognition" value="" name="precognition" {{superhero.precognition ? 'checked' : '' }}
             class="hidden peer" required="">
           <label for="precognition"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -167,7 +168,7 @@
         </li>
 
         <li>
-          <input type="checkbox" id="controle_montal" value="" {{superhero.controle_montal ? 'checked' : '' }}
+          <input type="checkbox" id="controle_montal" value="" name="controle_montal" {{superhero.controle_montal ? 'checked' : '' }}
             class="hidden peer" required="">
           <label for="controle_montal"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -179,7 +180,7 @@
         </li>
 
         <li>
-          <input type="checkbox" id="invisibilite" value="" {{superhero.invisibilite ? 'checked' : '' }}
+          <input type="checkbox" id="invisibilite" value="" name="invisibilite" {{superhero.invisibilite ? 'checked' : '' }}
             class="hidden peer" required="">
           <label for="invisibilite"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -191,7 +192,7 @@
         </li>
 
         <li>
-          <input type="checkbox" id="invulnerabilite" value="" {{superhero.invulnerabilite ? 'checked' : '' }}
+          <input type="checkbox" id="invulnerabilite" value="" name="invulnerabilite" {{superhero.invulnerabilite ? 'checked' : '' }}
             class="hidden peer" required="">
           <label for="invulnerabilite"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -203,7 +204,7 @@
         </li>
 
         <li>
-          <input type="checkbox" id="super_force" value="" {{superhero.super_force ? 'checked' : '' }}
+          <input type="checkbox" id="super_force" value="" name="super_force" {{superhero.super_force ? 'checked' : '' }}
             class="hidden peer" required="">
           <label for="super_force"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -214,7 +215,7 @@
           </label>
         </li>
         <li>
-          <input type="checkbox" id="vol" value="" {{superhero.vol ? 'checked' : '' }} class="hidden peer" required="">
+          <input type="checkbox" id="vol" value="" name="vol" {{superhero.vol ? 'checked' : '' }} class="hidden peer" required="">
           <label for="vol"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
             <div class="block">
@@ -224,7 +225,7 @@
           </label>
         </li>
         <li>
-          <input type="checkbox" id="super_vitesse" value="" {{superhero.super_vitesse ? 'checked' : '' }}
+          <input type="checkbox" id="super_vitesse" value="" name="super_vitesse" {{superhero.super_vitesse ? 'checked' : '' }}
             class="hidden peer" required="">
           <label for="super_vitesse"
             class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerald-400 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -263,7 +264,7 @@
       const numSelected = document.querySelectorAll('input[name="incidentsList[]"]:checked').length;
       if (numSelected < minSelection || numSelected > maxSelection) {
         checkbox.checked = false;
-        //  
+        //
       }
     });
   });

@@ -3,13 +3,27 @@ import Incident from 'App/Models/Incident'
 import IncidentValidator from 'App/Validators/IncidentValidator'
 
 export default class IncidentsController {
-  public async index({ view }: HttpContextContract) {
+  public async index({ view, request }: HttpContextContract) {
 
     // Récupérer tous les types des incidents
-    const incidents = await Incident.all()
+    const search = request.all().search
 
-    // renvoyer les données vers le vue 'index' de l'application
-    return view.render('pages.incidents.index', { incidents })
+
+    if (search != null) {
+      const incidents = await Incident.query()
+        .whereILike('type_incident', `%${search}%`)
+        .orWhereILike('description', `%${search}%`)
+
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.incidents.index', { incidents })
+
+    } else {
+      const incidents = await Incident.all()
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.incidents.index', { incidents })
+    }
+
+
   }
 
   public async create({ view }: HttpContextContract) {

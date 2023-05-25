@@ -15,10 +15,16 @@ export default class MissionsController {
     const villes = await Ville.all()
 
     // Récupérer tous les types des missions
-
     if (search != null) {
+
+      const urgenceStat = search.trim() == 'pas urgent' ? 1 : 1 || search.trim() == 'très urgent' ? 2 : 1 || search.trim() == 'danger public' ? 3 : 1 || search.trim() == 'danger imminent' ? 4 : 1
+      const confirmee = search.trim() == 'confirmée' ? 1 : 0 || search.trim() == 'en attente' ? 1 : 0
       const missions = await Mission.query()
         .whereILike('nom_mission', `%${search}%`)
+        .orWhereILike('type_incident', `%${search}%`)
+        .orWhereILike('ville', `%${search}%`)
+        .orWhereILike('code_postal', `%${search}%`)
+
       // renvoyer les données vers le vue 'index' de l'application
       return view.render('pages.missions.index', { missions, incidents, villes, superheros })
 
@@ -47,8 +53,15 @@ export default class MissionsController {
     // Récupérer tous les types des missions
 
     if (search != null) {
+
+      const urgenceStat = search.trim() == 'urgent' ? 1 : 1 || search.trim() == 'très urgent' ? 2 : 1 || search.trim() == 'danger public' ? 3 : 1 || search.trim() == 'danger imminent' ? 4 : 1
+      console.log(urgenceStat)
       const missions = await Mission.query()
         .whereILike('nom_mission', `%${search}%`)
+        .orWhereILike('type_incident', `%${search}%`)
+        .orWhereILike('ville', `%${search}%`)
+        .orWhereILike('code_postal', `%${search}%`)
+
       // renvoyer les données vers le vue 'index' de l'application
       return view.render('pages.missions.list', { missions, incidents, villes, superheros })
 
@@ -138,7 +151,7 @@ export default class MissionsController {
       },
     })
 
-    return response.redirect().toRoute('merci')
+    return response.redirect().toRoute('mission.list')
   }
 
   public async show({ view, params }: HttpContextContract) {

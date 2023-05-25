@@ -8,21 +8,50 @@ import Superhero from 'App/Models/Superhero'
 export default class SuperheroesController {
 
 
-  public async index({ view }: HttpContextContract) {
-    // Récupérer tous les types des superheroes
-    const superheros = await Superhero.all()
+  public async index({ view, request }: HttpContextContract) {
+    const search = request.all().search
 
 
-    // renvoyer les données vers le vue 'index' de l'application
-    return view.render('pages.superheros.index', { superheros })
+    if (search != null) {
+      const superheros = await Superhero.query()
+        .whereILike('nom_heroique', `%${search}%`)
+        .orWhereILike('tel', `%${search}%`)
+        .orWhereILike('nom', `%${search}%`)
+        .orWhereILike('prenom', `%${search}%`)
+
+
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.superheros.index', { superheros })
+
+    } else {
+      const superheros = await Superhero.all()
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.superheros.index', { superheros })
+    }
+
   }
-  public async list({ view }: HttpContextContract) {
-    // Récupérer tous les types des superheroes
-    const superheros = await Superhero.all()
+  public async list({ view, request }: HttpContextContract) {
+
+    const search = request.all().search
+    console.log(search)
+
+    if (search != null) {
+      const superheros = await Superhero.query()
+        .whereILike('nom_heroique', `%${search}%`)
+        .orWhereILike('tel', `%${search}%`)
+        .orWhereILike('nom', `%${search}%`)
+        .orWhereILike('prenom', `%${search}%`)
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.superheros.list', { superheros })
+
+    } else {
+      const superheros = await Superhero.all()
+      // renvoyer les données vers le vue 'index' de l'application
+      return view.render('pages.superheros.list', { superheros })
+    }
 
 
-    // renvoyer les données vers le vue 'list' de l'application
-    return view.render('pages.superheros.list', { superheros })
+
   }
 
   public async create({ view }: HttpContextContract) {
@@ -69,7 +98,7 @@ export default class SuperheroesController {
       superhero.profil = filePath
 
     }
-console.log(incidents_list)
+    console.log(incidents_list)
     superhero.nom = nom
     superhero.prenom = prenom
     superhero.tel = tel

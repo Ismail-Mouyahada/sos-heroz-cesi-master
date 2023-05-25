@@ -11,7 +11,7 @@
         </div>
 
         @if( auth.isLoggedIn)
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1   rounded-md">
           <div class="flex space-x-4  ">
             <a href="{{ route('dashboard') }}"
               class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">Tableau
@@ -19,21 +19,21 @@
           </div>
         </div>
 
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
           <div class="flex space-x-4 ">
             <a href="{{ route('incident.index') }}"
               class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">Incidents</a>
           </div>
         </div>
 
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
           <div class="flex space-x-4 ">
             <a href="{{ route('utilisateur.index') }}"
               class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">Utilisateurs</a>
           </div>
         </div>
 
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
           <div class="flex space-x-4">
             <a href="{{ route('superhero.index') }}"
               class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">Super
@@ -41,14 +41,14 @@
           </div>
         </div>
 
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
           <div class="flex space-x-4">
             <a href="{{ route('ville.index') }}" class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">
               Villes</a>
           </div>
         </div>
 
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
           <div class="flex space-x-4">
             <a href="{{ route('mission.index') }}"
               class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">
@@ -59,25 +59,33 @@
 
         @else
 
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
           <div class="flex space-x-4">
             <a href="{{ route('mission.create') }}"
               class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">
               Déclarer un incident </a>
           </div>
         </div>
-        <div class="hidden text-white sm:block sm:ml-6 bg-gray-600  py-1 px-4 rounded-md">
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
           <div class="flex space-x-4">
             <a href="{{ route('superhero.list') }}"
               class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">
               Des super-heros </a>
           </div>
         </div>
+        <div class="hidden text-white sm:block md:mx-2 sm:mx-4 bg-gray-600  py-1 px-4 rounded-md">
+          <div class="flex space-x-4">
+            <a href="{{ route('mission.list') }}"
+              class="text-white font-semibold hover:text-emerald-400 text-sm p-2   ">
+              Des Missions </a>
+          </div>
+        </div>
+
 
         @endif
       </div>
 
-      <div class="hidden sm:ml-6 sm:block">
+      <div class="hidden md:mx-2 sm:mx-4 sm:block">
         <div class="flex items-center space-x-4">
           @if(auth.user?.email)
           <div class="ml-3 relative" x-data="{ open: false }" @click.away="open = false">
@@ -133,10 +141,11 @@
 
   <div class="sm:hidden" x-show="open" style="display: none">
     <div class="px-4 py-2.5 space-y-1">
+      @if(auth.isLoggedIn)
       <a href="{{ route('dashboard') }}"
         class="block text-white font-semibold hover:text-emerald-400 text-sm p-2">Tableau de bord</a>
 
-      @if(auth.isLoggedIn)
+
       <div class="block text-gray-500">{{ auth.user.nom }}</div>
 
       <div class="mt-2">
@@ -149,8 +158,8 @@
         </form>
       </div>
       @else
-      <a href="/login" class="block text-white font-semibold hover:text-emerald-400 text-sm p-2 ">Déclaration</a>
-      <a href="/login" class="block text-white font-semibold hover:text-emerald-400 text-sm p-2 ">Superheros</a>
+      <a href="{{route('mission.create')}}" class="block text-white font-semibold hover:text-emerald-400 text-sm p-2 ">Déclaration</a>
+      <a href="{{route('superhero.list')}}" class="block text-white font-semibold hover:text-emerald-400 text-sm p-2 ">Superheros</a>
       <a href="/login" class="block text-white font-semibold hover:text-emerald-400 text-sm p-2 ">Connexion</a>
       <a href="/register" class="block text-white font-semibold hover:text-emerald-400 text-sm p-2 ">Inscription</a>
       @endif

@@ -1,11 +1,11 @@
 @layout('layouts/app')
 @section('content')
 <div class="w-3/4 mx-auto p-6 bg-white rounded-md">
-    <form action="{{ route('superhero.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('superhero.store')}}" id="heroForm" method="POST" enctype="multipart/form-data">
         {{ csrfField() }}
 
         <div class="flex items-center justify-center w-full">
-            <label for="dropzone-file"
+            <label for="dropzone-file" id="zoneDropping"
                 class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
                     <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
@@ -15,8 +15,8 @@
                         </path>
                     </svg>
                     <p class="mb-2 text-sm text-emerald-400 dark:text-gray-400"><span class="font-semibold">Click to
-                            upload</span> or
-                        drag and drop</p>
+                            Télécharger</span> or
+                        Glisser un fichier dans la zone</p>
                     <p class="text-xs text-emerald-400 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                 </div>
                 <input id="dropzone-file" type="file" name="profil" class="hidden" />
@@ -71,7 +71,7 @@
             <div id="map" class="w-full  h-80"></div>
         </div>
 
-        <div class="grid grid-cols-3 gap-4 px-2 my-3 ">
+        <div class="grid lg:grid-cols-3 md:grid-cols-1 sm:grid-cols-1 gap-4 px-2 my-3 ">
 
             <div>
                 <label for="max_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max
@@ -140,10 +140,10 @@
 
         </div>
 
-        <ul class="grid w-full my-4 gap-6 md:grid-cols-4">
+        <ul class="grid  my-4 gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 ">
 
             <li>
-                <input type="checkbox" id="super_intellegence" value="" class="hidden peer">
+                <input type="checkbox" id="super_intellegence" value="" name="super_intellegence" class="hidden peer">
                 <label for="super_intellegence"
                     class="inline-flex items-center justify-center   w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -154,7 +154,7 @@
             </li>
 
             <li>
-                <input type="checkbox" id="precognition" value="" class="hidden peer">
+                <input type="checkbox" id="precognition" value="" name="precognition" class="hidden peer">
                 <label for="precognition"
                     class="inline-flex items-center justify-center w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -165,7 +165,7 @@
             </li>
 
             <li>
-                <input type="checkbox" id="controle_montal" value="" class="hidden peer">
+                <input type="checkbox" id="controle_montal" value="" name="controle_montal" class="hidden peer">
                 <label for="controle_montal"
                     class="inline-flex items-center justify-center w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -176,7 +176,7 @@
             </li>
 
             <li>
-                <input type="checkbox" id="invisibilite" value="" class="hidden peer">
+                <input type="checkbox" id="invisibilite" value="" name="invisibilite" class="hidden peer">
                 <label for="invisibilite"
                     class="inline-flex items-center justify-center w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -187,7 +187,7 @@
             </li>
 
             <li>
-                <input type="checkbox" id="invulnerabilite" value="" class="hidden peer">
+                <input type="checkbox" id="invulnerabilite" value="" name="invulnerabilite" class="hidden peer">
                 <label for="invulnerabilite"
                     class="inline-flex items-center justify-center w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -198,7 +198,7 @@
             </li>
 
             <li>
-                <input type="checkbox" id="super_force" value="" class="hidden peer">
+                <input type="checkbox" id="super_force" value="" name="super_force" class="hidden peer">
                 <label for="super_force"
                     class="inline-flex items-center justify-center w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -208,7 +208,7 @@
                 </label>
             </li>
             <li>
-                <input type="checkbox" id="vol" value="" class="hidden peer">
+                <input type="checkbox" id="vol" value="" name="vol" class="hidden peer">
                 <label for="vol"
                     class="inline-flex items-center justify-center w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -218,7 +218,7 @@
                 </label>
             </li>
             <li>
-                <input type="checkbox" id="super_vitesse" value="" class="hidden peer">
+                <input type="checkbox" id="super_vitesse" value="" name="super_vitesse" class="hidden peer">
                 <label for="super_vitesse"
                     class="inline-flex items-center justify-center w-full p-5 text-emerald-400 bg-slate-50 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-emerald-400 peer-checked:text-emerlad-400 peer-checked:bg-slate-800 hover:text-gray-600 dark:peer-checked:text-gray-300 text-center hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                     <div class="block">
@@ -232,7 +232,7 @@
 
         </ul>
         <div class="grid w-full my-4 gap-6 md:grid-cols-1">
-            <button type="submit"
+            <button type="submit" id="submitHero"
                 class="text-white inline-flex items-center w-/2 my-2 bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 <i class="fa fa-arrow-right mx-2 text-white-600 fa-2x  text-center"></i>
                 M'inscrire en tant que super-hero
@@ -247,7 +247,13 @@
 
 <script>
 
-    const checkboxes = document.querySelectorAll('input[name="incidentsList[]"]');
+
+
+    const checkboxes = document.querySelectorAll('input[name="incidents_list[]"]');
+    const subBtn = document.getElementById('submitHero');
+    const heroForm = document.getElementById('heroForm');
+    const dropzoneFile = document.getElementById('dropzone-file');
+    const zoneDropping = document.getElementById('zoneDropping');
     const minSelection = 1;
     const maxSelection = 3;
     let latit = document.getElementById('latitude');
@@ -256,13 +262,45 @@
 
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-            const numSelected = document.querySelectorAll('input[name="incidentsList[]"]:checked').length;
+            const numSelected = document.querySelectorAll('input[name="incidents_list[]"]:checked').length;
             if (numSelected < minSelection || numSelected > maxSelection) {
                 checkbox.checked = false;
-                // Add custom error handling logic here
+                alert('vous pouvez selectionner seulement 3 incident maximum et 1 minimum')
             }
         });
     });
+
+    dropzoneFile.addEventListener('change', () => {
+
+
+        if (dropzoneFile != null && dropzoneFile.length > 0) {
+            zoneDropping.classList.add('bg-emerald-400')
+        } else if (dropzoneFile == null) {
+            zoneDropping.classList.add('bg-emerald-400')
+           zoneDropping.classList.add('text-white')
+            alert('une image d \'héro est obligatoire')
+        } else {
+            zoneDropping.classList.add('bg-emerald-400', 'text-white')
+
+
+        }
+
+
+    })
+
+    subBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        const numSelected = document.querySelectorAll('input[name="incidents_list[]"]:checked').length;
+        if (numSelected <= 0 || numSelected > 3) {
+            alert('vous pouvez selectionner seulement 3 incident maximum et 1 minimum')
+        } else if (numSelected > 0 && numSelected <= 3) {
+            heroForm.submit()
+        } else {
+            alert("une error est survenu")
+        }
+
+
+    })
 
     navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
