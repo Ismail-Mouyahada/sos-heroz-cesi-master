@@ -1,7 +1,8 @@
 
 ### Vue de l'application
 
-![screencapture-127-0-0-1-63176-2023-05-25-22_28_18](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/assets/66369128/acff5a4c-669d-47e1-944c-c6dfff32dc78)
+ ![screencapture-127-0-0-1-63176-2023-05-25-22_28_18](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/assets/66369128/9e6b81f2-543c-4e39-8a08-627b22cb7300)
+
 
 L'objectif de cette application est de permettre aux super-héros de s'inscrire et d'être géolocalisés à l'aide d'OpenStreetMap. Les citoyens et les communes peuvent également signaler des incidents nécessitant l'intervention des super-héros.
 
@@ -15,7 +16,8 @@ L'objectif de cette application est de permettre aux super-héros de s'inscrire 
 
 ### Modelisation MCD 
 
-![MCD](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/assets/66369128/4c4b20e2-67ed-419c-b3a9-8f7db6942547)
+ 
+![MDC SOS Heroz](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/assets/66369128/0d31fc92-195d-4f37-bb7b-b0881a19acb2)
 
 ## Étape 1 : Installation d'AdonisJS 5
 
