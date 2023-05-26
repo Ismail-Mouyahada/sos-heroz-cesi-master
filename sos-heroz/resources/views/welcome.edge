@@ -1,39 +1,14 @@
-<!DOCTYPE html>
-<html lang="fr">
+@layout('layouts/guest')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SOS Heroz - Bienvenue</title>
-  @entryPointStyles('app')
-  @entryPointScripts('app')
-</head>
+@section('content')
 
-<body>
 
-  <main>
-    <div>
-      <h1 class="title"> SOS Heroz à votre service !</h1>
-      <p class="subtitle">
-        Nous sommes là pour étendre la main de la jutice.
-      </p>
+<main class=" bg-cover bg-center py-6 bg-slate-800 flex justify-center content-center h-screen">
 
-      <ul>
-        <li>
-          The route for this page is defined inside <code>start/routes.ts</code> file
-        </li>
+  <div class="h-60 bg-emerald-400 p-6 mt-60 rounded-full animate-bounce">
+    <img src="logo-sans-text.svg" class=" h-60 bg-slate-100 p-6 rounded-full animate-" alt="" srcset="">
+  </div>
 
-        <li>
-          You can update this page by editing <code>resources/views/welcome.edge</code> file
-        </li>
 
-        <li>
-          If you run into problems, you can reach us on <a href="https://discord.gg/vDcEjq6?">Discord</a> or the <a
-            href="https://forum.adonisjs.com/">Forum</a>.
-        </li>
-      </ul>
-    </div>
-  </main>
-</body>
-
-</html>
+</main>
+@endsection

@@ -1,0 +1,48 @@
+@layout('layouts/app')
+@section('content')
+
+<div class="flex flex-col justify-center items-center h-[100vh] py-4">
+  <div
+    class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+    <div class="grid grid-cols-2 gap-4 px-2 w-full">
+      <div
+        class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          Nom de ville
+        </p>
+        <p class="text-sm text-gray-600">{{ ville.nom_ville}}</p>
+      </div>
+      <div
+        class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          Code postal
+        </p>
+        <p class="text-sm text-gray-600">{{ ville.code_postal}}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 px-2 w-full">
+      <div id="map" class="w-full  h-80"></div>
+    </div>
+    <a href="{{ route('ville.index') }}" class="w-1/2 text-center my-3 bg-emerald-400 p-3 rounded-md  justify-end"><i
+        class="fa fa-arrow-left text-white  "></i></a>
+
+  </div>
+
+</div>
+<script>
+  var map = new mapboxgl.Map({
+      accessToken: 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w',
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [{{ville.longitude}}, {{ ville.latitude}}],
+      zoom: 5
+  });
+
+  var marker = new mapboxgl.Marker()
+      .setLngLat([{{ville.longitude}}, {{ ville.latitude}}])
+      .addTo(map);
+
+
+</script>
+@endsection

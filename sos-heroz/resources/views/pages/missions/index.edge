@@ -1,0 +1,296 @@
+@layout('layouts/app')
+@section('content')
+
+<section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+  <div class=" W-100 px-4 lg:px-12">
+    <!-- Start coding here -->
+    <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+        <div class="w-full md:w-full">
+          <form class="flex items-center">
+            <label for="simple-search" class="sr-only">Chercher</label>
+            <div class="relative w-full">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <i class="fa fa-search"></i>
+              </div>
+              <input type="search" id="search" name="search"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Chercher" required="">
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal toggle -->
+        <div class="flex justify-center m-5">
+          <button id="defaultModalButton" data-modal-toggle="defaultModal"
+            class="block text-white bg-emerald-400 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            type="button">
+            Créer
+          </button>
+        </div>
+
+      </div>
+
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-4 py-3">ID</th>
+              <th scope="col" class="px-4 py-3">Nom mission</th>
+              <th scope="col" class="px-4 py-3">Type Incident</th>
+              <th scope="col" class="px-4 py-3">latitude</th>
+              <th scope="col" class="px-4 py-3">longitude</th>
+              <th scope="col" class="px-4 py-3">Confirmé</th>
+              <th scope="col" class="px-4 py-3">Urgence</th>
+
+              <th scope="col" class="px-4 py-3">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @each(item in missions)
+            <tr class="border-b dark:border-gray-700">
+              <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> {{ item.id
+                }} </th>
+              <td class="px-4 py-3">{{ item.nom_mission }} </td>
+              <td class="px-4 py-3">{{ item.type_incident }} </td>
+              <td class="px-4 py-3">{{ item.latitude }} </td>
+              <td class="px-4 py-3">{{ item.longitude }} </td>
+              <td class="px-4 py-3"><span
+                  class="{{ item.est_confirme?'bg-emerald-400 rounded-md  p-2 text-white':'bg-red-400 rounded-md  p-2 text-white' }}">
+                  {{
+                  item.est_confirme?'Confirmé':'en attente' }}</span> </td>
+              <td class="px-4 py-3">{{ item.urgence }} </td>
+
+
+              <td class="px-4 py-3 flex items-center justify-end">
+                <ul class=" flex ">
+                  <li><a class="shadow text-emerald-500 bg-emerald-50 p-2 mx-2 rounded-md"
+                      href="{{ route('mission.show', {id: item.id})}}"><i class="fa fa-eye "></i></a></li>
+                  <li><a class="shadow text-amber-400 bg-orange-50 p-2 mx-2 rounded-md"
+                      href="{{ route('mission.edit', {id: item.id})}}"><i class="fa fa-pen "></i></a></li>
+                  <li>
+
+                    <a class="shadow text-red-400 bg-red-50 p-2 mx-2 rounded-md"
+                      onclick="document.getElementById('dleteFrom-{{item.id}}').submit()"><i
+                        class="fa fa-trash "></i></a>
+
+                    <form action="{{ route('mission.delete', {id: item.id})}}" method="POST" id="dleteFrom-{{item.id}}">
+                      {{ csrfField() }}
+                      <button type="submit" class=" "> </button>
+                    </form></i></a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            @end
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <!-- Main modal -->
+  <div id="defaultModal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto my-5 overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
+    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+        <!-- Modal header -->
+        <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-center text-gray-900 dark:text-white">
+            Nouveau mission
+          </h3>
+          <button type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="defaultModal">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form action="{{ route('mission.store')}}" method="POST">
+          {{ csrfField() }}
+
+          <div class="grid gap-4 mb-4 sm:grid-cols-2">
+            <div>
+              <label for="nom_mission" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom de
+                mission</label>
+              <input type="text" name="nom_mission" id="nom_mission"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Nom de mission" required="">
+            </div>
+            <div>
+              <label for="date_incident" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date
+                d'incident</label>
+              <input type="date" name="date_incident" id="date_incident"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Date d'incdent ">
+            </div>
+
+            <div>
+              <label for="statut" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Statut</label>
+              <input type="text" name="statut" id="statut"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="en cours" required="">
+            </div>
+            <div>
+              <label for="urgence" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Urgence</label>
+              <select id="urgence" name="urgence"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option selected="">Niveau d'urgence</option>
+                <option value="1">urgent</option>
+                <option value="2">très urgent</option>
+                <option value="3">pas urgent</option>
+                <option value="4">danger imminent</option>
+              </select>
+            </div>
+            <div>
+              <label for="ville_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ville</label>
+              <select id="ville_id" name="ville_id"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option selected="">Nom de ville</option>
+                @each(item in villes)
+                <option value="{{ item.id}}">{{ item.nom_ville}}</option>
+                @endeach
+              </select>
+            </div>
+            <div>
+              <label for="superhero_id"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Superhero</label>
+              <select id="superhero_id" name="superhero_id"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option selected="">Nom de super-hero</option>
+                @each(item in superheros)
+                <option value="{{ item.id}}">{{ item.nom_heroique}}</option>
+                @endeach
+              </select>
+            </div>
+            <div>
+              <label for="type_incident"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">type_incident</label>
+              <select id="type_incident" name="type_incident"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option selected="">selectionnez un statut</option>
+                @each(item in incidents)
+
+                <option value="{{ item.type_incident}}">{{ item.type_incident}}</option>
+                @endeach
+
+              </select>
+            </div>
+
+
+            <div>
+
+              <input type="checkbox" name="est_confirmee" id="est_confirmee"
+                class="bg-emerald-50 border border-gray-300 text-gray-900 text-sm  rounded-lg focus:ring-emerald-600 focus:border-primary-600 block w-full p-2.5 dark:bg-emerald-400 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="latitude" required="">
+              <label for="est_confirmee" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Mission Confirmee ?</label>
+            </div>
+
+            <div>
+              <label for="latitude"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">latitude</label>
+              <input type="latitude" name="latitude" id="latitude"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="latitude" required="">
+            </div>
+            <div>
+              <label for="longitude"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">longitude</label>
+              <input type="longitude" name="longitude" id="longitude"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="longitude" required="">
+            </div>
+          </div>
+
+
+          <div class="grid grid-cols-1 gap-4 px-2 w-full">
+            <div id="map" class="w-full  h-80"></div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 px-2 w-full">
+
+            <div class="sm:col-span-2">
+              <label for="description"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+              <textarea id="description" rows="4" name="description"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="détails de l'mission ... "></textarea>
+            </div>
+          </div>
+
+          <div class="grid gap-4 my-4 sm:grid-cols-2">
+            <button type="submit"
+              class="text-white inline-flex items-center bg-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+              <i class="fa fa-add mx-2"></i>
+              Ajouter une mission
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  let latit = document.getElementById('latitude')
+  let long = document.getElementById('longitude')
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoieWlsYWs3MjY4MSIsImEiOiJjbGd2OWRxb3kxbGliM2dvMmw0bHcwanZ6In0.PTmeHh2OTeHuGbgGfOS8_w';
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+
+      latit.value = latitude
+      long.value  = longitude
+
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [longitude, latitude],
+        zoom: 5
+      });
+
+      new mapboxgl.Marker()
+      .setLngLat([longitude, latitude])
+      .addTo(map);
+
+map.on('click', function(e) {
+  let lngLat = e.lngLat;
+  new mapboxgl.Marker()
+  .setLngLat([lngLat.lng, lngLat.lat])
+  .addTo(map);
+
+
+
+  latit.value = lngLat.lat
+  long.value = lngLat.lng
+  // Add a marker at the clicked location
+  var marker = new mapboxgl.Marker()
+  .setLngLat([lngLat.lng, lngLat.lat])
+  .addTo(map);
+  });
+
+    });
+
+
+
+
+</script>
+
+@endsection

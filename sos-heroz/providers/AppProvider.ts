@@ -1,4 +1,4 @@
-import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
+import { ApplicationContract } from '@ioc:Adonis/Core/Application'
 
 export default class AppProvider {
   constructor(protected app: ApplicationContract) {}
@@ -8,7 +8,15 @@ export default class AppProvider {
   }
 
   public async boot() {
-    // IoC container is ready
+    const Response = this.app.container.use('Adonis/Core/Response')
+
+    Response.macro('intended', function (defaultUri = '/') {
+      const intendedUrl = this.ctx!.session.pull('intended_url', defaultUri)
+
+      this.ctx!.response.redirect(intendedUrl)
+
+      return this
+    })
   }
 
   public async ready() {

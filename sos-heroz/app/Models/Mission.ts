@@ -10,10 +10,10 @@ export default class Mission extends BaseModel {
   public id: number
 
   @column()
-  public nomMission: string
+  public nom_mission: string
 
   @column()
-  public typeIncident: string
+  public type_incident: string
 
   @column()
   public description: string
@@ -25,34 +25,30 @@ export default class Mission extends BaseModel {
   public longitude: string
 
   @column()
-  public dateIncident: DateTime
+  public date_incident: Date
 
   @column()
   public statut: string
 
   @column()
-  public estConfirmee: boolean
+  public est_confirmee: boolean
 
   @column()
   public urgence: number
 
   @column()
   public superheroId: Number
+  @belongsTo(() => Superhero)
+  public Superhero: BelongsTo<typeof Superhero>
 
   @column()
   public villeId: Number
+  @belongsTo(() => Ville)
+  public Ville: BelongsTo<typeof Ville>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
-
-  @belongsTo(() => Superhero)
-  public Superhero: BelongsTo<typeof Superhero>
-
-  @belongsTo(() => Ville)
-  public Ville: BelongsTo<typeof Ville>
-
-
 }

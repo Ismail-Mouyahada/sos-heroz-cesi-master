@@ -1,0 +1,72 @@
+@layout('layouts/app')
+@section('content')
+
+<div class="flex flex-col justify-center items-center h-[100vh] py-4">
+  <div
+    class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+    <div class="mt-2 mb-8 w-full">
+      <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
+        Information Général
+      </h4>
+      <p class="mt-2 px-2 text-base text-gray-600">
+        Retrouvez les détails de cet utilisateur
+      </p>
+    </div>
+    <div class="grid grid-cols-2 gap-4 px-2 w-full">
+      <div
+        class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Role</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ utilisateur.role}}
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Identité</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ utilisateur.nom +' '+ utilisateur.prenom}}
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Contact</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ utilisateur.email}}
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Appel</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ utilisateur.telephone}}
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Organization</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          Simmmple Web LLC
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+        <p class="text-sm text-gray-600">Date inscritpion</p>
+        <p class="text-base font-medium text-navy-700 dark:text-white">
+          {{ utilisateur.created_at}}
+        </p>
+      </div>
+
+      <a href="{{ route('utilisateur.index') }}" class="w-1/2 text-center bg-emerald-400 p-3 rounded-md  justify-end"><i
+          class="fa fa-arrow-left text-white  "></i></a>
+    </div>
+
+  </div>
+
+</div>
+
+@endsection

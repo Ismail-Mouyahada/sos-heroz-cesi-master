@@ -13,6 +13,9 @@ export default class User extends BaseModel {
   public prenom: string
 
   @column()
+  public telephone: string
+
+  @column()
   public role: string
 
   @column()
@@ -22,7 +25,10 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public rememberMeToken: string | null
+  public rememberMeToken?: string
+
+  @column.dateTime()
+  public emailVerifiedAt?: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
