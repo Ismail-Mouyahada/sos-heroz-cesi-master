@@ -360,3 +360,13 @@ export default class IncidentController {
 ## Étape 12 : Conclusion
 
 Nous avons créé une application SOS Heroz qui permet aux super-héros de s'inscrire et d'être géolocalisés à l'aide d'OpenStreetMap. Les citoyens et les communes peuvent également signaler des incidents nécessitant l'intervention des super-héros en temps réel .
+
+### Remerciement
+
++ Je tiens à remercier tous les pilots, intervenants qui m'ont inspiré avec leurs idées et le savoir faire.
+
+### Pour faire des remarques ou poser des questions veuillez utiliser cette formulaire : 
+des observations , des critiques , des commentaires ou des conseils sont toujours la bienvenue pour m'améliorer.
+
+    
+    https://public.zenkit.com/f/hw9-w2Yuo/observation-conseils-des-membre-de-la-jury-cesi?v=oxV0VZiUW  
