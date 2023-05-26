@@ -7,15 +7,15 @@ L'objectif de cette application est de permettre aux super-héros de s'inscrire 
 
 ### Diagramme UML
 
-[UML-Diagramme-cas-d'activité.pdf](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/files/11570295/UML-Diagramme-cas-d.activite.pdf)
+[UML-Diagramme-cas-d'activité](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/files/11570295/UML-Diagramme-cas-d.activite.pdf)
 
-[UML-Diagramme-cas-des-classes.pdf](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/files/11570296/UML-Diagramme-cas-des-classes.pdf
+[UML-Diagramme-cas-des-classes](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/files/11570296/UML-Diagramme-cas-des-classes.pdf)
 
-[UML-Diagramme-cas-d'-usage.pdf](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/files/11570297/UML-Diagramme-cas-d.-usage.pdf)
+[UML-Diagramme-cas-d'-usage](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/files/11570297/UML-Diagramme-cas-d.-usage.pdf)
 
 ### Modelisation MCD 
 
-![Untitled](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/assets/66369128/4c4b20e2-67ed-419c-b3a9-8f7db6942547)
+![MCD](https://github.com/Ismail-Mouyahada/sos-heroz-cesi-master/assets/66369128/4c4b20e2-67ed-419c-b3a9-8f7db6942547)
 
 ## Étape 1 : Installation d'AdonisJS 5
 
